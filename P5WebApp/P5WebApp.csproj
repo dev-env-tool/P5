@@ -16,4 +16,11 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Classes\" />
+    <Folder Include="Models\Repositories\" />
+    <Folder Include="Models\Services\" />
+    <Folder Include="Models\ViewModels\" />
+  </ItemGroup>
+
 </Project>
