@@ -2,8 +2,12 @@
 
 namespace P5WebApp.Models.Entities
 {
-    //public partial class Car : base()
-    //{
-    //    this.ListofVehicles = new HashSet<Cars>;
-    //}
+    public class Car : Vehicle
+    {
+        //this.ListofVehicles = new HashSet<Cars>;
+        public Car() : base()
+        {
+            //this.V = new HashSet<CarList>();
+        }
+    }
 }
