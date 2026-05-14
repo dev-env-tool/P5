@@ -1,16 +1,13 @@
 ﻿using System.Collections.Generic;
+using static P5WebApp.Models.Entities.Photo;
 
 namespace P5WebApp.Models.Entities
 {
     public partial class Add
     {
+       
 
-        private readonly List<AddLine>? _addList;
-
-        public Add() 
-        { 
-            _addList = new List<AddLine>();
-        }
+        // Input fields of Add class
         public int Id { get; set; }
 
         public DateOnly AddAvailabilityDate { get; set; }
@@ -28,19 +25,11 @@ namespace P5WebApp.Models.Entities
 
         public double AddSellingPrice { get; set; }
 
-        public virtual ICollection<Photo> ?AddPhotosList { get; set; }
 
-        
         // Virtual couplings below
 
-        public virtual Car ?Car { get; set; }
+        public virtual Car? Car { get; set; }
 
-
-        public class AddLine
-        {
-            public int AddLineId { get; set; }
-
-        }
-
+        public virtual ICollection<Photo>? AddPhotosList { get; set; }
     }
 }

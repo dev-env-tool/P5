@@ -31,7 +31,7 @@ namespace P5WebApp.Models.ViewModels
         public string? VehicleFinishTypeId { get; set; }
 
 
-        public virtual ICollection<Fix>? VehicleFixesList { get; set; }
+        public ICollection<Fix>? VehicleFixesList { get; set; }
 
     }
 }

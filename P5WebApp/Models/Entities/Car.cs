@@ -7,7 +7,7 @@ namespace P5WebApp.Models.Entities
         //this.ListofVehicles = new HashSet<Cars>;
         public Car() : base()
         {
-            //this.V = new HashSet<CarList>();
+
         }
     }
 }
