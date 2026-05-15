@@ -15,29 +15,9 @@ namespace P5WebApp.Models.Entities
 
         public double FixCost { get; set; }
 
-        public ICollection<FixListForAnAdd> ?FixListOfAnAdd { get; set; }
+        // Foreign Key
+        public int ?AssociatedVehicleId { get; set; }
 
-
-
-        public class FixList
-        {
-            public int FixlistId { get; set; }
-
-            public ICollection<FixListForAnAdd> ?FixListOfAnAdd { get; set; }
-
-        }
-
-        // Creating many to many relationship between a Fix and its FixList
-        public class FixListForAnAdd
-        {
-            public int FixID { get; set; }
-
-            public int FixId { get; set; }
-            public Fix ?Fix {  get; set; }
-
-
-            public int FixListId { get; set; }
-            public FixList? FixList { get; set; }
-        }
+        public virtual Vehicle ?AssociatedVehicle { get; set; }
     }
 }

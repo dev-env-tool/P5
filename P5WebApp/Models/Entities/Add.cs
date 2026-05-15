@@ -26,10 +26,10 @@ namespace P5WebApp.Models.Entities
         public double AddSellingPrice { get; set; }
 
 
-        // Virtual couplings below
+        // Virtual couplings below to be able to override children parameters from parent class
 
         public virtual Car? Car { get; set; }
 
-        public virtual ICollection<Photo>? AddPhotosList { get; set; }
+        public virtual ICollection<Photo>? AddPhotosList { get; set; } = [];
     }
 }

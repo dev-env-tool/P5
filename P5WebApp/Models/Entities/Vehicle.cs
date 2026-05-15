@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Components.Web.Virtualization;
+using System.Collections.Generic;
 using static P5WebApp.Models.Entities.Fix;
 
 namespace P5WebApp.Models.Entities
@@ -15,13 +16,13 @@ namespace P5WebApp.Models.Entities
 
         public double VehicleBuyPrice { get; set; }
 
-        public int VehicleBrandId { get; set; }
+        public virtual int VehicleBrandId { get; set; }
 
-        public int VehicleModelId { get; set; }
+        public virtual int VehicleModelId { get; set; }
 
-        public string? VehicleFinishTypeId { get; set; }
+        public virtual string? VehicleFinishTypeId { get; set; }
 
-        public virtual ICollection<Fix>? VehicleFixesList { get; set; }
+        public virtual ICollection<Fix>? VehicleFixesList { get; set; } = [];
 
 
     }

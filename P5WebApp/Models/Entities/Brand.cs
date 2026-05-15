@@ -8,11 +8,10 @@ namespace P5WebApp.Models.Entities
         public int BrandId { get; set; }
         public string? BrandDescription { get; set; }
 
-        public class BrandList
-        { 
-            ICollection<Brand>? BrandListForVehicle { get; set; }
-        }
+        public virtual ICollection<Model> ?Models { get; set; } = [];
 
-        public ICollection<Model.BrandModel>? BrandAndModelListForVehicle { get; set; }
+        // Foreign Key
+        public int AssociatedVehicleId { get; set; }
+        public virtual Vehicle? AssociatedVehicle { get; set; }
     }
 }

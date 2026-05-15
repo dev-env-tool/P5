@@ -4,10 +4,8 @@ namespace P5WebApp.Models.Entities
 {
     public class Car : Vehicle
     {
-        //this.ListofVehicles = new HashSet<Cars>;
-        public Car() : base()
-        {
-
-        }
+        // Foreign Key
+        public int AssociatedVehicleId { get; set; }
+        public Vehicle ?Vehicle { get; set; }
     }
 }

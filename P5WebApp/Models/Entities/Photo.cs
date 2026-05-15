@@ -6,31 +6,11 @@
         // Input fields of Photo class
         public int PhotoId { get; set; }
 
-        public string? PhotoPath { get; set; }
+        public string ?PhotoPath { get; set; }
 
-        public ICollection<PhotoListForAnAdd>? PhotoListOfAnAdd { get; set; }
+        // Foreign Key
+        public int AssociatedAddId { get; set; }
 
-
-
-        public class PhotoList
-        {
-            public int PhotoListId { get; set; }
-
-            public ICollection<PhotoListForAnAdd>? PhotoListOfAnAdd { get; set; }
-
-        }
-
-        // Creating many to many relationship between a Fix and its FixList
-        public class PhotoListForAnAdd
-        {
-            public int ID { get; set; }
-
-            public int PhotoId { get; set; }
-            public Photo? Photo { get; set; }
-
-
-            public int PhotoListId { get; set; }
-            public PhotoList? PhotoList { get; set; }
-        }
+        public virtual Add ?AssocitedAdd { get; set; }
     }
 }
