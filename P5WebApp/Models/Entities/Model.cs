@@ -8,12 +8,8 @@ namespace P5WebApp.Models.Entities
         public int Id { get; set; }
         public string? Name { get; set; }
 
-        public int BrandId { get; set; }
-        public virtual Brand ?AssociatedBrand { get; set; }
-
-        // Foreign Key
-        public int AssociatedVehicleId { get; set; }
-        public virtual Vehicle? AssociatedVehicle { get; set; }
+        public int AsociatedBrandId { get; set; }
+        public Brand ?AssociatedBrand { get; set; }
 
     }
 }

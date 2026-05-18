@@ -2,7 +2,7 @@
 
 namespace P5WebApp.Models.Entities
 {
-    public partial class Fix : Vehicle
+    public class Fix : Vehicle
     {
 
         // Input fields of Fix class

@@ -1,6 +1,6 @@
 ﻿namespace P5WebApp.Models.Entities
 {
-    public partial class Photo : Add
+    public class Photo : Add
     {
 
         // Input fields of Photo class
@@ -11,6 +11,6 @@
         // Foreign Key
         public int AssociatedAddId { get; set; }
 
-        public virtual Add ?AssocitedAdd { get; set; }
+        public virtual Add ?AssociatedAdd { get; set; }
     }
 }

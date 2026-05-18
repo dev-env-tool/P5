@@ -20,7 +20,14 @@ namespace P5WebApp
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
 
+            var connectionStringP5Referential = builder.Configuration.GetConnectionString("P5Referential") ?? throw new InvalidOperationException("Connection string 'P5Referential' not found.");
+            builder.Services.AddDbContext<P5Referential>(options =>
+                options.UseSqlServer(connectionStringP5Referential));
+            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+
             var app = builder.Build();
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
