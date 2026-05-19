@@ -3,7 +3,7 @@ using static P5WebApp.Models.Entities.Photo;
 
 namespace P5WebApp.Models.Entities
 {
-    public class Add
+    public partial class Add
     {
 
         // Input fields of Add class

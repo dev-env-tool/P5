@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using P5WebApp.Models.Entities;
-using static P5WebApp.Models.Entities.Add;
+﻿using P5WebApp.Data;
+using Newtonsoft.Json;
+
 
 namespace P5WebApp.Models.Repositories
 {
@@ -17,6 +17,18 @@ namespace P5WebApp.Models.Repositories
         //    _addList.Clear();
         //    _addList.AddRange(context.Add.ToList());
         //}
+
+        private static readonly Required _p5Referential;
+
+        //public AddRepository(P5Referential p5Referential);
+        //{
+        //    _p5Referential = P5Referential
+        //}
+
+
+
+
+
 
     }
 }
