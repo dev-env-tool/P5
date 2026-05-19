@@ -9,7 +9,7 @@ namespace P5WebApp.Models.Entities
         // Input fields of Add class
         public int Id { get; set; }
 
-        public string ?Name { get; set; }
+        public string ?Title { get; set; }
 
         public string ?Description { get; set; }
 
@@ -20,7 +20,7 @@ namespace P5WebApp.Models.Entities
         public bool AddSold { get; set; }
 
         // Virtual coupling.
-        public virtual int AddCarId { get; set; }
+        public virtual int AddVehicleId { get; set; }
 
         public double AddBuyPrice { get; set; }
 

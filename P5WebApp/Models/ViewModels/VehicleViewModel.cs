@@ -1,5 +1,6 @@
-﻿using P5WebApp.Models.Entities;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.FileProviders.Embedded;
+using P5WebApp.Models.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace P5WebApp.Models.ViewModels
@@ -9,29 +10,45 @@ namespace P5WebApp.Models.ViewModels
         [BindNever]
         public int VehicleId { get; set; }
 
-        [Required]
+
+        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingVehicleVinCode")]
         public string? VehicleVinCode { get; set; }
 
-        [Required]
+
+        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingVehicleYear")]
         public DateOnly VehicleYear { get; set; }
 
-        [Required]
+
+        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingVehicleBuyDate")]
         public DateOnly VehicleBuyDate { get; set; }
 
-        [Required]
+
+        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingVehicleBuyPrice")]
         public double VehicleBuyPrice { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingVehicleBrandId")]
         public int VehicleBrandId { get; set; }
 
-        [Required]
+
+        public virtual Brand? Brand { get; set; }
+
+
+        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingVehicleModelId")]
         public int VehicleModelId { get; set; }
 
-        [Required]
-        public string? VehicleFinishTypeId { get; set; }
+
+        public virtual Model? Model { get; set; }
 
 
-        public ICollection<Fix>? VehicleFixesList { get; set; }
+        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingVehicleFinishTypeId")]
+        public int? VehicleFinishTypeId { get; set; }
+
+
+        public virtual FinishType? FinishType { get; set; }
+
+
+        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorEmptyVehicleFixesList")]
+        public virtual ICollection<Fix>? VehicleFixesList { get; set; } = [];
 
     }
 }

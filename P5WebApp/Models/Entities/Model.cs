@@ -1,6 +1,4 @@
-﻿using static P5WebApp.Models.Entities.Photo;
-
-namespace P5WebApp.Models.Entities
+﻿namespace P5WebApp.Models.Entities
 {
     public class Model : Vehicle
     {
@@ -9,7 +7,7 @@ namespace P5WebApp.Models.Entities
         public string? Name { get; set; }
 
         public int AsociatedBrandId { get; set; }
-        public Brand ?AssociatedBrand { get; set; }
+        public virtual Brand ?AssociatedBrand { get; set; }
 
     }
 }

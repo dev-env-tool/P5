@@ -22,7 +22,19 @@
 	
   <ItemGroup>
     <Folder Include="Models\Classes\" />
-    <Folder Include="Models\Services\" />
+  </ItemGroup>
+
+	
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\AddViewModelResource.resx">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\BrandViewModelResource.resx">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\VehicleViewModel.resx">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

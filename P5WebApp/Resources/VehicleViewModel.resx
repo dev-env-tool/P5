@@ -117,22 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ErrorMissingAddAvailabilityDate" xml:space="preserve">
-    <value>Veuillez choisir une date de disponibilité.</value>
+  <data name="ErrorMissingVehicleVinCode" xml:space="preserve">
+    <value>Veuillez renseigner un numéro d'immatriculation. Il ne sera visible que par l'admnistrateur.</value>
   </data>
-  <data name="ErrorEmptyAddPhotosList" xml:space="preserve">
-    <value>Veuillez choisir au moins une photo.</value>
+  <data name="ErrorMissingVehicleModelId" xml:space="preserve">
+    <value>Veuillez renseigner le modèle du véhicule.</value>
   </data>
-  <data name="ErrorMissingAddTitle" xml:space="preserve">
-    <value>Veuillez indiquer le titre de l'annonce</value>
+  <data name="ErrorMissingVehicleBrandId" xml:space="preserve">
+    <value>Veuillez renseigner la marque du véhicule.</value>
   </data>
-  <data name="ErrorMissingAddDescription" xml:space="preserve">
-    <value>Veuillez indiquer la description de l'annonce</value>
+  <data name="ErrorMissingVehicleYear" xml:space="preserve">
+    <value>Veuillez renseigner l'année du véhicule.</value>
   </data>
-  <data name="ErrorMissingAddCar" xml:space="preserve">
-    <value>Veuillez choisir un véhicule.</value>
+  <data name="ErrorMissingVehicleBuyDate" xml:space="preserve">
+    <value>Veuillez renseigner la date d'achat du véhicule.</value>
   </data>
-  <data name="ErrorMissingAddAddVehicleId" xml:space="preserve">
-    <value>Veuillez choisir un véhicule.</value>
+  <data name="ErrorMissingVehicleBuyPrice" xml:space="preserve">
+    <value>Veuillez renseigner le prix d'achat du véhicule.</value>
+  </data>
+  <data name="ErrorMissingVehicleFinishTypeId" xml:space="preserve">
+    <value>Veuillez indiquer la finition du modèle.</value>
+  </data>
+  <data name="ErrorEmptyVehicleFixesList" xml:space="preserve">
+    <value>Veuillez renseigner au moins une réparation</value>
   </data>
 </root>
