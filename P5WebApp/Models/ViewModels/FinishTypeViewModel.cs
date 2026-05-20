@@ -9,10 +9,10 @@ namespace P5WebApp.Models.ViewModels
     public class FinishTypeViewModel
     {
         [BindNever]
-        public int? FinishTypeId { get; set; }
+        public required int? FinishTypeId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingFinishTypeName")]
-        public string? FinishTypeName { get; set; }
+        public required string? FinishTypeName { get; set; }
 
     }
 }

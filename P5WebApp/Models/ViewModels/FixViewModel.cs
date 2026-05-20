@@ -8,27 +8,27 @@ namespace P5WebApp.Models.ViewModels
     public class FixViewModel
     {
         [BindNever]
-        public int FixId { get; set; }
+        public required int FixId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingFixDescription")]
-        public string? FixDescription { get; set; }
+        public required string FixDescription { get; set; }
 
 
         [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingFixDate")]
-        public DateOnly FixDate { get; set; }
+        public required DateOnly FixDate { get; set; }
 
 
         [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingFixCost")]
-        public double FixCost { get; set; }
+        public required double FixCost { get; set; }
 
 
 
         // Foreign Key
         [BindNever]
-        public int? AssociatedVehicleId { get; set; }
+        public required int AssociatedCarId { get; set; }
 
         [BindNever]
-        public virtual Vehicle? AssociatedVehicle { get; set; }
+        public required virtual Car AssociatedCar { get; set; }
 
     }
 }

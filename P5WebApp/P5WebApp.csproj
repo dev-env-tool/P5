@@ -26,13 +26,13 @@
 
 	
   <ItemGroup>
-    <EmbeddedResource Update="Resources\AddViewModelResource.resx">
+    <EmbeddedResource Update="Resources\ShortAddViewModelResource.resx">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\BrandViewModelResource.resx">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\VehicleViewModel.resx">
+    <EmbeddedResource Update="Resources\CarViewModel.resx">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

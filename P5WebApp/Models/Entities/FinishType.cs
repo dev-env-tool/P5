@@ -1,10 +1,10 @@
 ﻿namespace P5WebApp.Models.Entities
 {
-    public class FinishType : Vehicle
+    public class FinishType : Car
     {
-        public int? FinishTypeId { get; set; }
+        public required int FinishTypeId { get; set; }
 
-        public string? FinishTypeName { get; set; }
+        public required string FinishTypeName { get; set; }
 
     }
 }

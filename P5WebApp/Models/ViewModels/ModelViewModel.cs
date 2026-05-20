@@ -8,14 +8,14 @@ namespace P5WebApp.Models.ViewModels
     public class ModelViewModel
     {
         [BindNever]
-        public int Id { get; set; }
+        public required int Id { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingModelName")]
-        public string? Name { get; set; }
+        public required string Name { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingAsociatedBrandId")]
-        public int AsociatedBrandId { get; set; }
-        public virtual Brand ?AssociatedBrand { get; set; }
+        public required int AsociatedBrandId { get; set; }
+        public required virtual Brand AssociatedBrand { get; set; }
 
     }
 }

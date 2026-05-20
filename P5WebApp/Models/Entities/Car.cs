@@ -2,13 +2,38 @@
 
 namespace P5WebApp.Models.Entities
 {
-    public class Car : Vehicle
+    public class Car
     {
         public int CarId { get; set; }
-        public string VehicleType { get; set; } = "Car";
-        // Foreign Key
-        public int AssociatedVehicleId { get; set; }
-        public Vehicle ?AssociatedVehicle { get; set; }
+
+
+        public required string CarVinCode { get; set; }
+
+        public required DateOnly CarYear { get; set; }
+
+        public required DateOnly CarBuyDate { get; set; }
+
+        public required double CarBuyPrice { get; set; }
+
+        public required int CarBrandId { get; set; }
+
+        public required virtual Brand? Brand { get; set; }
+
+        public required int CarModelId { get; set; }
+
+        public required virtual Model Model { get; set; }
+
+        public required int CarFinishTypeId { get; set; }
+
+        public required virtual FinishType FinishType { get; set; }
+
+        // Virtual couplings below to be able to override children parameters from parent class
+
+        public required virtual ICollection<Fix> CarFixesList { get; set; } = [];
+
+        public required int AssociatedShortAddId { get; set; }
+
+        public required virtual ShortAdd AssociatedShortAdd { get; set; }
     }
 }
 

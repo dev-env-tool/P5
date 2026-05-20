@@ -41,7 +41,7 @@ namespace P5WebApp.Data
 
         public virtual DbSet<Photo> Photos { get; set; }
 
-        public virtual DbSet<Add> Adds { get; set; }
+        public virtual DbSet<ShortAdd> ShortAdds { get; set; }
 
 
 
@@ -59,8 +59,8 @@ namespace P5WebApp.Data
             //modelBuilder.HasAnnotation("ProductVersion", "2.2.1-servicing-10028");
 
 
-            // Indicate that Vehicle is the base class to build the cars table.
-            modelBuilder.Entity<Vehicle>();
+            // Indicate that Car is the base class to build the cars table.
+
 
 
             modelBuilder.Entity<Car>()
@@ -109,8 +109,8 @@ namespace P5WebApp.Data
                 .HasIndex(p => p.Id);
 
             // Create a table for adds 
-            modelBuilder.Entity<Add>()
-                .ToTable("Adds")
+            modelBuilder.Entity<ShortAdd>()
+                .ToTable("ShortAdds")
                 .HasIndex(a => a.Id);
         }
 

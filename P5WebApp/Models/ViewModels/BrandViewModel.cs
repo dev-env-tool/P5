@@ -11,11 +11,11 @@ namespace P5WebApp.Models.ViewModels
     public class BrandViewModel
     {
         [BindNever]
-        public int BrandId { get; set; }
+        public required int BrandId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingBrandName")]
-        public string? BrandName { get; set; }
+        public required string? BrandName { get; set; }
 
-        public virtual ICollection<Model>? Models { get; set; } = [];
+        public required virtual ICollection<Model>? Models { get; set; } = [];
     }
 }

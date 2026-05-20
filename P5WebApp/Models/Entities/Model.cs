@@ -1,13 +1,13 @@
 ﻿namespace P5WebApp.Models.Entities
 {
-    public class Model : Vehicle
+    public class Model : Car
     {
 
-        public int Id { get; set; }
-        public string? Name { get; set; }
+        public required int Id { get; set; }
+        public required string Name { get; set; }
 
-        public int AsociatedBrandId { get; set; }
-        public virtual Brand ?AssociatedBrand { get; set; }
+        public required int AsociatedBrandId { get; set; }
+        public required virtual Brand ?AssociatedBrand { get; set; }
 
     }
 }

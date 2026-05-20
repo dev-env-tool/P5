@@ -10,18 +10,18 @@ namespace P5WebApp.Models.ViewModels
     {
         // Input fields of Photo class
         [BindNever]
-        public int PhotoId { get; set; }
+        public required int PhotoId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingPhotoPath")]
-        public string? PhotoPath { get; set; }
+        public required string PhotoPath { get; set; }
 
         // Foreign Key
 
         [BindNever]
-        public int AssociatedAddId { get; set; }
+        public required int AssociatedAddId { get; set; }
 
         [BindNever]
-        public virtual Add? AssociatedAdd { get; set; }
+        public required virtual ShortAdd AssociatedAdd { get; set; }
 
 
 
