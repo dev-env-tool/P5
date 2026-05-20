@@ -21,7 +21,7 @@ namespace P5WebApp.Models.Entities
 
         public required int CarModelId { get; set; }
 
-        public required virtual Model Model { get; set; }
+        public required virtual CarModel CarModel { get; set; }
 
         public required int CarFinishTypeId { get; set; }
 

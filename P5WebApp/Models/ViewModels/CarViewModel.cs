@@ -37,7 +37,7 @@ namespace P5WebApp.Models.ViewModels
         public required int CarModelId { get; set; }
 
 
-        public required virtual Model Model { get; set; }
+        public required virtual CarModel CarModel { get; set; }
 
 
         [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingCarFinishTypeId")]

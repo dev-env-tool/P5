@@ -35,7 +35,7 @@ namespace P5WebApp.Data
 
         public virtual DbSet<Brand> Brands { get; set; }
 
-        public virtual DbSet<Model> Models { get; set; }
+        public virtual DbSet<CarModel> CarModels { get; set; }
 
         public virtual DbSet<FinishType> FinishTypes { get; set; }
 
@@ -75,7 +75,7 @@ namespace P5WebApp.Data
 
             // Indicate the relationship one brand has many models
             modelBuilder.Entity<Brand>()
-                .HasMany(m => m.Models)
+                .HasMany(m => m.CarModels)
                 .WithOne(b => b.AssociatedBrand)
                 .HasForeignKey(b => b.AsociatedBrandId);
 
@@ -87,16 +87,17 @@ namespace P5WebApp.Data
 
 
             // Indicate the relationship many models have one brand
-            modelBuilder.Entity<Model>()
+            modelBuilder.Entity<CarModel>()
                 .HasOne(b => b.AssociatedBrand)
-                .WithMany(m => m.Models)
+                .WithMany(m => m.CarModels)
                 .HasForeignKey(b =>b.AsociatedBrandId);
 
 
             // Create a table for models 
-            modelBuilder.Entity<Model>()
+            modelBuilder.Entity<CarModel>()
                 .ToTable("Models")
                 .HasIndex(m => m.Id);
+
 
             // Create a table for finishtypes
             modelBuilder.Entity<FinishType>()

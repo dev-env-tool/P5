@@ -5,9 +5,9 @@ namespace P5WebApp.Models.Entities
 {
     public class Brand : Car
     {
-        public int BrandId { get; set; }
-        public string? BrandName { get; set; }
+        public required int BrandId { get; set; }
+        public required string BrandName { get; set; }
 
-        public virtual ICollection<Model> ?Models { get; set; } = [];
+        public required virtual ICollection<CarModel> ?CarModels { get; set; } = [];
     }
 }

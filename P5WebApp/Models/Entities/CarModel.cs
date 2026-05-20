@@ -1,8 +1,7 @@
 ﻿namespace P5WebApp.Models.Entities
 {
-    public class Model : Car
+    public class CarModel : Car
     {
-
         public required int Id { get; set; }
         public required string Name { get; set; }
 

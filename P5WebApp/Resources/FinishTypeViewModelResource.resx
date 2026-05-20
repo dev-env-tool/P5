@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ErrorMissingAssociatedBrandlId" xml:space="preserve">
+    <value>Veuillez indiquer la marque associée.</value>
+  </data>
+  <data name="ErrorMissingAssociatedCarModelId" xml:space="preserve">
+    <value>Veuillez indiquer le modèle associé.</value>
+  </data>
   <data name="ErrorMissingFinishTypeName" xml:space="preserve">
     <value>Veuillez indiquer le nom de la finition.</value>
   </data>

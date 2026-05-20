@@ -16,6 +16,6 @@ namespace P5WebApp.Models.ViewModels
         [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingBrandName")]
         public required string? BrandName { get; set; }
 
-        public required virtual ICollection<Model>? Models { get; set; } = [];
+        public required virtual ICollection<Model>? CarModels { get; set; } = [];
     }
 }

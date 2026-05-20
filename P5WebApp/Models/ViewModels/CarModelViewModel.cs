@@ -5,7 +5,7 @@ using P5WebApp.Models.Entities;
 
 namespace P5WebApp.Models.ViewModels
 {
-    public class ModelViewModel
+    public class CarModelViewModel
     {
         [BindNever]
         public required int Id { get; set; }
