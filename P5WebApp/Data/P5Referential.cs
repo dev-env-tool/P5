@@ -62,7 +62,6 @@ namespace P5WebApp.Data
             // Indicate that Car is the base class to build the cars table.
 
 
-
             modelBuilder.Entity<Car>()
                 .ToTable("Cars")
                 .HasIndex(c => c.CarId);
@@ -78,6 +77,7 @@ namespace P5WebApp.Data
             modelBuilder.Entity<Brand>()
                 .HasMany(m => m.CarModels)
                 .WithOne(b => b.AssociatedBrand)
+                .OnDelete(deleteBehavior: DeleteBehavior.NoAction)
                 .HasForeignKey(b => b.AsociatedBrandId);
 
             // Create a table for brands 
@@ -91,6 +91,7 @@ namespace P5WebApp.Data
             modelBuilder.Entity<CarModel>()
                 .HasOne(b => b.AssociatedBrand)
                 .WithMany(m => m.CarModels)
+                .OnDelete(deleteBehavior: DeleteBehavior.NoAction)
                 .HasForeignKey(b => b.AsociatedBrandId);
 
 
@@ -103,9 +104,11 @@ namespace P5WebApp.Data
             modelBuilder.Entity<FinishType>()
                 .HasOne(b => b.AssociatedCarModel)
                 .WithOne(f => f.FinishType)
+                .OnDelete(deleteBehavior: DeleteBehavior.NoAction)
                 .HasForeignKey<FinishType>(b => b.AssociatedBrandId)
-                .HasForeignKey<FinishType>(cm => cm.AssociatedCarModelId);
-
+                .OnDelete(deleteBehavior: DeleteBehavior.NoAction)
+                .HasForeignKey<FinishType>(cm => cm.AssociatedCarModelId)
+                .OnDelete(deleteBehavior: DeleteBehavior.NoAction);
 
             // Create a table for finishtypes
             modelBuilder.Entity<FinishType>()
@@ -114,10 +117,17 @@ namespace P5WebApp.Data
 
             // Create a table for photos 
             modelBuilder.Entity<Photo>()
+                .HasOne(s => s.AssociatedShortAdd)
+                .WithMany(p => p.ShortAddPhotosList)
+                .OnDelete(deleteBehavior: DeleteBehavior.NoAction);
+
+
+            modelBuilder.Entity<Photo>()
                 .ToTable("Photos")
                 .HasIndex(p => p.Id);
 
             // Create a table for adds 
+
             modelBuilder.Entity<ShortAdd>()
                 .ToTable("ShortAdds")
                 .HasIndex(a => a.Id);

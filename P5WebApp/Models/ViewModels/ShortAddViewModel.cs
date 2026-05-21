@@ -10,9 +10,6 @@ namespace P5WebApp.Models.ViewModels
         [BindNever]
         public required int Id { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingShortAddTitle")] 
-        public required string Title { get; set; }
-
 
         [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingShortAddDescription")]
         public required string Description { get; set; }

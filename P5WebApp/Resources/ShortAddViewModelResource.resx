@@ -123,9 +123,6 @@
   <data name="ErrorEmptyShortAddPhotosList" xml:space="preserve">
     <value>Veuillez choisir au moins une photo.</value>
   </data>
-  <data name="ErrorMissingShortAddTitle" xml:space="preserve">
-    <value>Veuillez indiquer le titre de l'annonce</value>
-  </data>
   <data name="ErrorMissingShortAddDescription" xml:space="preserve">
     <value>Veuillez indiquer la description de l'annonce</value>
   </data>

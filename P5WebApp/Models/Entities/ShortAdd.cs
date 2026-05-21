@@ -9,8 +9,6 @@ namespace P5WebApp.Models.Entities
         // Input fields of ShortAdd class
         public required int Id { get; set; }
 
-        public required string Title { get; set; }
-
         public required string Description { get; set; }
 
         public required DateOnly ShortAddAvailabilityDate { get; set; }

@@ -8,6 +8,6 @@ namespace P5WebApp.Models.Entities
         public required int BrandId { get; set; }
         public required string BrandName { get; set; }
 
-        public required virtual ICollection<CarModel> ?CarModels { get; set; } = [];
+        public virtual ICollection<CarModel> ?CarModels { get; set; } = [];
     }
 }
