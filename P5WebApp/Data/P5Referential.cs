@@ -64,7 +64,8 @@ namespace P5WebApp.Data
 
 
             modelBuilder.Entity<Car>()
-                .ToTable("Cars");
+                .ToTable("Cars")
+                .HasIndex(c => c.CarId);
 
 
             // Create a table for fixes
@@ -90,13 +91,20 @@ namespace P5WebApp.Data
             modelBuilder.Entity<CarModel>()
                 .HasOne(b => b.AssociatedBrand)
                 .WithMany(m => m.CarModels)
-                .HasForeignKey(b =>b.AsociatedBrandId);
+                .HasForeignKey(b => b.AsociatedBrandId);
 
 
             // Create a table for models 
             modelBuilder.Entity<CarModel>()
                 .ToTable("Models")
                 .HasIndex(m => m.Id);
+
+
+            modelBuilder.Entity<FinishType>()
+                .HasOne(b => b.AssociatedCarModel)
+                .WithOne(f => f.FinishType)
+                .HasForeignKey<FinishType>(b => b.AssociatedBrandId)
+                .HasForeignKey<FinishType>(cm => cm.AssociatedCarModelId);
 
 
             // Create a table for finishtypes

@@ -8,5 +8,6 @@
         public required int AsociatedBrandId { get; set; }
         public required virtual Brand ?AssociatedBrand { get; set; }
 
+
     }
 }

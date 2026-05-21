@@ -7,11 +7,20 @@
         public required string FinishTypeName { get; set; }
 
 
-        public required int AssociatedModelId { get; set; }
+        public required int AssociatedCarId { get; set; }
+
+        public required virtual Car AssociatedCar { get; set; }
+
+
+        public required int AssociatedCarModelId { get; set; }
 
         public required virtual CarModel AssociatedCarModel { get; set; }
 
-        public required int AssociatedBrandlId { get; set; }
+        public required virtual ICollection<CarModel>? CarModels { get; set; } = [];
+
+
+
+        public required int AssociatedBrandId { get; set; }
 
         public required virtual Brand AssociatedBrand { get; set; }
 
