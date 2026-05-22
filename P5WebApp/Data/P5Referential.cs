@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using P5WebApp.Models.Entities;
 using System.Data;
+using System.Reflection.Emit;
 
 namespace P5WebApp.Data
 {
@@ -17,6 +18,10 @@ namespace P5WebApp.Data
         }
 
     }
+
+
+
+
     public class P5Referential : DbContext
     {
         private IDbConnection ?DbConnection { get; }
@@ -64,13 +69,13 @@ namespace P5WebApp.Data
 
             modelBuilder.Entity<Car>()
                 .ToTable("Cars")
-                .HasIndex(c => c.CarId);
+                .HasKey(c => c.CarId);
 
 
             // Create a table for fixes
             modelBuilder.Entity<Fix>()
                 .ToTable("Fixes")
-                .HasIndex(f => f.FixId);
+                .HasKey(f => f.FixId);
 
 
             // Indicate the relationship : one brand has many car models
@@ -82,7 +87,7 @@ namespace P5WebApp.Data
             // Create a table for brands 
             modelBuilder.Entity<Brand>()
                 .ToTable("Brands")
-                .HasIndex(b => b.BrandId);
+                .HasKey(b => b.BrandId);
 
 
 
@@ -97,7 +102,7 @@ namespace P5WebApp.Data
             // Create a table for models 
             modelBuilder.Entity<CarModel>()
                 .ToTable("CarModels")
-                .HasIndex(m => m.Id);
+                .HasKey(m => m.Id);
 
 
             modelBuilder.Entity<FinishType>()
@@ -117,26 +122,29 @@ namespace P5WebApp.Data
             // Create a table for finishtypes
             modelBuilder.Entity<FinishType>()
                 .ToTable("FinishTypes")
-                .HasIndex(f => f.FinishTypeId);
+                .HasKey(f => f.FinishTypeId);
 
+            modelBuilder.Entity<Photo>()
+                .HasKey(p => p.PhotoId);
 
             // Create a table for photos 
-            modelBuilder.Entity<Photo>()
-                .HasOne(s => s.AssociatedShortAdd)
-                .WithMany(p => p.ShortAddPhotosList)
-                .HasForeignKey(k  => k.AssociatedShortAddId)
-                .OnDelete(deleteBehavior: DeleteBehavior.NoAction);
+            //modelBuilder.Entity<Photo>()
+            //    .HasOne(s => s.AssociatedShortAdd)
+            //    .WithMany(p => p.ShortAddPhotosList)
+            //    .HasForeignKey(k => k.AssociatedShortAddId)
+            //    .OnDelete(DeleteBehavior.NoAction);
 
 
             modelBuilder.Entity<Photo>()
-                .ToTable("Photos")
-                .HasIndex(p => p.PhotoId);
+                .ToTable("Photos");
+
 
             // Create a table for adds 
 
             modelBuilder.Entity<ShortAdd>()
                 .ToTable("ShortAdds")
-                .HasIndex(a => a.Id);
+                .HasKey(s => s.ShortAddId);
+
         }
 
     }

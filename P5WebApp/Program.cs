@@ -54,6 +54,12 @@ namespace P5WebApp
             app.MapRazorPages()
                .WithStaticAssets();
 
+            var optionsBuilder = new DbContextOptionsBuilder<P5Referential>();
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=P5Referential;Trusted_Connection=True;MultipleActiveResultSets=true");
+            using var context = new P5Referential(optionsBuilder.Options);
+            bool canConnect = context.Database.CanConnect();
+            Console.WriteLine(canConnect ? "SQL Connection OK" : "SQL connection failed");
+
             app.Run();
         }
     }

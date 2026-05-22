@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using static P5WebApp.Models.Entities.Photo;
 
 namespace P5WebApp.Models.Entities
 {
@@ -7,7 +6,7 @@ namespace P5WebApp.Models.Entities
     {
 
         // Input fields of ShortAdd class
-        public required int Id { get; set; }
+        public required int ShortAddId { get; set; }
 
         public string ?Description { get; set; }
 

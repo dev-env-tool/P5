@@ -19,7 +19,7 @@ namespace P5WebApp.Models.Repositories
         // Asynchronous task to retrieve an add from Db.
         public async Task<ShortAdd> GetShortAdd(int id)
         {
-            var shortAdd = await _context!.ShortAdds.SingleOrDefaultAsync(s => s.Id == id);
+            var shortAdd = await _context!.ShortAdds.SingleOrDefaultAsync(s => s.ShortAddId == id);
 
             if (shortAdd == null)
             {
@@ -50,7 +50,7 @@ namespace P5WebApp.Models.Repositories
 
         public IEnumerable<ShortAdd> GetAllShortAdds()
         {
-            IEnumerable<ShortAdd> shortAdds = _context!.ShortAdds.Where(s => s.Id >= 0);
+            IEnumerable<ShortAdd> shortAdds = _context!.ShortAdds.Where(s => s.ShortAddId >= 0);
             return shortAdds;
         }
 
@@ -87,7 +87,7 @@ namespace P5WebApp.Models.Repositories
 
         public void DeleteShortAdd(int id)
         {
-            ShortAdd shortAdd = _context!.ShortAdds.First(s => s.Id == id);
+            ShortAdd shortAdd = _context!.ShortAdds.First(s => s.ShortAddId == id);
             if (shortAdd != null)
             {
                 _context!.ShortAdds.Remove(shortAdd);
