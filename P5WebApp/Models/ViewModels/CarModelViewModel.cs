@@ -17,5 +17,7 @@ namespace P5WebApp.Models.ViewModels
         public required int AsociatedBrandId { get; set; }
         public required virtual Brand AssociatedBrand { get; set; }
 
+        public virtual ICollection<FinishType>? FinishTypes { get; set; } = new List<FinishType>();
+
     }
 }

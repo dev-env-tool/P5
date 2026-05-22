@@ -1,8 +1,9 @@
 ﻿using Humanizer.Localisation;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.FileProviders.Embedded;
+using P5WebApp.Models.Entities;
+using System.ComponentModel.DataAnnotations;
 
 
 
@@ -16,6 +17,6 @@ namespace P5WebApp.Models.ViewModels
         [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingBrandName")]
         public required string? BrandName { get; set; }
 
-        public virtual ICollection<Model>? CarModels { get; set; } = [];
+        public virtual ICollection<CarModel>? CarModels { get; set; } = new List<CarModel>();
     }
 }

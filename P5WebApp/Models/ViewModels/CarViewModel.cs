@@ -48,7 +48,11 @@ namespace P5WebApp.Models.ViewModels
 
 
         [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorEmptyCarFixesList")]
-        public required virtual ICollection<Fix> CarFixesList { get; set; } = [];
+        public required virtual ICollection<Fix> CarFixesList { get; set; } = new List<Fix>();
+
+        public int AssociatedShortAddId { get; set; }
+
+        public virtual ShortAdd? AssociatedShortAdd { get; set; }
 
     }
 }

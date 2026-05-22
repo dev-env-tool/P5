@@ -1,6 +1,6 @@
 ﻿namespace P5WebApp.Models.Entities
 {
-    public class Photo : ShortAdd
+    public class Photo
     {
 
         // Input fields of Photo class
@@ -11,6 +11,6 @@
         // Foreign Key
         public required int AssociatedShortAddId { get; set; }
 
-        public required virtual ShortAdd ?AssociatedShortAdd { get; set; }
+        public required virtual ShortAdd AssociatedShortAdd { get; set; }
     }
 }

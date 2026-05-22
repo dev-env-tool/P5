@@ -17,30 +17,14 @@ namespace P5WebApp.Models.ViewModels
 
 
 
+        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorEmptyCarModel")]
 
-        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingAssociatedCarId")]
-        public required int AssociatedCarId { get; set; }
-
-        public required virtual Car AssociatedCar { get; set; }
+        public required virtual ICollection<CarModel>? CarModels { get; set; } = new List<CarModel>();
 
 
+        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorEmptyBrand")]
 
-
-        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingAssociatedCarModelId")]
-        public required int AssociatedCarModelId { get; set; }
-
-        public required virtual CarModel AssociatedCarModel { get; set; }
-
-        public required virtual ICollection<CarModel>? CarModels { get; set; } = [];
-
-
-
-        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingAssociatedBrandId")]
-        public required int AssociatedBrandId { get; set; }
-
-        public required virtual Brand AssociatedBrand { get; set; }
-
-        public required virtual ICollection<Brand>? Brands { get; set; } = [];
+        public required virtual ICollection<Brand>? Brands { get; set; } = new List<Brand>();
 
     }
 }

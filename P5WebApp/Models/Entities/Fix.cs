@@ -1,18 +1,18 @@
 ﻿
 namespace P5WebApp.Models.Entities
 {
-    public class Fix : Car
+    public class Fix
     {
 
         // Input fields of Fix class
 
         public required int FixId { get; set; }
 
-        public required string FixDescription { get; set; }
+        public string ?FixDescription { get; set; }
 
-        public required DateOnly FixDate { get; set; }
+        public DateOnly FixDate { get; set; }
 
-        public required double FixCost { get; set; }
+        public double FixCost { get; set; }
 
         // Foreign Key
         public required int AssociatedCarId { get; set; }

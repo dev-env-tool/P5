@@ -73,13 +73,12 @@ namespace P5WebApp.Data
                 .HasIndex(f => f.FixId);
 
 
-            // Indicate the relationship one brand has many models
+            // Indicate the relationship : one brand has many car models
             modelBuilder.Entity<Brand>()
                 .HasMany(m => m.CarModels)
                 .WithOne(b => b.AssociatedBrand)
-                .OnDelete(deleteBehavior: DeleteBehavior.NoAction)
-                .HasForeignKey(b => b.AsociatedBrandId);
-
+                .HasForeignKey(b => b.AsociatedBrandId)
+                .OnDelete(deleteBehavior: DeleteBehavior.NoAction);
             // Create a table for brands 
             modelBuilder.Entity<Brand>()
                 .ToTable("Brands")
@@ -87,44 +86,51 @@ namespace P5WebApp.Data
 
 
 
-            // Indicate the relationship many models have one brand
+            // Indicate the relationship : one CarModel has one brand
             modelBuilder.Entity<CarModel>()
                 .HasOne(b => b.AssociatedBrand)
                 .WithMany(m => m.CarModels)
-                .OnDelete(deleteBehavior: DeleteBehavior.NoAction)
-                .HasForeignKey(b => b.AsociatedBrandId);
+                .HasForeignKey(b => b.AsociatedBrandId)
+                .OnDelete(deleteBehavior: DeleteBehavior.NoAction);
 
 
             // Create a table for models 
             modelBuilder.Entity<CarModel>()
-                .ToTable("Models")
+                .ToTable("CarModels")
                 .HasIndex(m => m.Id);
 
 
             modelBuilder.Entity<FinishType>()
-                .HasOne(b => b.AssociatedCarModel)
-                .WithOne(f => f.FinishType)
-                .OnDelete(deleteBehavior: DeleteBehavior.NoAction)
-                .HasForeignKey<FinishType>(b => b.AssociatedBrandId)
-                .OnDelete(deleteBehavior: DeleteBehavior.NoAction)
-                .HasForeignKey<FinishType>(cm => cm.AssociatedCarModelId)
-                .OnDelete(deleteBehavior: DeleteBehavior.NoAction);
+                .HasMany(c => c.CarModels)
+                .WithMany(f => f.FinishTypes);
+
+
+                
+
+
+
+            modelBuilder.Entity<FinishType>()
+                .HasMany(b => b.Brands)
+                .WithMany(f => f.FinishTypes);
+
 
             // Create a table for finishtypes
             modelBuilder.Entity<FinishType>()
                 .ToTable("FinishTypes")
                 .HasIndex(f => f.FinishTypeId);
 
+
             // Create a table for photos 
             modelBuilder.Entity<Photo>()
                 .HasOne(s => s.AssociatedShortAdd)
                 .WithMany(p => p.ShortAddPhotosList)
+                .HasForeignKey(k  => k.AssociatedShortAddId)
                 .OnDelete(deleteBehavior: DeleteBehavior.NoAction);
 
 
             modelBuilder.Entity<Photo>()
                 .ToTable("Photos")
-                .HasIndex(p => p.Id);
+                .HasIndex(p => p.PhotoId);
 
             // Create a table for adds 
 

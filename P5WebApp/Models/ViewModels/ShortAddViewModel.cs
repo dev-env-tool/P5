@@ -40,7 +40,7 @@ namespace P5WebApp.Models.ViewModels
 
 
         [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorEmptyShortAddPhotosList")]
-        public required virtual ICollection<Photo> ShortAddPhotosList { get; set; } = [];
+        public required virtual ICollection<Photo> ShortAddPhotosList { get; set; } = new List<Photo>();
 
 
 
