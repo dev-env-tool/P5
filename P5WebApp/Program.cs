@@ -44,6 +44,9 @@ namespace P5WebApp
             app.UseHttpsRedirection();
             app.UseRouting();
 
+            // <summary> add for scaffolding auth pages 
+            app.UseAuthentication();
+            // <\summary>
             app.UseAuthorization();
 
             app.MapStaticAssets();
@@ -55,7 +58,8 @@ namespace P5WebApp
                .WithStaticAssets();
 
             var optionsBuilder = new DbContextOptionsBuilder<P5Referential>();
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=P5Referential;Trusted_Connection=True;MultipleActiveResultSets=true");
+            //optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=P5Referential;Trusted_Connection=True;MultipleActiveResultSets=true");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=P5Referential;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
             using var context = new P5Referential(optionsBuilder.Options);
             bool canConnect = context.Database.CanConnect();
             Console.WriteLine(canConnect ? "SQL Connection OK" : "SQL connection failed");

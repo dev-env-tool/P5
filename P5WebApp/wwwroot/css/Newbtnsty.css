@@ -1,0 +1,11 @@
+﻿
+.btn-custom 
+{
+    background-color: #D9A963;
+    color: black;
+}
+
+.btn-custom:hover 
+{
+    background-color: burlywood;
+}
