@@ -4,7 +4,7 @@
 
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "EpressVoitures";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -23,7 +23,7 @@
                     <span asp-validation-for="Input.Email" class="text-danger"></span> *@
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="password" name="Input.Password" class="form-control" value="votre mot de passe" />
+                    <input type="password" name="Input.Password" class="form-control" value="" />
 @*                     <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
                     <label asp-for="Input.Password" class="form-label">Password</label>
                     <span asp-validation-for="Input.Password" class="text-danger"></span> *@
@@ -86,5 +86,4 @@
 @section Scripts {
     <script src="@Url.Content("~/js/test.js")"></script>
     <partial name="_ValidationScriptsPartial" />
-    
 }
