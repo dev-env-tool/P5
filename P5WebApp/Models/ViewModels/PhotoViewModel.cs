@@ -12,7 +12,7 @@ namespace P5WebApp.Models.ViewModels
         [BindNever]
         public required int PhotoId { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingPhotoPath")]
+        [Required]
         public required string PhotoPath { get; set; }
 
         // Foreign Key

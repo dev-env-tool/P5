@@ -12,17 +12,17 @@ namespace P5WebApp.Models.ViewModels
         [BindNever]
         public required int? FinishTypeId { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingFinishTypeName")]
+        [Required]
         public required string? FinishTypeName { get; set; }
 
 
 
-        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorEmptyCarModel")]
+        [Required]
 
         public required virtual ICollection<CarModel>? CarModels { get; set; } = new List<CarModel>();
 
 
-        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorEmptyBrand")]
+        [Required]
 
         public required virtual ICollection<Brand>? Brands { get; set; } = new List<Brand>();
 

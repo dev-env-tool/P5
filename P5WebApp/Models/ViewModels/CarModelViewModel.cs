@@ -10,10 +10,10 @@ namespace P5WebApp.Models.ViewModels
         [BindNever]
         public required int Id { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingModelName")]
+        [Required]
         public required string Name { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingAsociatedBrandId")]
+        [Required]
         public required int AsociatedBrandId { get; set; }
         public required virtual Brand AssociatedBrand { get; set; }
 

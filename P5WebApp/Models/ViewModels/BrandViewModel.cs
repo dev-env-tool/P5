@@ -14,7 +14,7 @@ namespace P5WebApp.Models.ViewModels
         [BindNever]
         public required int BrandId { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingBrandName")]
+        [Required]
         public required string? BrandName { get; set; }
 
         public virtual ICollection<CarModel>? CarModels { get; set; } = new List<CarModel>();

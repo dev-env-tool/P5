@@ -11,11 +11,11 @@ namespace P5WebApp.Models.ViewModels
         public required int Id { get; set; }
 
 
-        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingShortAddDescription")]
+        [Required]
         public required string Description { get; set; }
 
 
-        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingShortAddAvailabilityDate")]
+        [Required]
         public required DateOnly ShortAddAvailabilityDate { get; set; }
 
 
@@ -26,7 +26,7 @@ namespace P5WebApp.Models.ViewModels
         public required bool ShortAddSold { get; set; }
 
 
-        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingShortAddAddCarId")]
+        [Required]
         public required virtual int ShortAddCarId { get; set; }
 
 
@@ -39,12 +39,12 @@ namespace P5WebApp.Models.ViewModels
 
 
 
-        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorEmptyShortAddPhotosList")]
+        [Required]
         public required virtual ICollection<Photo> ShortAddPhotosList { get; set; } = new List<Photo>();
 
 
 
-        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingShortAddCar")]
+        [Required]
         public required virtual Car Car { get; set; }
 
     }

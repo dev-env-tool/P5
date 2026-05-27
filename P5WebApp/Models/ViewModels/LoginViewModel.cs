@@ -5,10 +5,10 @@ namespace P5WebApp.Models.ViewModels
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingLoginName")]
+        [Required]
         public required string Name { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingLoginPassword")]
+        [Required]
         public required string Password { get; set; }
 
         public string ReturnUrl { get; set; } = "/";

@@ -10,15 +10,15 @@ namespace P5WebApp.Models.ViewModels
         [BindNever]
         public required int FixId { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingFixDescription")]
+        [Required]
         public required string FixDescription { get; set; }
 
 
-        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingFixDate")]
+        [Required]
         public required DateOnly FixDate { get; set; }
 
 
-        [Required(ErrorMessageResourceType = typeof(EmbeddedResourceFileInfo), ErrorMessageResourceName = "ErrorMissingFixCost")]
+        [Required]
         public required double FixCost { get; set; }
 
 

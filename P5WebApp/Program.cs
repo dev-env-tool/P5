@@ -28,6 +28,7 @@ namespace P5WebApp
 
             var app = builder.Build();
 
+            app.UseStaticFiles();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -49,13 +50,19 @@ namespace P5WebApp
             // <\summary>
             app.UseAuthorization();
 
-            app.MapStaticAssets();
+            //app.MapStaticAssets();
+            //app.MapControllerRoute(
+            //    name: "default",
+            //    pattern: "{controller=Home}/{action=Index}/{id?}")
+            //    .WithStaticAssets();
+            //app.MapRazorPages()
+            //   .WithStaticAssets();
+
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
-                .WithStaticAssets();
-            app.MapRazorPages()
-               .WithStaticAssets();
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.MapRazorPages();
 
             var optionsBuilder = new DbContextOptionsBuilder<P5Referential>();
             //optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=P5Referential;Trusted_Connection=True;MultipleActiveResultSets=true");
