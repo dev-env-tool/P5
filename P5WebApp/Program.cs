@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using P5WebApp.Data;
+using P5WebApp.Models.Repositories;
+using P5WebApp.Models.Services;
 
 namespace P5WebApp
 {
@@ -10,7 +12,14 @@ namespace P5WebApp
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // ShortAdd services to the container.
+
+            builder.Services.AddControllersWithViews();
+
+            // Add services to the container.
+            builder.Services.AddScoped<IBrandService, BrandService>();
+            builder.Services.AddScoped<IBrandRepository, BrandRepository>();
+
+            // Add DB contexts to the app.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
@@ -24,6 +33,10 @@ namespace P5WebApp
             builder.Services.AddDbContext<P5Referential>(options =>
                 options.UseSqlServer(connectionStringP5Referential));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+
+
+
 
 
             var app = builder.Build();

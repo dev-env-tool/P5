@@ -1,0 +1,42 @@
+﻿@using P5WebApp.Models.ViewModels
+
+@model IEnumerable<P5WebApp.Models.ViewModels.BrandViewModel>
+
+@{
+    ViewData["Title"] = "Gestion des marques (administrateur)";
+    Layout = "_Layout";
+}
+
+<br />
+<div id="panel-body">
+    <table class="table table-bordered table-striped table-sm">
+        <thead>
+            <tr>
+                <th>
+                    <label>Id</label>
+                </th>
+                <th>
+                    <label>Nom de la Marque</label>
+                </th>
+        </thead>
+        <tbody>
+            @foreach (BrandViewModel b in Model)
+            {
+                <tr>
+                    <td>@b.BrandName</td>
+                    <td>
+                        <form id="@b.BrandName" asp-action="DeleteBrand" asp-controller="Brand" method="post">
+                            <input type="hidden" name="id" value="@b.BrandId" />
+                            Supprimer<button type="submit" class="btn-custom btn btn-danger">
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div style="white-space:pre-line">
+        <h1></h1>
+    </div>
+    <a class="btn btn-primary btn-custom" asp-controller="Brand" asp-action="Create">Créer</a>
+</div>
