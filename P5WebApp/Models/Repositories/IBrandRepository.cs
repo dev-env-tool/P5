@@ -1,4 +1,5 @@
-﻿using P5WebApp.Models.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using P5WebApp.Models.Entities;
 using P5WebApp.Models.ViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;

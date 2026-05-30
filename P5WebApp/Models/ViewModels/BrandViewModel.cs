@@ -12,9 +12,9 @@ namespace P5WebApp.Models.ViewModels
     public class BrandViewModel
     {
         [BindNever]
-        public required int BrandId { get; set; }
+        public int ?BrandId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Veuillez renseigner un nom de marque")]
         public required string? BrandName { get; set; }
 
         public virtual ICollection<CarModel>? CarModels { get; set; } = new List<CarModel>();

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using P5WebApp.Models.Entities;
 using P5WebApp.Models.Repositories;
 using P5WebApp.Models.Services;
@@ -65,6 +66,16 @@ namespace P5WebApp.Controllers
             //{
             //    return View();
             //}
+            Dictionary<string, string> modelErrors = _brandService.CheckBrandModelErrors(brand);
+
+
+            foreach (var key in modelErrors)
+            {
+                string field = key.Key;
+                string error = key.Value;
+
+                ModelState.AddModelError(field, error);
+            }
             if (ModelState.IsValid)
             {
                 _brandService.SaveBrand(brand);

@@ -1,6 +1,8 @@
-﻿using P5WebApp.Models.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using P5WebApp.Models.Entities;
 using P5WebApp.Models.Repositories;
 using P5WebApp.Models.ViewModels;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
 namespace P5WebApp.Models.Services
@@ -28,6 +30,8 @@ namespace P5WebApp.Models.Services
         }
 
 
+
+
         private static List<BrandViewModel> MapToViewModel(IEnumerable<Brand> brandEntities)
         {
             List<BrandViewModel> brands = new List<BrandViewModel>();
@@ -50,6 +54,32 @@ namespace P5WebApp.Models.Services
             return brands.Find(b => b.BrandId == id);
         }
 
+
+
+        public Dictionary<string, string> CheckBrandModelErrors(BrandViewModel brand)
+        {
+            /// <summary>
+            /// Use of a dictionnary to ease ModelState tests.
+            /// [Key ,Value]
+            /// [Key = Value = "ErrorMessageName" ]
+            /// </summary >
+            Dictionary<string, string> modelErrors = new Dictionary<string, string>();
+
+
+            /// <summary>
+            /// Declaration of the same ProductViewModel RegularExpression attributes
+            /// to run server side attribute validation.
+            /// </summary >
+            var Attribute1 = new RequiredAttribute();
+
+            if (!Attribute1.IsValid(brand.BrandName))
+            {
+                modelErrors.Add("", "Veuillez renseigner un nom de marque");
+            }
+            
+            
+            return modelErrors;
+        }
 
         public BrandViewModel GetBrandByIdViewModel(int id)
         {
@@ -74,12 +104,19 @@ namespace P5WebApp.Models.Services
             _brandRepository.SaveBrand(brandToAdd);
         }
 
-
-        private static Brand MapToBrandEntity(BrandViewModel brand)
+        public int GetMaxBrandId()
         {
+            var maxBrandId = _brandRepository.GetMaxBrandId();
+            return maxBrandId;
+        }
+
+
+
+        private Brand MapToBrandEntity(BrandViewModel brand)
+        {
+
             Brand brandEntity = new Brand
             {
-                BrandId = brand.BrandId,
                 BrandName = brand.BrandName,
             };
             return brandEntity;

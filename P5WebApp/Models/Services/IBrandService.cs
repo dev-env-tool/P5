@@ -9,6 +9,9 @@ namespace P5WebApp.Models.Services
         List<BrandViewModel> GetAllBrandsViewModel();
         Brand GetBrandById(int id);
         BrandViewModel GetBrandByIdViewModel(int id);
+
+        Dictionary<string, string> CheckBrandModelErrors(BrandViewModel product);
+
         //void UpdateBrandInfos();
         void SaveBrand(BrandViewModel Brand);
         void DeleteBrand(int id);

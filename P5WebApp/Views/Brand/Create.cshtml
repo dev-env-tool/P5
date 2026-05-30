@@ -1,4 +1,8 @@
-﻿@model P5WebApp.Models.ViewModels.BrandViewModel
+﻿@* @model P5WebApp.Models.ViewModels.BrandViewModel
+@Html.ValidationSummary()
+
+
+
 
 @{
     ViewData["Title"] = "Création des marques (administrateur)";
@@ -13,6 +17,7 @@
     <div class="mb-3 col-6">
         <label>Nom de marque*:</label><input asp-for="BrandName" class="form-control" />
         <div><span asp-validation-for="BrandName" class="text-danger"></span></div>
+      
     </div>
 
 </form>
@@ -20,3 +25,46 @@
     <h1></h1>
 </div>
 <a class="btn btn-primary btn-custom" asp-action="Create" asp-controller="Brand">Créer</a>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+ *@
+
+@model P5WebApp.Models.ViewModels.BrandViewModel
+@{
+    Layout = "_Layout";
+}
+
+
+<div class="row">
+    <form method="post">
+        <div class="mb-3 col-6">
+            <div class="mb-3 col-6">
+                <label>Nom de marque*:</label>
+            </div>
+            <input asp-for="BrandName" class="form-control"/><span asp-validation-for="BrandName"></span>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="row">
+                <button type="submit" class="btn btn-custom">Créer</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

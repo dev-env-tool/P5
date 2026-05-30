@@ -27,8 +27,16 @@ namespace P5WebApp.Models.Repositories
 
         public int GetMaxBrandId()
         {
-            int MaxBrandId = _context.Brands.Max(i => i.BrandId);
-            return MaxBrandId;
+            int maxBrandId;
+
+            if (!_context.Brands.Any())
+            {
+                return maxBrandId = 0;
+            }
+            else
+            {
+                return maxBrandId = _context.Brands.Max(i => i.BrandId);
+            }
         }
 
 

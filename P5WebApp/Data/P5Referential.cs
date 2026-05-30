@@ -82,7 +82,7 @@ namespace P5WebApp.Data
             modelBuilder.Entity<Brand>()
                 .HasMany(m => m.CarModels)
                 .WithOne(b => b.AssociatedBrand)
-                .HasForeignKey(b => b.AsociatedBrandId)
+                .HasForeignKey(b => b.AssociatedBrandId)
                 .OnDelete(deleteBehavior: DeleteBehavior.NoAction);
             // Create a table for brands 
             modelBuilder.Entity<Brand>()
@@ -95,7 +95,7 @@ namespace P5WebApp.Data
             modelBuilder.Entity<CarModel>()
                 .HasOne(b => b.AssociatedBrand)
                 .WithMany(m => m.CarModels)
-                .HasForeignKey(b => b.AsociatedBrandId)
+                .HasForeignKey(b => b.AssociatedBrandId)
                 .OnDelete(deleteBehavior: DeleteBehavior.NoAction);
 
 
