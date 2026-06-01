@@ -19,6 +19,9 @@ namespace P5WebApp
             builder.Services.AddScoped<IBrandService, BrandService>();
             builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 
+            builder.Services.AddScoped<ICarModelService, CarModelService>();
+            builder.Services.AddScoped<ICarModelRepository, CarModelRepository>();
+
             // Add DB contexts to the app.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>

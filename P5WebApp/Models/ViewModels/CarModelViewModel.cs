@@ -9,12 +9,14 @@ namespace P5WebApp.Models.ViewModels
     {
         public int Id { get; set; }
 
-        [Required]
-        public required string Name { get; set; }
+        [Required(ErrorMessage = "Veuillez renseigner le nom du modèle")]
+        public string Name { get; set; }
 
-        [Required]
-        public required int AssociatedBrandId { get; set; }
-        public required virtual Brand AssociatedBrand { get; set; }
+        [Required(ErrorMessage = "Veuillez choisir une marque")]
+        public int AssociatedBrandId { get; set; }
+
+        public List <Brand> Brands { get; set; } = new List<Brand>();
+
 
         public virtual ICollection<FinishType>? FinishTypes { get; set; } = new List<FinishType>();
 

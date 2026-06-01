@@ -1,0 +1,70 @@
+﻿@model P5WebApp.Models.ViewModels.CarModelViewModel
+
+
+@{
+    Layout = "_Layout";
+}
+
+
+<div class="row">
+    <h1 class="mb-3 col-4 offset-md-4">
+        Modification d'un modèle
+    </h1>
+    <div style="white-space:pre-line">
+        <h1></h1>
+    </div>
+    <form method="post">
+        <div class="mb-3 col-4 offset-md-4">
+            <div class="mb-3 col-8">
+                <label>Nom du modèle*:</label>
+            </div>
+            <input asp-for="Name" class="form-control col-12" /><span asp-validation-for="Name"></span>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Marque associée au modèle*:</label>
+            </div>
+
+            <select asp-for="AssociatedBrandId" class="form-select col-12" />
+            @foreach (var brand in Model.Brands)
+            {
+                var selected = Model.AssociatedBrandId == brand.BrandId ? "selected" : "";
+                <option value="@brand.BrandId" selected>@brand.BrandName</option>
+            }
+        </select>
+        <span asp-validation-for="AssociatedBrandId"></span>
+        <div style="white-space:pre-line">
+            <h1></h1>
+        </div>
+        <div class="mb-3 col-8">
+            <label>Finition associée au modèle:</label>
+        </div>
+        <select asp-for="FinishTypes" class="form-select col-12" />
+        @foreach (var finishtype in Model.FinishTypes)
+        {
+            var selected = Model.FinishTypes == Model.FinishTypes ? "selected" : "";
+            <option value="@Model.FinishTypes" selected>@Model.FinishTypes</option>
+        }
+    </select>
+    <span asp-validation-for="FinishTypes"></span>
+    <div style="white-space:pre-line">
+        <h1></h1>
+    </div>
+    <div class="row">
+        <button type="submit" class="btn btn-custom col-12">Modifier</button>
+    </div>
+</div>
+</form>
+</div>
+
+
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -6,9 +6,16 @@
 @if (SignInManager.IsSignedIn(User))
 {
 
+    <li class="nav-item">
+        <a class="nav-link btn btn-link text-dark" asp-controller="Brand" asp-action="Admin">Gestion des marques</a>
+    </li>
 
     <li class="nav-item">
-         <a class="nav-link btn btn-link text-dark" asp-controller="Brand" asp-action="Admin">Gestion des marques</a>
+        <a class="nav-link btn btn-link text-dark" asp-controller="CarModel" asp-action="Admin">Gestion des modèles</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link btn btn-link text-dark" asp-controller="FinishType" asp-action="Admin">Gestion des finitions</a>
     </li>
 
 

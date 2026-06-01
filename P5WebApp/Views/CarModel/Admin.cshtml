@@ -2,14 +2,14 @@
 @Html.ValidationSummary()
 
 
-@model IEnumerable<P5WebApp.Models.ViewModels.BrandViewModel>
+@model IEnumerable<P5WebApp.Models.ViewModels.CarModelViewModel>
 
 @{
-    ViewData["Title"] = "Gestion des marques (administrateur)";
+    ViewData["Title"] = "Gestion des modèles (administrateur)";
     Layout = "_Layout";
 }
 
-<h1>Gestion des marques</h1>
+<h1>Gestion des modèles</h1>
 
 <br />
 <div id="panel-body">
@@ -17,7 +17,7 @@
         <thead>
             <tr>
                 <th>
-                    <label>Nom de la Marque</label>
+                    <label>Nom du modèle</label>
                 </th>
                 <th>
                     <label>Modifier</label>
@@ -27,22 +27,22 @@
                 </th>
         </thead>
         <tbody>
-            @foreach (BrandViewModel b in Model)
+            @foreach (CarModelViewModel c in Model)
             {
                 <tr>
-                    <td>@b.BrandName</td>
+                    <td>@c.Name</td>
                     <td>
                         
-                            <form id="@b.BrandName" asp-action="Edit" asp-controller="Brand" method="get">
-                                <input type="hidden" name="id" value="@b.BrandId" />
+                            <form id="@c.Name" asp-action="Edit" asp-controller="CarModel" method="get">
+                                <input type="hidden" name="id" value="@c.Id" />
                                 <button type="submit" class="btn-custom btn btn-danger">Modifier
                                 </button>
                             </form>
                     </td>
                     <td>
                         
-                        <form id="@b.BrandName" asp-action="Delete" asp-controller="Brand" method="post">
-                            <input type="hidden" name="id" value="@b.BrandId" />
+                            <form id="@c.Id" asp-action="Delete" asp-controller="CarModel" method="post">
+                            <input type="hidden" name="id" value="@c.Id" />
                             <button type="submit" class="btn-custom btn btn-danger">Supprimer
                             </button>
                         </form>
@@ -54,7 +54,7 @@
     <div style="white-space:pre-line">
         <h1></h1>
     </div>
-    <a class="btn btn-primary btn-custom" asp-controller="Brand" asp-action="Create">Créer</a>
+    <a class="btn btn-primary btn-custom" asp-controller="CarModel" asp-action="Create">Créer</a>
 </div>
 @section Scripts {
     <script src="@Url.Content("~/js/test.js")"></script>

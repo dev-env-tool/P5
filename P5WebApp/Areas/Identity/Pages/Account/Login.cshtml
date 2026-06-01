@@ -34,8 +34,9 @@
                     </div>
                     <div class="text">ou</div>
                     <div class="col-md-11">
-                        @* <button id="register" type="button" class="float-lg-end btn btn-custom">S'inscrire</button> *@
-                        <button asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="float-lg-end btn btn-custom">S'inscrire</button>
+                        <button asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" id="register" type="button" class="float-lg-end btn btn-custom">S'inscrire</button>
+                        @* <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl"></a> *@
+                        @* <button asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="float-lg-end btn btn-custom">S'inscrire</button> *@
                     </div>
                 </div>
             </form>

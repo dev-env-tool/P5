@@ -27,15 +27,15 @@ namespace P5WebApp.Models.Repositories
 
         public int GetMaxBrandId()
         {
-            int maxBrandId;
+            int MaxBrandId;
 
             if (!_context.Brands.Any())
             {
-                return maxBrandId = 0;
+                return MaxBrandId = 0;
             }
             else
             {
-                return maxBrandId = _context.Brands.Max(i => i.BrandId);
+                return MaxBrandId = _context.Brands.Max(i => i.BrandId);
             }
         }
 
@@ -71,14 +71,14 @@ namespace P5WebApp.Models.Repositories
 
         public async Task<Brand> GetBrand(int id)
         {
-            var brand = await _context.Brands.SingleOrDefaultAsync(b => b.BrandId == id);
-            return brand;
+            var Brand = await _context.Brands.SingleOrDefaultAsync(b => b.BrandId == id);
+            return Brand;
         }
 
         public async Task<IList<Brand>> GetBrand()
         {
-            var brands = await _context.Brands.ToListAsync();
-            return brands;
+            var Brands = await _context.Brands.ToListAsync();
+            return Brands;
         }
 
 
