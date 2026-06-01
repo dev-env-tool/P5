@@ -11,6 +11,8 @@ namespace P5WebApp.Models.Repositories
         IEnumerable<Brand> GetAllBrands();
 
         int GetMaxBrandId();
+
+        void UpdateBrand(Brand Brand);
         void SaveBrand(Brand Brand);
         void DeleteBrand(int id);
         Task<Brand> GetBrand(int id);

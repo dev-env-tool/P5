@@ -12,7 +12,7 @@ namespace P5WebApp.Models.Services
 
         Dictionary<string, string> CheckBrandModelErrors(BrandViewModel product);
 
-        //void UpdateBrandInfos();
+        void UpdateBrand(BrandViewModel brand);
         void SaveBrand(BrandViewModel Brand);
         void DeleteBrand(int id);
 

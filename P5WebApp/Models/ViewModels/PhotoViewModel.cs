@@ -9,8 +9,7 @@ namespace P5WebApp.Models.ViewModels
     public class PhotoViewModel
     {
         // Input fields of Photo class
-        [BindNever]
-        public required int PhotoId { get; set; }
+        public int PhotoId { get; set; }
 
         [Required]
         public required string PhotoPath { get; set; }

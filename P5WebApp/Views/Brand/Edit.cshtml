@@ -1,16 +1,20 @@
 ﻿@model P5WebApp.Models.ViewModels.BrandViewModel
+
 @{
     Layout = "_Layout";
 }
 
 
+
 <div class="row">
-    <h1 class ="mb-3 col-4 offset-md-4">
-        Création d'une marque </h1>
+    <h1 class="mb-3 col-4 offset-md-4">
+        Modification d'une marque
+    </h1>
     <div style="white-space:pre-line">
         <h1></h1>
     </div>
     <form method="post">
+        <input type="hidden" name="BrandId" value="@Model.BrandId" />
         <div class="mb-3 col-4 offset-md-4">
             <div class="mb-3 col-4">
                 <label>Nom de marque*:</label>
@@ -20,7 +24,7 @@
                 <h1></h1>
             </div>
             <div class="row">
-                <button type="submit" class="btn btn-custom col-12">Créer</button>
+                <button type="submit" class="btn btn-custom col-12">Modifier</button>
             </div>
         </div>
     </form>

@@ -51,7 +51,8 @@ namespace P5WebApp.Models.Services
         public Brand GetBrandById(int id)
         {
             List<Brand> brands = GetAllBrands().ToList();
-            return brands.Find(b => b.BrandId == id);
+            var brandToReturn = brands.Find(b => b.BrandId == id);
+            return brandToReturn;
         }
 
 
@@ -76,8 +77,9 @@ namespace P5WebApp.Models.Services
             {
                 modelErrors.Add("", "Veuillez renseigner un nom de marque");
             }
-            
-            
+
+
+
             return modelErrors;
         }
 
@@ -96,18 +98,21 @@ namespace P5WebApp.Models.Services
         //    }
         //}
 
-       
+        public void UpdateBrand(BrandViewModel brand)
+        {
+
+            var brandToEdit = GetBrandById(brand.BrandId);
+   
+            brandToEdit.BrandName = brand.BrandName;
+
+            _brandRepository.UpdateBrand(brandToEdit);
+
+        }
 
         public void SaveBrand(BrandViewModel brand)
         {
             var brandToAdd = MapToBrandEntity(brand);
             _brandRepository.SaveBrand(brandToAdd);
-        }
-
-        public int GetMaxBrandId()
-        {
-            var maxBrandId = _brandRepository.GetMaxBrandId();
-            return maxBrandId;
         }
 
 

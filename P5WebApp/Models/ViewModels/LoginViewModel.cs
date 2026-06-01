@@ -6,7 +6,7 @@ namespace P5WebApp.Models.ViewModels
     public class LoginViewModel
     {
         [Required]
-        public required string Name { get; set; }
+        public string Name { get; set; }
 
         [Required]
         public required string Password { get; set; }

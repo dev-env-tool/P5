@@ -40,6 +40,15 @@ namespace P5WebApp.Models.Repositories
         }
 
 
+        public void UpdateBrand(Brand Brand)
+        {
+            if (Brand != null)
+            {
+                _context.Entry(Brand).State = EntityState.Modified;
+                _context.SaveChanges();
+            }
+        }
+
         public void SaveBrand(Brand Brand)
         {
             if (Brand != null)

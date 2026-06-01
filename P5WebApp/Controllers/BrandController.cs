@@ -58,14 +58,7 @@ namespace P5WebApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(BrandViewModel brand)
         {
-            //try
-            //{
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
+
             Dictionary<string, string> modelErrors = _brandService.CheckBrandModelErrors(brand);
 
 
@@ -91,31 +84,35 @@ namespace P5WebApp.Controllers
         // GET: BrandController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            BrandViewModel brandViewModel = _brandService.GetBrandByIdViewModel(id);
+            return View(brandViewModel);
         }
 
         // POST: BrandController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(BrandViewModel brandViewModel)
+        public IActionResult Edit(BrandViewModel brand)
         {
-            try
+            
+            Dictionary<string, string> modelErrors = _brandService.CheckBrandModelErrors(brand);
+
+
+            foreach (var key in modelErrors)
             {
-                return RedirectToAction(nameof(Index));
+                string field = key.Key;
+                string error = key.Value;
+
+                ModelState.AddModelError(field, error);
             }
-            catch
+            if (ModelState.IsValid)
             {
-                return View();
+                _brandService.UpdateBrand(brand);
+                return RedirectToAction("Admin");
             }
-            //if (ModelState.IsValid)
-            //{
-            //    _brandService.SaveBrand(brand);
-            //    return RedirectToAction("Admin");
-            //}
-            //else
-            //{
-            //    return View(brand);
-            //}
+            else
+            {
+                return View(brand);
+            }
         }
 
         // GET: BrandController/Delete/5
@@ -130,23 +127,10 @@ namespace P5WebApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id, IFormCollection collection)
         {
-            //try
-            //{
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
-
-
             {
                 _brandService.DeleteBrand(id);
                 return RedirectToAction("Admin");
             }
-
-
-
         }
     }
 }

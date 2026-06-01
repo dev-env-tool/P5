@@ -7,8 +7,7 @@ namespace P5WebApp.Models.ViewModels
 {
     public class CarModelViewModel
     {
-        [BindNever]
-        public required int Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public required string Name { get; set; }

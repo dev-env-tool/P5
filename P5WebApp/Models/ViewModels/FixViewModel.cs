@@ -7,8 +7,7 @@ namespace P5WebApp.Models.ViewModels
 {
     public class FixViewModel
     {
-        [BindNever]
-        public required int FixId { get; set; }
+        public int FixId { get; set; }
 
         [Required]
         public required string FixDescription { get; set; }

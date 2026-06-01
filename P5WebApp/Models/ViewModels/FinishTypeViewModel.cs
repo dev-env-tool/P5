@@ -9,8 +9,7 @@ namespace P5WebApp.Models.ViewModels
 {
     public class FinishTypeViewModel
     {
-        [BindNever]
-        public required int? FinishTypeId { get; set; }
+        public int FinishTypeId { get; set; }
 
         [Required]
         public required string? FinishTypeName { get; set; }
