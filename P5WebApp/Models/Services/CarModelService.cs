@@ -102,21 +102,14 @@ namespace P5WebApp.Models.Services
             return CarModels.Find(c => c.Id == id);
         }
 
-        //public void UpdateCarModelInfos()
-        //{
-        //    CarModel CarModel = (Cart)_cart;
-        //    foreach (CartLine line in cart.Lines)
-        //    {
-        //        _CarModelRepository.UpdateCarModelStocks(line.CarModel.Id, line.Quantity);
-        //    }
-        //}
 
         public void UpdateCarModel(CarModelViewModel CarModel)
         {
 
             var CarModelToEdit = GetCarModelById(CarModel.Id);
-   
+
             CarModelToEdit.Name = CarModel.Name;
+            CarModelToEdit.AssociatedBrandId = CarModel.AssociatedBrandId;
 
             _CarModelRepository.UpdateCarModel(CarModelToEdit);
 

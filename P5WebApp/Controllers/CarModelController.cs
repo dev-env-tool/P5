@@ -92,8 +92,10 @@ namespace P5WebApp.Controllers
         public ActionResult Edit(int id)
         {
             CarModelViewModel CarModelViewModel = _CarModelService.GetCarModelByIdViewModel(id);
+            var editCarModel = _CarModelService.GetCarModelById(id);
             CarModelViewModel.Brands = new List<Brand>();
             CarModelViewModel.Brands = _brandService.GetAllBrands();
+            CarModelViewModel.AssociatedBrandId = editCarModel.AssociatedBrandId;
             return View(CarModelViewModel);
         }
 

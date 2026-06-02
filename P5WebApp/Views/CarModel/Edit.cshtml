@@ -25,42 +25,31 @@
             <div class="mb-3 col-8">
                 <label>Marque associée au modèle*:</label>
             </div>
-
-            <select asp-for="AssociatedBrandId" class="form-select col-12" />
-            @foreach (var brand in Model.Brands)
-            {
-                var selected = Model.AssociatedBrandId == brand.BrandId ? "selected" : "";
-                <option value="@brand.BrandId" selected>@brand.BrandName</option>
-            }
-        </select>
-        <span asp-validation-for="AssociatedBrandId"></span>
-        <div style="white-space:pre-line">
-            <h1></h1>
-        </div>
-        <div class="mb-3 col-8">
-            <label>Finition associée au modèle:</label>
-        </div>
-        <select asp-for="FinishTypes" class="form-select col-12" />
-        @foreach (var finishtype in Model.FinishTypes)
-        {
-            var selected = Model.FinishTypes == Model.FinishTypes ? "selected" : "";
-            <option value="@Model.FinishTypes" selected>@Model.FinishTypes</option>
-        }
-    </select>
-    <span asp-validation-for="FinishTypes"></span>
-    <div style="white-space:pre-line">
-        <h1></h1>
+            <select asp-for="AssociatedBrandId" class="form-select col-12"  asp-items="@(new SelectList(Model.Brands, "BrandId", "BrandName"))"></select>
+            <span asp-validation-for="AssociatedBrandId"></span>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Finition associée au modèle:</label>
+            </div>
+            <select asp-for="FinishTypes" class="form-select col-12" />
+                @foreach (var finishtype in Model.FinishTypes)
+                {
+                    var selected = Model.FinishTypes == Model.FinishTypes ? "selected" : "";
+                    <option value="@Model.FinishTypes" selected>@Model.FinishTypes</option>
+                }
+            </select>
+            <span asp-validation-for="FinishTypes"></span>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="row">
+                <button type="submit" class="btn btn-custom col-12">Modifier</button>
+            </div>
     </div>
-    <div class="row">
-        <button type="submit" class="btn btn-custom col-12">Modifier</button>
-    </div>
-</div>
 </form>
 </div>
-
-
-
-
 
 
 @section Scripts {
