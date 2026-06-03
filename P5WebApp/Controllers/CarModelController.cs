@@ -13,14 +13,14 @@ namespace P5WebApp.Controllers
     public class CarModelController : Controller
     {
 
-        private readonly ICarModelService _CarModelService;
-        private readonly ICarModelRepository _CarModelRepository;
+        private readonly ICarModelService _carModelService;
+        private readonly ICarModelRepository _carModelRepository;
         private readonly IBrandService _brandService;
 
         public CarModelController(ICarModelService CarModelService, ICarModelRepository CarModelRepository, IBrandService brandService)
         {
-            _CarModelService = CarModelService;
-            _CarModelRepository = CarModelRepository;
+            _carModelService = CarModelService;
+            _carModelRepository = CarModelRepository;
             _brandService = brandService;
         }
 
@@ -36,14 +36,14 @@ namespace P5WebApp.Controllers
         // GET: View only for registered admin user. CarModel list to see all CarModels.
         public IActionResult Admin()
         {
-            return View(_CarModelService.GetAllCarModelsViewModel().OrderByDescending(c => c.Id));
+            return View(_carModelService.GetAllCarModelsViewModel().OrderByDescending(c => c.Id));
         }
 
 
         // GET: CarModelController/Details/5
         public IActionResult Details(int id)
         {
-            IEnumerable<CarModelViewModel> CarModels = _CarModelService.GetAllCarModelsViewModel();
+            IEnumerable<CarModelViewModel> CarModels = _carModelService.GetAllCarModelsViewModel();
             return View();
         }
 
@@ -66,7 +66,7 @@ namespace P5WebApp.Controllers
         public IActionResult Create(CarModelViewModel CarModel)
         {
 
-            Dictionary<string, string> modelErrors = _CarModelService.CheckCarModelModelErrors(CarModel);
+            Dictionary<string, string> modelErrors = _carModelService.CheckCarModelModelErrors(CarModel);
 
 
             foreach (var key in modelErrors)
@@ -78,7 +78,7 @@ namespace P5WebApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                _CarModelService.SaveCarModel(CarModel);
+                _carModelService.SaveCarModel(CarModel);
                 return RedirectToAction("Admin");
             }
             else
@@ -91,8 +91,8 @@ namespace P5WebApp.Controllers
         // GET: CarModelController/Edit/5
         public ActionResult Edit(int id)
         {
-            CarModelViewModel CarModelViewModel = _CarModelService.GetCarModelByIdViewModel(id);
-            var editCarModel = _CarModelService.GetCarModelById(id);
+            CarModelViewModel CarModelViewModel = _carModelService.GetCarModelByIdViewModel(id);
+            var editCarModel = _carModelService.GetCarModelById(id);
             CarModelViewModel.Brands = new List<Brand>();
             CarModelViewModel.Brands = _brandService.GetAllBrands();
             CarModelViewModel.AssociatedBrandId = editCarModel.AssociatedBrandId;
@@ -105,7 +105,7 @@ namespace P5WebApp.Controllers
         public IActionResult Edit(CarModelViewModel CarModel)
         {
             
-            Dictionary<string, string> modelErrors = _CarModelService.CheckCarModelModelErrors(CarModel);
+            Dictionary<string, string> modelErrors = _carModelService.CheckCarModelModelErrors(CarModel);
 
 
             foreach (var key in modelErrors)
@@ -117,7 +117,7 @@ namespace P5WebApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                _CarModelService.UpdateCarModel(CarModel);
+                _carModelService.UpdateCarModel(CarModel);
                 return RedirectToAction("Admin");
             }
             else
@@ -139,7 +139,7 @@ namespace P5WebApp.Controllers
         public IActionResult Delete(int id, IFormCollection collection)
         {
             {
-                _CarModelService.DeleteCarModel(id);
+                _carModelService.DeleteCarModel(id);
                 return RedirectToAction("Admin");
             }
         }

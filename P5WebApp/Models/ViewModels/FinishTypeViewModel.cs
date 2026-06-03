@@ -12,18 +12,17 @@ namespace P5WebApp.Models.ViewModels
         public int FinishTypeId { get; set; }
 
         [Required]
-        public required string? FinishTypeName { get; set; }
-
-
+        public string? FinishTypeName { get; set; }
 
         [Required]
-
-        public required virtual ICollection<CarModel>? CarModels { get; set; } = new List<CarModel>();
-
+        public List<int>? AssociatedCarModelIds { get; set; } = new List<int>();
 
         [Required]
+        public List<int>? AssociatedBrandsIds { get; set; } = new List<int>();
 
-        public required virtual ICollection<Brand>? Brands { get; set; } = new List<Brand>();
+        public virtual ICollection<CarModel>? CarModels { get; set; } = new List<CarModel>();
+
+        public virtual ICollection<Brand>? Brands { get; set; } = new List<Brand>();
 
     }
 }

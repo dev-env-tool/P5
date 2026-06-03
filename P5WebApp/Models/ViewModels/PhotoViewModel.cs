@@ -16,10 +16,8 @@ namespace P5WebApp.Models.ViewModels
 
         // Foreign Key
 
-        [BindNever]
         public required int AssociatedAddId { get; set; }
 
-        [BindNever]
         public required virtual ShortAdd AssociatedAdd { get; set; }
 
 

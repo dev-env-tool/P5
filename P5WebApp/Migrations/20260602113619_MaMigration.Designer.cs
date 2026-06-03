@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using P5WebApp.Data;
 
@@ -11,9 +12,11 @@ using P5WebApp.Data;
 namespace P5WebApp.Migrations
 {
     [DbContext(typeof(P5Referential))]
-    partial class P5ReferentialModelSnapshot : ModelSnapshot
+    [Migration("20260602113619_MaMigration")]
+    partial class MaMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -252,13 +255,13 @@ namespace P5WebApp.Migrations
                     b.HasOne("P5WebApp.Models.Entities.Brand", null)
                         .WithMany()
                         .HasForeignKey("BrandsBrandId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("P5WebApp.Models.Entities.FinishType", null)
                         .WithMany()
                         .HasForeignKey("FinishTypesFinishTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -267,13 +270,13 @@ namespace P5WebApp.Migrations
                     b.HasOne("P5WebApp.Models.Entities.CarModel", null)
                         .WithMany()
                         .HasForeignKey("CarModelsId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("P5WebApp.Models.Entities.FinishType", null)
                         .WithMany()
                         .HasForeignKey("FinishTypesFinishTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -282,24 +285,22 @@ namespace P5WebApp.Migrations
                     b.HasOne("P5WebApp.Models.Entities.ShortAdd", "AssociatedShortAdd")
                         .WithOne("Car")
                         .HasForeignKey("P5WebApp.Models.Entities.Car", "AssociatedShortAddId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("P5WebApp.Models.Entities.Brand", "Brand")
                         .WithMany()
-                        .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("BrandId");
 
                     b.HasOne("P5WebApp.Models.Entities.CarModel", "CarModel")
                         .WithMany()
                         .HasForeignKey("CarModelId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("P5WebApp.Models.Entities.FinishType", "FinishType")
                         .WithMany()
-                        .HasForeignKey("FinishTypeId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("FinishTypeId");
 
                     b.Navigation("AssociatedShortAdd");
 
@@ -326,7 +327,7 @@ namespace P5WebApp.Migrations
                     b.HasOne("P5WebApp.Models.Entities.Car", "AssociatedCar")
                         .WithMany("CarFixesList")
                         .HasForeignKey("AssociatedCarId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AssociatedCar");
@@ -337,7 +338,7 @@ namespace P5WebApp.Migrations
                     b.HasOne("P5WebApp.Models.Entities.ShortAdd", "AssociatedShortAdd")
                         .WithMany("ShortAddPhotosList")
                         .HasForeignKey("AssociatedShortAddId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AssociatedShortAdd");

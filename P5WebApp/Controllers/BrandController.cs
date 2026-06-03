@@ -14,11 +14,13 @@ namespace P5WebApp.Controllers
 
         private readonly IBrandService _brandService;
         private readonly IBrandRepository _brandRepository;
+        private readonly ICarModelRepository _carModelRepository;
 
-        public BrandController(IBrandService brandService, IBrandRepository brandRepository)
+        public BrandController(IBrandService brandService, IBrandRepository brandRepository, ICarModelRepository carModelRepository)
         {
             _brandService = brandService;
             _brandRepository = brandRepository;
+            _carModelRepository = carModelRepository;
         }
 
 
@@ -128,8 +130,19 @@ namespace P5WebApp.Controllers
         public IActionResult Delete(int id, IFormCollection collection)
         {
             {
-                _brandService.DeleteBrand(id);
-                return RedirectToAction("Admin");
+
+                int numberofTimesbrandUsed = _carModelRepository.GetAllCarModels().Where(c => c.AssociatedBrandId == id).Count();
+
+                if (numberofTimesbrandUsed > 0)
+                {
+                    return RedirectToAction("Admin");
+                }
+                else
+                {
+                    _brandService.DeleteBrand(id);
+                    return RedirectToAction("Admin");
+                }
+                
             }
         }
     }

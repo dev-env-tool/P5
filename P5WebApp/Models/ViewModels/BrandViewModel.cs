@@ -11,7 +11,6 @@ namespace P5WebApp.Models.ViewModels
 {
     public class BrandViewModel
     {
-        //[BindNever]
         public int BrandId { get; set; }
 
         [Required(ErrorMessage ="Veuillez renseigner un nom de marque")]

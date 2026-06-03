@@ -10,10 +10,15 @@ namespace P5WebApp.Models.Services
     public class BrandService : IBrandService
     {
         private readonly IBrandRepository ?_brandRepository;
+        private readonly ICarModelService? _carModelService;
+        private readonly ICarModelRepository ?_carModelRepository;
+        
 
-        public BrandService(IBrandRepository brandRepository) 
+        public BrandService(IBrandRepository brandRepository, ICarModelService? carModelService, ICarModelRepository carModelRepository) 
         {
             _brandRepository = brandRepository;
+            _carModelService = carModelService;
+            _carModelRepository = carModelRepository;
         }
 
         public List<Brand> GetAllBrands()
@@ -130,7 +135,15 @@ namespace P5WebApp.Models.Services
 
         public void DeleteBrand(int id)
         {
-            _brandRepository.DeleteBrand(id);
+            int numberofTimesbrandUsed = _carModelRepository.GetAllCarModels().Where(c => c.AssociatedBrandId == id).Count();
+
+            if (numberofTimesbrandUsed > 0)
+            {
+            }
+            else 
+            {
+                _brandRepository.DeleteBrand(id);
+            }
         }
 
         public async Task<Brand> GetBrand(int id)

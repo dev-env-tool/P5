@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using P5WebApp.Data;
 
@@ -11,9 +12,11 @@ using P5WebApp.Data;
 namespace P5WebApp.Migrations
 {
     [DbContext(typeof(P5Referential))]
-    partial class P5ReferentialModelSnapshot : ModelSnapshot
+    [Migration("20260602143838_Migration060226")]
+    partial class Migration060226
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

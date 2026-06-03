@@ -23,10 +23,8 @@ namespace P5WebApp.Models.ViewModels
 
 
         // Foreign Key
-        [BindNever]
         public required int AssociatedCarId { get; set; }
 
-        [BindNever]
         public required virtual Car AssociatedCar { get; set; }
 
     }

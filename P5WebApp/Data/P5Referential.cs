@@ -65,6 +65,11 @@ namespace P5WebApp.Data
 
 
             // Indicate that Car is the base class to build the cars table.
+            
+            foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            }
 
 
             modelBuilder.Entity<Car>()

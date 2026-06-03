@@ -1,0 +1,56 @@
+﻿@model P5WebApp.Models.ViewModels.FinishTypeViewModel
+
+
+@{
+    Layout = "_Layout";
+}
+
+
+<div class="row">
+    <h1 class ="mb-3 col-4 offset-md-4">
+        Création d'un modèle </h1>
+    <div style="white-space:pre-line">
+        <h1></h1>
+    </div>
+    <form method="post">
+        <div class="mb-3 col-4 offset-md-4">
+            <div class="mb-3 col-8">
+                <label>Nom de la finition*:</label>
+            </div>
+            <input asp-for="FinishTypeName" class="form-control col-12" /><span asp-validation-for="FinishTypeName"></span>
+            <div style="white-space:pre-line">
+            <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Marques associées à la finition*:</label>
+            </div>
+            <select asp-for="AssociatedBrandsIds" class="form-select col-12" asp-items="@(new SelectList(Model.Brands, "BrandId", "BrandName"))"></select>
+            <span asp-validation-for="AssociatedBrandsIds"></span>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Modèles associés à la finition:</label>
+            </div>
+            <select asp-for="AssociatedCarModelIds" class="form-select col-12" asp-items="@(new SelectList(Model.CarModels, "Id", "Name"))"></select>
+            <span asp-validation-for="AssociatedBrandsIds"></span>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="row">
+                <button type="submit" class="btn btn-custom col-12">Créer</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
