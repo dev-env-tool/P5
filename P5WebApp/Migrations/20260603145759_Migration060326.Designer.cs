@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using P5WebApp.Data;
 
@@ -11,9 +12,11 @@ using P5WebApp.Data;
 namespace P5WebApp.Migrations
 {
     [DbContext(typeof(P5Referential))]
-    partial class P5ReferentialModelSnapshot : ModelSnapshot
+    [Migration("20260603145759_Migration060326")]
+    partial class Migration060326
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,6 +83,12 @@ namespace P5WebApp.Migrations
                     b.PrimitiveCollection<string>("AssociatedFixIds")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("AssociatedShortAddId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("BrandId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CarBrandId")
                         .HasColumnType("int");
 
@@ -98,10 +107,22 @@ namespace P5WebApp.Migrations
                     b.Property<string>("CarVinCode")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateOnly?>("CarYear")
+                    b.Property<DateOnly>("CarYear")
                         .HasColumnType("date");
 
+                    b.Property<int?>("FinishTypeId")
+                        .HasColumnType("int");
+
                     b.HasKey("CarId");
+
+                    b.HasIndex("AssociatedShortAddId")
+                        .IsUnique();
+
+                    b.HasIndex("BrandId");
+
+                    b.HasIndex("CarModelId");
+
+                    b.HasIndex("FinishTypeId");
 
                     b.ToTable("Cars", (string)null);
                 });
@@ -160,13 +181,10 @@ namespace P5WebApp.Migrations
                     b.Property<int>("AssociatedCarId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CarId")
-                        .HasColumnType("int");
-
                     b.Property<double>("FixCost")
                         .HasColumnType("float");
 
-                    b.Property<DateOnly?>("FixDate")
+                    b.Property<DateOnly>("FixDate")
                         .HasColumnType("date");
 
                     b.Property<string>("FixDescription")
@@ -174,7 +192,7 @@ namespace P5WebApp.Migrations
 
                     b.HasKey("FixId");
 
-                    b.HasIndex("CarId");
+                    b.HasIndex("AssociatedCarId");
 
                     b.ToTable("Fixes", (string)null);
                 });
@@ -209,9 +227,6 @@ namespace P5WebApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShortAddId"));
 
-                    b.Property<int>("CarId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -234,8 +249,6 @@ namespace P5WebApp.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("ShortAddId");
-
-                    b.HasIndex("CarId");
 
                     b.ToTable("ShortAdds", (string)null);
                 });
@@ -270,6 +283,39 @@ namespace P5WebApp.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("P5WebApp.Models.Entities.Car", b =>
+                {
+                    b.HasOne("P5WebApp.Models.Entities.ShortAdd", "AssociatedShortAdd")
+                        .WithOne("Car")
+                        .HasForeignKey("P5WebApp.Models.Entities.Car", "AssociatedShortAddId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("P5WebApp.Models.Entities.Brand", "Brand")
+                        .WithMany()
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("P5WebApp.Models.Entities.CarModel", "CarModel")
+                        .WithMany()
+                        .HasForeignKey("CarModelId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("P5WebApp.Models.Entities.FinishType", "FinishType")
+                        .WithMany()
+                        .HasForeignKey("FinishTypeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("AssociatedShortAdd");
+
+                    b.Navigation("Brand");
+
+                    b.Navigation("CarModel");
+
+                    b.Navigation("FinishType");
+                });
+
             modelBuilder.Entity("P5WebApp.Models.Entities.CarModel", b =>
                 {
                     b.HasOne("P5WebApp.Models.Entities.Brand", "AssociatedBrand")
@@ -283,10 +329,13 @@ namespace P5WebApp.Migrations
 
             modelBuilder.Entity("P5WebApp.Models.Entities.Fix", b =>
                 {
-                    b.HasOne("P5WebApp.Models.Entities.Car", null)
+                    b.HasOne("P5WebApp.Models.Entities.Car", "AssociatedCar")
                         .WithMany("CarFixesList")
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("AssociatedCarId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AssociatedCar");
                 });
 
             modelBuilder.Entity("P5WebApp.Models.Entities.Photo", b =>
@@ -298,17 +347,6 @@ namespace P5WebApp.Migrations
                         .IsRequired();
 
                     b.Navigation("AssociatedShortAdd");
-                });
-
-            modelBuilder.Entity("P5WebApp.Models.Entities.ShortAdd", b =>
-                {
-                    b.HasOne("P5WebApp.Models.Entities.Car", "Car")
-                        .WithMany()
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Car");
                 });
 
             modelBuilder.Entity("P5WebApp.Models.Entities.Brand", b =>
@@ -323,6 +361,9 @@ namespace P5WebApp.Migrations
 
             modelBuilder.Entity("P5WebApp.Models.Entities.ShortAdd", b =>
                 {
+                    b.Navigation("Car")
+                        .IsRequired();
+
                     b.Navigation("ShortAddPhotosList");
                 });
 #pragma warning restore 612, 618

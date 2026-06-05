@@ -25,6 +25,12 @@ namespace P5WebApp
             builder.Services.AddScoped<IFinishTypeService, FinishTypeService>();
             builder.Services.AddScoped<IFinishTypeRepository, FinishTypeRepository>();
 
+            builder.Services.AddScoped<ICarService, CarService>();
+            builder.Services.AddScoped<ICarRepository, CarRepository>();
+
+            builder.Services.AddScoped<IFixService, FixService>();
+            builder.Services.AddScoped<IFixRepository, FixRepository>();
+
             // Add DB contexts to the app.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>

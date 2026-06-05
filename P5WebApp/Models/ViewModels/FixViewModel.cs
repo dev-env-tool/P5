@@ -9,23 +9,24 @@ namespace P5WebApp.Models.ViewModels
     {
         public int FixId { get; set; }
 
-        [Required]
-        public required string FixDescription { get; set; }
+        [Required(ErrorMessage = "Veuillez renseigner la description de la réparation")]
+        public string FixDescription { get; set; }
 
 
-        [Required]
-        public required DateOnly FixDate { get; set; }
+        [Required(ErrorMessage = "Veuillez renseigner la date de la réparation")]
+        public DateOnly? FixDate { get; set; }
 
 
-        [Required]
-        public required double FixCost { get; set; }
+        [Required(ErrorMessage = "Veuillez renseigner le coût de la réparation")]
+        [RegularExpression("^(-?(\\d+\\.?\\d+|\\d))+$", ErrorMessage = "Le coût n'est pas un nombre")]
+        [Range(0.0001, double.MaxValue, ErrorMessage = "Le coût n'est pas supérieur à 0")]
+        public double FixCost { get; set; }
 
 
 
         // Foreign Key
-        public required int AssociatedCarId { get; set; }
-
-        public required virtual Car AssociatedCar { get; set; }
+        [Required(ErrorMessage = "Veuillez choisir une voiture associée")]
+        public int AssociatedCarId { get; set; }
 
     }
 }

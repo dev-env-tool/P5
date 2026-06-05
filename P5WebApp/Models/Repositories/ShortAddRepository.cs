@@ -1,8 +1,8 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using P5WebApp.Data;
-using P5WebApp.Interfaces;
 using P5WebApp.Models.Entities;
+using P5WebApp.Models.Services;
 
 
 namespace P5WebApp.Models.Repositories
@@ -35,7 +35,8 @@ namespace P5WebApp.Models.Repositories
         // Asynchronous task to retrieve the associated car from Db.
         public async Task<Car> GetAssociatedCar(int id)
         {
-            var car = await _context!.Cars.SingleOrDefaultAsync(c => c.AssociatedShortAddId == id);
+            //var car = await _context!.Cars.SingleOrDefaultAsync(c => c.AssociatedShortAddId == id);
+            var car = await _context!.Cars.SingleOrDefaultAsync(c => c.CarId == id);
 
             if (car == null)
             {

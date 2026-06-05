@@ -140,6 +140,18 @@ namespace P5WebApp.Controllers
             }
         }
 
+        public JsonResult GetModelByBrandId(int brandId)
+        {
+            return Json(_carModelService.GetAllCarModels().Where(b => b.AssociatedBrandId == brandId).ToList());
+        }
+
+
+
+
+
+
+
+
         // GET: FinishTypeController/Delete/5
         public ActionResult Delete(int id)
         {

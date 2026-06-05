@@ -1,7 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using P5WebApp.Models.Entities;
 
-namespace P5WebApp.Interfaces
+namespace P5WebApp.Models.Services
 {
     public interface IShortAddRepository
     {

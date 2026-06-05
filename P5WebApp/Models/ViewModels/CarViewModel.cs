@@ -10,46 +10,53 @@ namespace P5WebApp.Models.ViewModels
         public int CarId { get; set; }
 
 
-        [Required]
-        public required string CarVinCode { get; set; }
+        [Required(ErrorMessage = "Veuillez renseigner un numéro d'immatriculation")]
+        public string CarVinCode { get; set; }
 
 
-        [Required]
-        public required DateOnly CarYear { get; set; }
+        [Required(ErrorMessage = "Veuillez renseigner une année de production")]
+        public DateOnly? CarYear { get; set; }
 
 
-        [Required]
-        public required DateOnly CarBuyDate { get; set; }
+        [Required(ErrorMessage = "Veuillez renseigner une date d'achat")]
+        public DateOnly ?CarBuyDate { get; set; }
 
 
-        [Required]
-        public required double CarBuyPrice { get; set; }
+        [Required(ErrorMessage = "Veuillez renseigner un prix d'achat")]
+        [RegularExpression("^(-?(\\d+\\.?\\d+|\\d))+$", ErrorMessage = "Le prix n'est pas un nombre")]
+        [Range(0.0001, double.MaxValue, ErrorMessage = "Le prix n'est pas supérieur à 0")]
 
-        [Required]
-        public required int CarBrandId { get; set; }
+        public double CarBuyPrice { get; set; }
 
-
-        public required virtual Brand Brand { get; set; }
-
-
-        [Required]
-        public required int CarModelId { get; set; }
+        [Required(ErrorMessage = "Veuillez renseigner une marque")]
+        public int CarBrandId { get; set; }
 
 
-        public required virtual CarModel CarModel { get; set; }
+
+        [Required(ErrorMessage = "Veuillez renseigner un modèle")]
+        public int CarModelId { get; set; }
 
 
-        [Required]
-        public required int CarFinishTypeId { get; set; }
+
+        [Required(ErrorMessage = "Veuillez renseigner une finition")]
+        public int CarFinishTypeId { get; set; }
 
 
-        public required virtual FinishType FinishType { get; set; }
-
-
-        [Required]
-        public required virtual ICollection<Fix> CarFixesList { get; set; } = new List<Fix>();
+        public List<int>? AssociatedFixIds { get; set; } = new List<int>();
 
         public int AssociatedShortAddId { get; set; }
+
+
+        public virtual ICollection<Fix> CarFixesList { get; set; } = new List<Fix>();
+
+        public virtual ICollection<Brand> CarBrands { get; set; } = new List<Brand>();
+
+
+        public virtual ICollection<CarModel> CarModels { get; set; } = new List<CarModel>();
+
+
+        public virtual ICollection<FinishType> FinishTypes { get; set; } = new List<FinishType>();
+
 
         public virtual ShortAdd? AssociatedShortAdd { get; set; }
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using P5WebApp.Data;
 
@@ -11,9 +12,11 @@ using P5WebApp.Data;
 namespace P5WebApp.Migrations
 {
     [DbContext(typeof(P5Referential))]
-    partial class P5ReferentialModelSnapshot : ModelSnapshot
+    [Migration("20260605090818_Migration2060526")]
+    partial class Migration2060526
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,9 +163,6 @@ namespace P5WebApp.Migrations
                     b.Property<int>("AssociatedCarId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CarId")
-                        .HasColumnType("int");
-
                     b.Property<double>("FixCost")
                         .HasColumnType("float");
 
@@ -174,7 +174,7 @@ namespace P5WebApp.Migrations
 
                     b.HasKey("FixId");
 
-                    b.HasIndex("CarId");
+                    b.HasIndex("AssociatedCarId");
 
                     b.ToTable("Fixes", (string)null);
                 });
@@ -283,10 +283,13 @@ namespace P5WebApp.Migrations
 
             modelBuilder.Entity("P5WebApp.Models.Entities.Fix", b =>
                 {
-                    b.HasOne("P5WebApp.Models.Entities.Car", null)
+                    b.HasOne("P5WebApp.Models.Entities.Car", "AssociatedCar")
                         .WithMany("CarFixesList")
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("AssociatedCarId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AssociatedCar");
                 });
 
             modelBuilder.Entity("P5WebApp.Models.Entities.Photo", b =>

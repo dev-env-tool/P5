@@ -11,18 +11,19 @@ namespace P5WebApp.Models.ViewModels
     {
         public int FinishTypeId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Veuillez renseigner un nom de finition")]
         public string? FinishTypeName { get; set; }
 
-        [Required]
-        public List<int>? AssociatedCarModelIds { get; set; } = new List<int>();
-
-        [Required]
+        [Required(ErrorMessage = "Veuillez choisir au moins une marque associée")]
         public List<int>? AssociatedBrandsIds { get; set; } = new List<int>();
 
-        public virtual ICollection<CarModel>? CarModels { get; set; } = new List<CarModel>();
+        [Required(ErrorMessage = "Veuillez choisir au moins un modèle associé")]
+        public List<int>? AssociatedCarModelIds { get; set; } = new List<int>();
 
         public virtual ICollection<Brand>? Brands { get; set; } = new List<Brand>();
+        public virtual ICollection<CarModel>? CarModels { get; set; } = new List<CarModel>();
+
+
 
     }
 }

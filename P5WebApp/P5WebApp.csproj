@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.3.8" />
-    <PackageReference Include="DartSassBuilder" Version="1.1.0" />
+    <PackageReference Include="Bootstrap.Datepicker" Version="1.8.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.8" />
@@ -29,11 +29,13 @@
 
 	
   <ItemGroup>
+    <Folder Include="Interfaces\" />
     <Folder Include="Models\Classes\" />
   </ItemGroup>
 
 	
   <ItemGroup>
+    <None Include="Models\Services\FixService.cs" />
     <None Include="wwwroot\css\Newbtnsty.css" />
   </ItemGroup>
 

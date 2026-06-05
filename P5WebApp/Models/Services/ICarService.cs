@@ -6,10 +6,10 @@ namespace P5WebApp.Models.Services
     public interface ICarService
     {
         List<Car> GetAllCars();
-        List<CarViewModel> GetAllCarViewModel();
+        List<CarViewModel> GetAllCarsViewModel();
         Car GetCarById(int id);
         CarViewModel GetCarByIdViewModel(int id);
-        void UpdateCarInfos();
+        void UpdateCarInfos(CarViewModel Car);
         void SaveCar(CarViewModel Car);
         void DeleteCar(int id);
 

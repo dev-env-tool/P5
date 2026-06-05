@@ -1,0 +1,95 @@
+﻿@using P5WebApp.Models.ViewModels
+@using P5WebApp.Models.Entities
+
+@Html.ValidationSummary()
+
+
+@model IEnumerable<P5WebApp.Models.ViewModels.CarViewModel>
+
+@{
+    ViewData["Title"] = "Gestion des voitures (administrateur)";
+    Layout = "_Layout";
+    var brands = ViewBag.Brands as List<Brand>;
+    var carModels = ViewBag.CarModels as List<CarModel>;
+    var finishTypes = ViewBag.FinishTypes as List<FinishType>;
+}
+
+<h1>Gestion des voitures</h1>
+
+<br />
+<div id="panel-body">
+    <table class="table table-bordered table-striped table-sm">
+        <thead>
+            <tr>
+                <th>
+                <label>Modèle</label>
+                </th>
+                <th>
+                <label>Marque associée</label>
+                </th>
+                <th>
+                <label>Finition associée</label>
+                </th>
+                <th>
+                    <label>Consulter</label>
+                </th>
+                <th>
+                    <label>Modifier</label>
+                </th>
+                <th>
+                    <label>Supprimer</label>
+                </th>
+        </thead>
+        <tbody>
+
+            @foreach (CarViewModel c in Model)
+            {
+                <tr>
+                    
+                    <td>
+                        @string.Join(",", carModels.Where(cm => c.CarModelId.Equals(cm.Id)).Select(cm => cm.Name));
+                    </td>
+                    <td>
+                        @string.Join(",", brands.Where(b => c.CarBrandId.Equals(b.BrandId)).Select(b => b.BrandName));
+                    </td>
+                    <td>
+                        @string.Join(",", finishTypes.Where(f => c.CarFinishTypeId.Equals(f.FinishTypeId)).Select(f => f.FinishTypeName));
+                    </td>
+                    <td>
+                        <form id="@c.CarId" asp-action="Read" asp-controller="Car" method="get">
+                            <input type="hidden" name="id" value="@c.CarId" />
+                            <button type="submit" class="btn-custom btn btn-danger">
+                                Consulter
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <form id="@c.CarId" asp-action="Edit" asp-controller="Car" method="get">
+                            <input type="hidden" name="id" value="@c.CarId" />
+                            <button type="submit" class="btn-custom btn btn-danger">
+                                Modifier
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        
+                        <form id="@c.CarId" asp-action="Delete" asp-controller="Car" method="post">
+                            <input type="hidden" name="id" value="@c.CarId" />
+                            <button type="submit" class="btn-custom btn btn-danger">
+                                Supprimer
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div style="white-space:pre-line">
+        <h1></h1>
+    </div>
+
+    <a class="btn btn-primary btn-custom" asp-controller="Car" asp-action="Create">Créer</a>
+</div>
+@section Scripts {
+    <script src="@Url.Content("~/js/test.js")"></script>
+}

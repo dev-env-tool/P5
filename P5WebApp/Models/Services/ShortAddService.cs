@@ -1,4 +1,4 @@
-﻿using P5WebApp.Interfaces;
+﻿using P5WebApp.Models.Repositories;
 using P5WebApp.Models.ViewModels;
 
 namespace P5WebApp.Models.Services

@@ -79,16 +79,10 @@ namespace P5WebApp.Models.Services
                 modelErrors.Add("", "Veuillez renseigner un nom de modèle");
             }
 
-            //var Attribute2 = new RequiredAttribute();
 
-            //if (!Attribute2.IsValid(CarModel.AssociatedBrand))
-            //{
-            //    modelErrors.Add("", "Veuillez renseigner un nom de marque associée");
-            //}
+            var Attribute2 = new RequiredAttribute();
 
-            var Attribute3 = new RequiredAttribute();
-
-            if (!Attribute3.IsValid(CarModel.FinishTypes))
+            if (!Attribute2.IsValid(CarModel.FinishTypes))
             {
                 modelErrors.Add("", "Veuillez renseigner au moins une finition associée");
             }

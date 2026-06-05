@@ -1,0 +1,69 @@
+﻿@model P5WebApp.Models.ViewModels.FixViewModel
+@using P5WebApp.Models.Entities
+
+@{
+    Layout = "_Layout";
+}
+
+
+<div class="row">
+    <h1 class ="mb-3 col-4 offset-md-4">
+        Création d'une réparation </h1>
+    <div style="white-space:pre-line">
+        <h1></h1>
+    </div> 
+      <form method="post">
+        <input type="hidden" name="AssociatedCarId" value="@Model.AssociatedCarId" />
+        <div class="mb-3 col-4 offset-md-4">
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Description de la réparation*:</label>
+            </div>
+            <input asp-for="FixDescription" class="form-control col-12"/>
+            <span asp-validation-for="FixDescription"></span>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Date*':</label>
+            </div>
+            <input asp-for="FixDate" type="text" id="txtDate" class="form-control col-12" date="@Model.FixDate" />
+            <span asp-validation-for="FixDate"></span>
+            <label class="date"></label>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Coût*':</label>
+            </div>
+            <input asp-for="FixCost" class="form-control col-12"/>
+            <span asp-validation-for="FixCost"></span>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="row">
+                <button type="submit" class="btn btn-custom col-12">Créer</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        <script type="text/javascript">
+            $(function(){
+            $("#txtDate").datepicker({format:"dd/mm/yyyy"});
+            });
+        </script>
+
+    }
+}

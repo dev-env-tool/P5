@@ -2,7 +2,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using P5WebApp.Data;
-using P5WebApp.Interfaces;
+using P5WebApp.Models.Repositories;
 using P5WebApp.Models.Entities;
 using P5WebApp.Models.Services;
 using P5WebApp.Models.ViewModels;
