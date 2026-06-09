@@ -57,6 +57,7 @@ namespace P5WebApp.Data
             {
                 optionsBuilder.UseSqlServer(DbConnection?.ConnectionString, providerOptions => providerOptions.EnableRetryOnFailure());
             }
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

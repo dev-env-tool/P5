@@ -1,14 +1,16 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using P3AddNewFunctionalityDotNetCore.Data;
 using P5WebApp.Data;
 using P5WebApp.Models.Repositories;
 using P5WebApp.Models.Services;
+using System.Runtime.CompilerServices;
 
 namespace P5WebApp
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -95,6 +97,8 @@ namespace P5WebApp
             using var context = new P5Referential(optionsBuilder.Options);
             bool canConnect = context.Database.CanConnect();
             Console.WriteLine(canConnect ? "SQL Connection OK" : "SQL connection failed");
+
+            await IdentitySeedData.EnsurePopulated(app);
 
             app.Run();
         }
