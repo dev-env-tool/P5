@@ -10,6 +10,7 @@ namespace P5WebApp.Models.Repositories
     {
         IEnumerable<CarModel> GetAllCarModels();
 
+        IEnumerable<CarModel> GetCarModelsByBrandIds(int[] ids);
         int GetMaxCarModelId();
 
         void UpdateCarModel(CarModel CarModel);

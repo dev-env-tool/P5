@@ -6,6 +6,7 @@ using P5WebApp.Models.Repositories;
 using P5WebApp.Models.Entities;
 using P5WebApp.Models.Services;
 using P5WebApp.Models.ViewModels;
+using System.Linq;
 
 namespace P5WebApp.Models.Repositories
 {
@@ -22,6 +23,27 @@ namespace P5WebApp.Models.Repositories
         {
             IEnumerable<CarModel> CarModels = _context.CarModels.Where(c => c.Id >= 0);
             return CarModels.ToList();
+        }
+
+        public IEnumerable<CarModel> GetAllCarModelsWithoutFilter()
+        {
+            IEnumerable<CarModel> CarModels = _context.CarModels;
+            return CarModels.ToList();
+        }
+
+        public IEnumerable<CarModel> GetCarModelsByBrandIds(int[] ids)
+        {
+            if (ids == null || ids.Length == 0)
+                return Enumerable.Empty<CarModel>();
+
+
+            var selectedCarModels = GetAllCarModelsWithoutFilter()
+                .Where(c => ids.Contains(c.AssociatedBrandId))
+                .ToList();
+                
+
+
+            return (selectedCarModels);
         }
 
 
@@ -68,6 +90,8 @@ namespace P5WebApp.Models.Repositories
                 _context.SaveChanges();
             }
         }
+
+
 
         public async Task<CarModel> GetCarModel(int id)
         {

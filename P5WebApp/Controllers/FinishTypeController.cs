@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Identity.Client;
+using NuGet.Protocol.Core.Types;
 using P5WebApp.Models.Entities;
 using P5WebApp.Models.Repositories;
 using P5WebApp.Models.Services;
@@ -17,15 +19,16 @@ namespace P5WebApp.Controllers
         private readonly IFinishTypeRepository _finishTypeRepository;
         private readonly IBrandService _brandService;
         private readonly ICarModelService _carModelService;
-
+        private readonly ICarModelRepository _carModelRepository;
 
         public FinishTypeController(IFinishTypeService finishTypeService, IFinishTypeRepository finishTypeRepository,
-            IBrandService brandService, ICarModelService carModelService)
+            IBrandService brandService, ICarModelService carModelService, ICarModelRepository carModelRepository)
         {
             _finishTypeService = finishTypeService;
             _finishTypeRepository = finishTypeRepository;
             _brandService = brandService;
             _carModelService = carModelService;
+            _carModelRepository = carModelRepository;
         }
 
 
@@ -59,13 +62,45 @@ namespace P5WebApp.Controllers
 
         public ViewResult Create(int id)
         {
+
             FinishTypeViewModel FinishTypeViewModel = new FinishTypeViewModel();
             FinishTypeViewModel.Brands = new List<Brand>();
             FinishTypeViewModel.Brands = _brandService.GetAllBrands();
 
-            FinishTypeViewModel.CarModels = new List<CarModel>();
-            FinishTypeViewModel.CarModels = _carModelService.GetAllCarModels();
+            //FinishTypeViewModel.CarModels = new List<CarModel>();
+            //FinishTypeViewModel.CarModels = _carModelService.GetAllCarModels();
+
             return View(FinishTypeViewModel);
+        }
+
+
+
+        //[HttpGet]
+        //public JsonResult GetCarModelList([FromQuery] int[] id)
+        //{
+        //    if (id == null || id.Length == 0)
+        //    { 
+        //        return Json(new List<object>());
+        //    }
+
+        //    var selectedCarModels = _carModelService.GetAllCarModels()
+        //        .Where(x => id.Contains(x.AssociatedBrandId))
+        //        .Select(x => new { x.Id, x.Name })
+        //        .ToList();
+
+        //    return Json(selectedCarModels);
+
+
+        //}
+        [HttpGet]
+        public JsonResult GetCarModelList(int[] id)
+        {
+            var selectedCarModels = _carModelRepository.GetCarModelsByBrandIds(id)
+                .Select(x => new { x.Id, x.Name })
+                .ToList();
+
+            return Json(selectedCarModels);
+
         }
 
         // POST: FinishTypeController/Create

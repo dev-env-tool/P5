@@ -24,7 +24,8 @@
             <div class="mb-3 col-8">
                 <label>Marques associées à la finition*:</label>
             </div>
-            <select asp-for="AssociatedBrandsIds" class="form-select col-12" asp-items="@(new SelectList(Model.Brands, "BrandId", "BrandName"))"></select>
+            @* <select asp-for="AssociatedBrandsIds" multiple="multiple" class="form-select col-12" name="AssociatedBrandsIds" asp-items="@(new MultiSelectList(Model.Brands, "BrandId", "BrandName"))"></select> *@
+            <select asp-for="AssociatedBrandsIds" class="form-select" id="AssociatedBrandsIds" multiple="multiple" asp-items="@(new MultiSelectList(Model.Brands, "BrandId", "BrandName"))"></select>
             <span asp-validation-for="AssociatedBrandsIds"></span>
             <div style="white-space:pre-line">
                 <h1></h1>
@@ -32,8 +33,9 @@
             <div class="mb-3 col-8">
                 <label>Modèles associés à la finition:</label>
             </div>
-            <select asp-for="AssociatedCarModelIds" class="form-select col-12" asp-items="@(new SelectList(Model.CarModels, "Id", "Name"))"></select>
-            <span asp-validation-for="AssociatedBrandsIds"></span>
+            @* <select asp-for="AssociatedCarModelIds" multiple="multiple" class="form-select col-12" name="AssociatedCarModelIds" asp-items="@(new MultiSelectList(Model.CarModels, "Id", "Name"))"></select> *@
+            <select asp-for="AssociatedCarModelIds" class="form-select" id="AssociatedCarModelIds" multiple="multiple" disabled="disabled"></select>
+            <span asp-validation-for="AssociatedCarModelIds"></span>
             <div style="white-space:pre-line">
                 <h1></h1>
             </div>
@@ -49,8 +51,161 @@
 
 
 
-@section Scripts {
+@section Scripts 
+{
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+            $('#AssociatedBrandsIds').change(function() {
+            var selectedIds = $(this).val();
+            var url = '@Url.Action("GetCarModelList", "FinishType")';
+
+            if (!selectedIds || selectedIds.length === 0) {
+            console.log('Selected Ids :', selectedIds);
+            $('#AssociatedCarModelIds').empty().prop('disabled', true);
+            return;
+            }
+
+            $('#AssociatedCarModelIds').prop('disabled', false);
+
+            $.ajax({
+            url: url,
+            data: { id: selectedIds },
+            traditional: true,         
+            dataType: 'json',
+            
+            
+            
+            success: function(data) {
+                console.log('data : ', data);
+            $('#AssociatedCarModelIds').empty();
+            $.each(data, function(i, model) {
+            $('#AssociatedCarModelIds').append($('<option>', {
+            value: model.Id,
+            text: model.Name
+            }));
+            });
+            },
+            error: function() {
+            alert('Erreur lors de la récupération des modèles.');
+            $('#AssociatedCarModelIds').empty().prop('disabled', true);
+
+            }
+            });
+            });
+            });
+        </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // <script type="text/javascript">
+        //     $('#AssociatedBrandsIds').change(function() 
+        //     {
+        //         var url = '@Url.Action("GetCarModelList", "FinishType")';
+        //         var selectedBrandId = $(this).val();
+
+        //         if (!selectedBrandId || selectedBrandId.length === 0) 
+        //         {
+        //             $('#AssociatedCarModelIds').empty().prop('disabled', true);
+        //         return;
+        //         }
+
+        //         $('#AssociatedCarModelIds').prop('disabled', false);
+
+        //         $.getJSON(url, { 'id[]': selectedBrandId }, function(data) 
+        //         {
+        //             var items = '';
+        //             $('#AssociatedCarModelIds').empty();
+
+        //             console.log(data);
+
+        //             $.each(data, function(i, model) 
+        //             {
+        //                 console.log("Id:", model.Id, "Name:", model.Name);
+        //                 items += "<option value='" + model.Id + "'>" + model.Name + "</option>";
+        //             });
+        //             $('#AssociatedCarModelIds').html(items);
+        //         });
+
+        //     $.ajax
+        //     ({
+        //             url: '@Url.Action("GetCarModelList", "FinishType")',
+        //             data: { id: $('#AssociatedBrandsIds').val() },
+        //             traditional: true,
+        //             dataType: 'json',
+        //             success: function(data) 
+        //             {
+        //                 console.log("Données reçues :", data);
+        //                 var items = '';
+        //                 $('#AssociatedCarModelIds').empty();
+        //                 $.each(data, function(i, model) 
+        //                 {
+        //                     $('#AssociatedCarModelIds').append($('<option>', 
+        //                     {
+        //                         value: model.Id,
+        //                         text: model.Name
+        //                     }));
+
+        //                     items += "<option value='" + value + "'>" + text + "</option>";
+        //                 });
+        //                 $('#AssociatedCarModelIds').html(items);
+        //             },
+        //             error: function(xhr, status, error) 
+        //             {
+        //                 console.error("Erreur AJAX :", status, error);
+        //             }
+        //         });
+        //     });
+        // </script>
+        // <script type ="text/javascript">
+        //     $(document).ready(function()
+        //     {
+            
+        //         $('#AssociatedBrandsIds').change(function(){
+        //             var url='@Url.Action("GetCarModelList", "FinishType")';
+        //             var selectedBrandId = $('#AssociatedBrandsIds').val();
+        //             if(!selectedBrandId.lenght === 0)
+        //             {
+        //                 $('#AssociatedCarModelIds').prop('disabled', true);
+        //                 return;
+        //             }
+        //             $('#AssociatedCarModelIds').prop('disabled', false);
+
+        //             $.getJSON(url, {id: selectedBrandId}, function(data){
+        //                 var items='' ;
+        //                 $('#AssociatedCarModelIds').empty();
+        //                 $.each(data, function (i, model){
+        //                 items +="<option value='" + model.value + "'>" + model.text + "</option>" ;
+        //                 });
+        //                 $("#AssociatedCarModelIds").html(items);
+        //             });
+        //         })
+        //     })
+        // </script>
     }
+
 }

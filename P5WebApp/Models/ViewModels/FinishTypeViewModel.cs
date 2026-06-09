@@ -15,10 +15,10 @@ namespace P5WebApp.Models.ViewModels
         public string? FinishTypeName { get; set; }
 
         [Required(ErrorMessage = "Veuillez choisir au moins une marque associée")]
-        public List<int>? AssociatedBrandsIds { get; set; } = new List<int>();
+        public List<int> AssociatedBrandsIds { get; set; } = new List<int>();
 
         [Required(ErrorMessage = "Veuillez choisir au moins un modèle associé")]
-        public List<int>? AssociatedCarModelIds { get; set; } = new List<int>();
+        public List<int> AssociatedCarModelIds { get; set; } = new List<int>();
 
         public virtual ICollection<Brand>? Brands { get; set; } = new List<Brand>();
         public virtual ICollection<CarModel>? CarModels { get; set; } = new List<CarModel>();
