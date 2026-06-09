@@ -6,18 +6,20 @@ namespace P5WebApp.Models.Entities
     {
 
         // Input fields of ShortAdd class
-        public required int ShortAddId { get; set; }
+        public int ShortAddId { get; set; }
 
         public string ?Description { get; set; }
 
-        public DateOnly ShortAddAvailabilityDate { get; set; }
+        public DateOnly ?ShortAddAvailabilityDate { get; set; }
 
-        public DateOnly ShortAddDateSold { get; set; }
+        public bool ShortAddPublished { get; set; }
+
+        public DateOnly ?ShortAddDateSold { get; set; }
 
         public bool ShortAddSold { get; set; }
 
         // Virtual coupling.
-        public virtual int ShortAddCarId { get; set; }
+        public int ShortAddCarId { get; set; }
 
         public double ShortAddBuyPrice { get; set; }
 
@@ -32,7 +34,7 @@ namespace P5WebApp.Models.Entities
 
         // Virtual couplings below to be able to override children 
 
-        public required virtual Car Car { get; set; }
+        public virtual Car ?Car { get; set; }
 
 
     }

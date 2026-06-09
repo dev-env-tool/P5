@@ -7,44 +7,42 @@ namespace P5WebApp.Models.ViewModels
 {
     public class ShortAddViewModel
     {
-        public int Id { get; set; }
+        public int ShortAddId { get; set; }
 
 
-        [Required]
-        public required string Description { get; set; }
+        [Required(ErrorMessage = "Veuillez renseigner une description")]
+        public string Description { get; set; }
 
 
-        [Required]
-        public required DateOnly ShortAddAvailabilityDate { get; set; }
+        [Required(ErrorMessage = "Veuillez renseigner une date de disponibilité")]
+        public DateOnly ?ShortAddAvailabilityDate { get; set; }
+
+ 
+        public bool ShortAddPublished { get; set; }
+
+        public DateOnly ?ShortAddDateSold { get; set; }
 
 
-
-        public required DateOnly ShortAddDateSold { get; set; }
-
-
-        public required bool ShortAddSold { get; set; }
+        public bool ShortAddSold { get; set; }
 
 
-        [Required]
-        public required virtual int ShortAddCarId { get; set; }
+        [Required(ErrorMessage = "Veuillez renseigner la voiture associée")]
+        public virtual int ShortAddCarId { get; set; }
 
-
+        [Required(ErrorMessage = "Veuillez renseigner le prix d'achat de la voiture")]
+        public double ShortAddBuyPrice { get; set; }
 
         public const double Margin = 500;
 
 
-
-        public required double ShortAddSellingPrice { get; set; }
-
+        public double ShortAddSellingPrice { get; set; }
 
 
-        [Required]
-        public required virtual ICollection<Photo> ShortAddPhotosList { get; set; } = new List<Photo>();
+        public virtual ICollection<Photo> ShortAddPhotosList { get; set; } = new List<Photo>();
 
+        public virtual ICollection<Car> CarsList { get; set; } = new List<Car>();
 
-
-        [Required]
-        public required virtual Car Car { get; set; }
+        public virtual Car Car { get; set; }
 
     }
 }

@@ -60,5 +60,6 @@ namespace P5WebApp.Models.ViewModels
 
         public virtual ShortAdd? AssociatedShortAdd { get; set; }
 
+        public virtual Car? Car { get; set; }
     }
 }

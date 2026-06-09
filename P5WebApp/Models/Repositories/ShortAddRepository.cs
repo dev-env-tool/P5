@@ -16,6 +16,28 @@ namespace P5WebApp.Models.Repositories
             _context = context;
         }
 
+
+        public IEnumerable<ShortAdd> GetAllShortAdds()
+        {
+            IEnumerable<ShortAdd> shortAdds = _context!.ShortAdds.Where(s => s.ShortAddId >= 0);
+            return shortAdds;
+        }
+
+
+        public int GetMaxShortAddId()
+        {
+            int maxShortAddId;
+
+            if (!_context.ShortAdds.Any())
+            {
+                return maxShortAddId = 0;
+            }
+            else
+            {
+                return maxShortAddId = _context.ShortAdds.Max(c => c.ShortAddId);
+            }
+        }
+
         // Asynchronous task to retrieve an add from Db.
         public async Task<ShortAdd> GetShortAdd(int id)
         {
@@ -32,28 +54,7 @@ namespace P5WebApp.Models.Repositories
 
         }
 
-        // Asynchronous task to retrieve the associated car from Db.
-        public async Task<Car> GetAssociatedCar(int id)
-        {
-            //var car = await _context!.Cars.SingleOrDefaultAsync(c => c.AssociatedShortAddId == id);
-            var car = await _context!.Cars.SingleOrDefaultAsync(c => c.CarId == id);
 
-            if (car == null)
-            {
-                throw new InvalidOperationException("The car requested does not exist");
-            }
-            else
-            {
-                return car;
-            }
-
-        }
-
-        public IEnumerable<ShortAdd> GetAllShortAdds()
-        {
-            IEnumerable<ShortAdd> shortAdds = _context!.ShortAdds.Where(s => s.ShortAddId >= 0);
-            return shortAdds;
-        }
 
         public async Task<IList<ShortAdd>> GetShortAddList()
         {
@@ -62,7 +63,7 @@ namespace P5WebApp.Models.Repositories
         }
 
         // Asynchronous task to retrieve the associated photos from Db.
-        public IEnumerable<Photo> GetPhotosOfShortAdd(int id)
+        public IEnumerable<Photo> GetAssociatedPhotosOfShortAdd(int id)
         {
             IEnumerable<Photo> photos = _context!.Photos.Where(p => p.AssociatedShortAddId == id);
             if (photos == null)
@@ -74,7 +75,14 @@ namespace P5WebApp.Models.Repositories
                 return photos;
             }
         }
-
+        public void UpdateShortAdd(ShortAdd ShortAdd)
+        {
+            if (ShortAdd != null)
+            {
+                _context.Entry(ShortAdd).State = EntityState.Modified;
+                _context.SaveChanges();
+            }
+        }
 
         public void SaveShortAdd(ShortAdd shortAdd)
         {
@@ -94,6 +102,13 @@ namespace P5WebApp.Models.Repositories
                 _context!.ShortAdds.Remove(shortAdd);
                 _context.SaveChanges();
             }
+        }
+
+
+        public async Task<IList<ShortAdd>> GetShortAdd()
+        {
+            var shortAdds = await _context.ShortAdds.ToListAsync();
+            return shortAdds;
         }
     }
 }

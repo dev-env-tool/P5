@@ -48,6 +48,7 @@ namespace P5WebApp.Models.Services
                     CarModelId = Car.CarModelId,
                     CarFinishTypeId = Car.CarFinishTypeId,
                     CarFixesList = Car.CarFixesList,
+                    Car = Car,
 
                 });
             }
@@ -155,6 +156,7 @@ namespace P5WebApp.Models.Services
             CarToEdit.CarModelId = Car.CarModelId;
             CarToEdit.CarFinishTypeId = Car.CarFinishTypeId;
             CarToEdit.CarFixesList = Car.CarFixesList;
+
 
             _carRepository.UpdateCar(CarToEdit);
 

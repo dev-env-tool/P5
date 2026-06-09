@@ -10,7 +10,7 @@ namespace P5WebApp.Models.Services
         List<ShortAddViewModel> GetAllShortAddsViewModel();
         ShortAdd GetShortAddById(int id);
         ShortAddViewModel GetShortAddByIdViewModel(int id);
-        void UpdateShortAddInfos();
+        void UpdateShortAddInfos(ShortAddViewModel shortAdd);
         void SaveShortAdd(ShortAddViewModel add);
         void DeleteShortAdd(int id);
 
