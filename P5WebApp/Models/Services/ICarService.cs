@@ -6,6 +6,8 @@ namespace P5WebApp.Models.Services
     public interface ICarService
     {
         List<Car> GetAllCars();
+
+        string GetCarModelCarBrandAndYearNameByVinCode(string CarVinCode);
         List<CarViewModel> GetAllCarsViewModel();
         Car GetCarById(int id);
         CarViewModel GetCarByIdViewModel(int id);

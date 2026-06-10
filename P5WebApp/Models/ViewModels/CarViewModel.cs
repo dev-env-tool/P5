@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.FileProviders.Embedded;
 using P5WebApp.Models.Entities;
+using System.Collections;
 using System.ComponentModel.DataAnnotations;
 
 namespace P5WebApp.Models.ViewModels
@@ -61,5 +62,12 @@ namespace P5WebApp.Models.ViewModels
         public virtual ShortAdd? AssociatedShortAdd { get; set; }
 
         public virtual Car? Car { get; set; }
+
+
+
+        public List<string>? CarVinCodes { get; set; } = new List<string>();
+
+
+        public string SelectedVinCode { get; set; }
     }
 }

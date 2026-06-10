@@ -44,5 +44,8 @@ namespace P5WebApp.Models.ViewModels
 
         public virtual Car Car { get; set; }
 
+
+        public CarViewModel CarViewModel { get; set; }
+
     }
 }

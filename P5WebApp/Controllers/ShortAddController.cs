@@ -2,11 +2,15 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Identity.Client;
+using Newtonsoft.Json.Linq;
 using P5WebApp.Models.Entities;
 using P5WebApp.Models.Repositories;
 using P5WebApp.Models.Services;
 using P5WebApp.Models.ViewModels;
+using System.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace P5WebApp.Controllers
 {
@@ -43,6 +47,7 @@ namespace P5WebApp.Controllers
         // GET: ShortAddController
         public ActionResult Index()
         {
+
             return View();
         }
 
@@ -50,7 +55,9 @@ namespace P5WebApp.Controllers
 
         // GET: View only for registered admin user. ShortAdd list to see all ShortAdds.
         public IActionResult Admin()
-        {  
+        {
+            ShortAddViewModel shortAddViewModel = new ShortAddViewModel();
+            ViewBag.CarModels = _carModelService.GetAllCarModels().Where(c => c.Id >= 0).SelectMany(c => c.Name);
             return View(_shortAddService.GetAllShortAddsViewModel().OrderByDescending(s => s.ShortAddId));
         }
 
@@ -88,23 +95,41 @@ namespace P5WebApp.Controllers
 
         public ViewResult Create(int id)
         {
-            //ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedShortAddId == id);
-            ShortAddViewModel ShortAddViewModel = new ShortAddViewModel();
 
-            //ShortAddViewModel.ShortAddId = _ShortAddRepository.GetMaxShortAddId() + 1;
+            ShortAddViewModel shortAddViewModel = new ShortAddViewModel();
+            shortAddViewModel.CarViewModel = new CarViewModel();
+            shortAddViewModel.CarViewModel.CarVinCodes = new List<string>();
+            shortAddViewModel.CarViewModel.CarVinCodes = _carService.GetAllCars().Where(c => c.CarId > 0).Select(c => c.CarVinCode).ToList();
 
-            //ShortAddViewModel.ShortAddBrands = new List<Brand>();
-            //ShortAddViewModel.ShortAddBrands = _brandService.GetAllBrands();
+            //shortAddViewModel.CarViewModel.CarVinCodes = _carService.GetAllCars().Where(c => c.CarId >= 0).Select(c => c.CarVinCode).ToList();
+            var carInfosBuffer = new List<SelectListItem>();
 
-            //ShortAddViewModel.ShortAddModels = new List<ShortAddModel>();
-            //ShortAddViewModel.ShortAddModels = _ShortAddModelService.GetAllShortAddModels();
+            foreach (var vinCode in shortAddViewModel.CarViewModel.CarVinCodes)
+            {
+                var text = vinCode + " - " + (_carService.GetCarModelCarBrandAndYearNameByVinCode(vinCode) ?? "N/A");
+                var item = new SelectListItem { Value = vinCode, Text = text };
+                carInfosBuffer.Add(item);
+            }
+            ViewBag.CarInfos = carInfosBuffer;
 
-            //ShortAddViewModel.FinishTypes = new List<FinishType>();
-            //ShortAddViewModel.FinishTypes = _finishTypeService.GetAllFinishTypes();
 
-            //ShortAddViewModel.ShortAddId = _ShortAddRepository.GetMaxShortAddId()+1;
 
-            return View(ShortAddViewModel);
+            //ViewBag.CarInfos = shortAddViewModel.CarViewModel.CarVinCodes
+            //    .Select(vinCode => new SelectListItem
+            //    {
+            //        Value = vinCode,
+            //        Text = vinCode + " - " + (_carService.GetCarModelCarBrandAndYearNameByVinCode(vinCode) ?? "N/A")
+            //    })
+            //    .ToList();
+
+
+            //ViewBag.CarModels = _carModelService.GetAllCarModels().Where(c => c.Id >= 0).Select(c => c.Name).ToList();
+            //ViewBag.CarVinCodes = new List<string>();
+            //ViewBag.CarVinCodes = _carService.GetAllCars().Where(c => c.CarId >= 0).Select(c => c.CarVinCode).ToList();
+
+
+
+            return View(shortAddViewModel);
         }
         // POST: ShortAddController/Create
         [Authorize]

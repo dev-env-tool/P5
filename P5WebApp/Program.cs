@@ -33,6 +33,9 @@ namespace P5WebApp
             builder.Services.AddScoped<IFixService, FixService>();
             builder.Services.AddScoped<IFixRepository, FixRepository>();
 
+            builder.Services.AddScoped<IShortAddService, ShortAddService>();
+            builder.Services.AddScoped<IShortAddRepository, ShortAddRepository>();
+
             // Add DB contexts to the app.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>

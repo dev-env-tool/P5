@@ -10,10 +10,12 @@ namespace P5WebApp.Models.Services
     public class ShortAddService : IShortAddService
     {
         private readonly IShortAddRepository? _shortAddRepository;
+        private readonly ICarService? _carService;
 
-        public ShortAddService(IShortAddRepository shortAddRepository)
+        public ShortAddService(IShortAddRepository shortAddRepository, ICarService carService)
         {
             _shortAddRepository = shortAddRepository;
+            _carService = carService;
         }
 
         public List<ShortAdd> GetAllShortAdds()
@@ -28,8 +30,6 @@ namespace P5WebApp.Models.Services
             IEnumerable<ShortAdd> shortAddEntities = GetAllShortAdds();
             return MapToViewModel(shortAddEntities);
         }
-
-
 
 
         private static List<ShortAddViewModel> MapToViewModel(IEnumerable<ShortAdd> shortAddEntities)
@@ -47,7 +47,7 @@ namespace P5WebApp.Models.Services
                     ShortAddSold = shortAdd.ShortAddSold,
                     ShortAddCarId = shortAdd.ShortAddCarId,
                     ShortAddBuyPrice = shortAdd.ShortAddBuyPrice,
-                    Car = shortAdd.Car,
+
 
                 });
             }
@@ -132,7 +132,7 @@ namespace P5WebApp.Models.Services
             shortAddToEdit.ShortAddSold = shortAdd.ShortAddSold;
             shortAddToEdit.ShortAddCarId = shortAdd.ShortAddCarId;
             shortAddToEdit.ShortAddBuyPrice = shortAdd.ShortAddBuyPrice;
-            shortAddToEdit.Car = shortAdd.Car;
+ 
   
 
 
@@ -160,7 +160,6 @@ namespace P5WebApp.Models.Services
                 ShortAddSold = shortAdd.ShortAddSold,
                 ShortAddCarId = shortAdd.ShortAddCarId,
                 ShortAddBuyPrice = shortAdd.ShortAddBuyPrice,
-                Car = shortAdd.Car,
 
             };
             return shortAddEntity;

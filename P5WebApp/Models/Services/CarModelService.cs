@@ -13,7 +13,7 @@ namespace P5WebApp.Models.Services
         private readonly ICarModelRepository ?_carModelRepository;
         private readonly ApplicationDbContext _context;
 
-        public CarModelService(ICarModelRepository carModelRepository, ApplicationDbContext context) 
+        public CarModelService(ICarModelRepository carModelRepository, ICarRepository carRepository, ApplicationDbContext context) 
         {
             _carModelRepository = carModelRepository;
             _context = context;

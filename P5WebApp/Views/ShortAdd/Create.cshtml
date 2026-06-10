@@ -1,87 +1,90 @@
-﻿@model P5WebApp.Models.ViewModels.CarViewModel
+﻿@model P5WebApp.Models.ViewModels.ShortAddViewModel
 @using P5WebApp.Models.Entities
 
 
 @{
     Layout = "_Layout";
     var fixes = ViewBag.Fixes as List<Fix>;
+    var vinCodes = ViewBag.CarVinCodes as List<Car>;
+    var carInfos = ViewBag.CarInfos;
 }
 
 
 <div class="row">
     <h1 class="mb-3 col-4 offset-md-4">
-        Création d'une voiture
+        Création d'une annonce
     </h1>
     <div style="white-space:pre-line">
         <h1></h1>
     </div>
     <form method="post">
-        <input type="hidden" name="CarId" value="@Model.CarId" />
+        <input type="hidden" name="ShortAddId" value="@Model.ShortAddId" />
         <div class="mb-3 col-4 offset-md-4">
             <div style="white-space:pre-line">
                 <h1></h1>
             </div>
-            <div class="mb-3 col-8">
-                <label>Marque*':</label>
-            </div>
-            <select asp-for="CarBrandId" class="form-select col-12" asp-items="@(new SelectList(Model.CarBrands, "BrandId", "BrandName"))"></select>
-            <span asp-validation-for="CarBrandId"></span>
             <div style="white-space:pre-line">
                 <h1></h1>
             </div>
             <div class="mb-3 col-8">
-                <label>Modèle*':</label>
+                <label>Description*:</label>
             </div>
-            <select asp-for="CarModelId" class="form-select col-12" asp-items="@(new SelectList(Model.CarModels, "Id", "Name"))"></select>
-            <span asp-validation-for="CarModelId"></span>
+            <input asp-for="Description" class="form-control col-12" />
+            <span asp-validation-for="Description"></span>
             <div style="white-space:pre-line">
                 <h1></h1>
             </div>
             <div class="mb-3 col-8">
-                <label>Finition*':</label>
+                <label>Date de disponibilité*':</label>
             </div>
-            <select asp-for="CarFinishTypeId" class="form-select col-12" asp-items="@(new SelectList(Model.FinishTypes, "FinishTypeId", "FinishTypeName"))"></select>
-            <span asp-validation-for="CarFinishTypeId"></span>
+            <input asp-for="ShortAddAvailabilityDate" type="text" id="txtDate" class="form-control col-12" date="@Model.ShortAddAvailabilityDate" />
+            <span asp-validation-for="ShortAddAvailabilityDate"></span>
             <div style="white-space:pre-line">
                 <h1></h1>
             </div>
             <div class="mb-3 col-8">
-                <label>Numéro de plaque*:</label>
+                <label>Publier l'annonce':</label>
             </div>
-            <input asp-for="CarVinCode" class="form-control col-12" />
-            <span asp-validation-for="CarVinCode"></span>
-            <div style="white-space:pre-line">
-                <h1></h1>
-            </div>
-            <div class="mb-3 col-8">
-                <label>Année de production*:</label>
-            </div>
-            <input asp-for="CarYear" type="text" id="txtDate" class="form-control col-12" date="@Model.CarYear" />
-            <span asp-validation-for="CarYear"></span>
-            <label class="date"></label>
-            <div style="white-space:pre-line">
-                <h1></h1>
-            </div>
-            <div class="mb-3 col-8">
-                <label>Date d'achat*':</label>
-            </div>
-            <input asp-for="CarBuyDate" type="text" id="txtDate2" class="form-control col-12" date="@Model.CarBuyDate" />
-            <span asp-validation-for="CarBuyDate"></span>
-            <label class="date"></label>
-            <div style="white-space:pre-line">
-                <h1></h1>
-            </div>
-            <div class="mb-3 col-8">
-                <label>Prix d'achat*':</label>
-            </div>
-            <input asp-for="CarBuyPrice" class="form-control col-12">
-            <span asp-validation-for="CarBuyPrice"></span>
-            <div style="white-space:pre-line">
-                <h1></h1>
-            </div>
+            <input asp-for="ShortAddBuyPrice" class="form-control navbar-toggler-icon col-12" />
+            <span asp-validation-for="ShortAddBuyPrice"></span>
 
-            
+
+
+
+
+
+
+
             <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Date de vente:</label>
+            </div>
+            <input asp-for="ShortAddDateSold" type="text" id="txtDate2" class="form-control col-12" date="@Model.ShortAddDateSold" />
+            <span asp-validation-for="ShortAddDateSold"></span>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Voiture*:</label>
+            </div>
+            @Html.DropDownListFor(m => m.CarViewModel.SelectedVinCode,
+                new SelectList(carInfos, "Value", "Text"), htmlAttributes: new {@class ="form-control col-12"})
+            <span asp-validation-for="ShortAddCarId"></span>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Prix d'achat*:</label>
+            </div>
+            <input asp-for="ShortAddBuyPrice" class="form-control col-12" />
+            <span asp-validation-for="ShortAddBuyPrice"></span>
+
+
+
+
+            @* <div style="white-space:pre-line">
                 <h1></h1>
             </div>
             <div>
@@ -150,7 +153,7 @@
                         <input type="hidden" name="Id" value=@(Model.CarBrandId) />
                     </a>
 
-                </div>
+                </div> *@
                 <div style="white-space:pre-line">
                     <h1></h1>
                 </div>

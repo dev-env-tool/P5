@@ -4,16 +4,20 @@ using P5WebApp.Models.Repositories;
 using P5WebApp.Models.ViewModels;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.Linq;
 
 namespace P5WebApp.Models.Services
 {
     public class CarService : ICarService
     {
         private readonly ICarRepository ?_carRepository;
-
-        public CarService(ICarRepository carRepository) 
+        private readonly ICarModelService? _carModelService;
+        private readonly IBrandService? _brandService;
+        public CarService(ICarRepository carRepository, ICarModelService carModelService, IBrandService brandService) 
         {
             _carRepository = carRepository;
+            _carModelService = carModelService;
+            _brandService = brandService;
         }
 
         public List<Car> GetAllCars()
@@ -21,6 +25,24 @@ namespace P5WebApp.Models.Services
             IEnumerable<Car> CarEntities = _carRepository.GetAllCars();
             return CarEntities.ToList();
         }
+
+        public string GetCarModelCarBrandAndYearNameByVinCode(string CarVinCode)
+        {
+            int carModelId = GetAllCars().Where(c => c.CarVinCode == CarVinCode).Select(c => c.CarModelId).FirstOrDefault();
+            string carModelName = _carModelService.GetAllCarModels().Where(c => c.Id == carModelId).Select(c => c.Name).Single();
+
+
+            int carBrandId = GetAllCars().Where(c => c.CarVinCode == CarVinCode).Select(c => c.CarBrandId).FirstOrDefault();
+            string brandName = _brandService.GetAllBrands().Where(b => b.BrandId == carBrandId).Select(b => b.BrandName).Single();
+
+            string carBrandYear = GetAllCars().Where(c => c.CarVinCode == CarVinCode).Select(c => c.CarYear).FirstOrDefault().ToString();
+
+
+            return (carModelName + " " + brandName + " " + carBrandYear);
+        }
+
+
+
 
         public List<CarViewModel> GetAllCarsViewModel()
         {
