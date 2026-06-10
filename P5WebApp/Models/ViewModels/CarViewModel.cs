@@ -69,5 +69,6 @@ namespace P5WebApp.Models.ViewModels
 
 
         public string SelectedVinCode { get; set; }
+
     }
 }

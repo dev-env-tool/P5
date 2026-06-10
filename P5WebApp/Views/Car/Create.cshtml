@@ -6,6 +6,16 @@
     Layout = "_Layout";
     var fixes = ViewBag.Fixes as List<Fix>;
 }
+@{
+    bool IsFormFilled =
+                Model.CarBrandId != 0 &&
+                Model.CarModelId != 0 &&
+                Model.CarFinishTypeId != 0 &&
+                !string.IsNullOrWhiteSpace(Model.CarVinCode) &&
+                Model.CarYear != null &&
+                Model.CarBuyDate != null &&
+                Model.CarBuyPrice != 0;
+}
 
 
 <div class="row">
@@ -17,6 +27,7 @@
     </div>
     <form method="post">
         <input type="hidden" name="CarId" value="@Model.CarId" />
+        <input type="hidden" name="SelectedVinCode" value="ok"/>
         <div class="mb-3 col-4 offset-md-4">
             <div style="white-space:pre-line">
                 <h1></h1>
@@ -80,86 +91,105 @@
                 <h1></h1>
             </div>
 
-            
+
+                
+                    
+            @if (Model.CarId != 0)
+            {
+                    <div class="row">
+                        <button class="btn btn-custom"> Créer une réparation</button>
+                    </div>
+                    <div style="white-space:pre-line">
+                        <h1></h1>
+                    </div>
+                    <div>
+                        <div class="mb-3 col-8">
+                            <table class="table table-bordered table-striped table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <label>Réparation</label>
+                                        </th>
+                                        <th>
+                                            <label>Date</label>
+                                        </th>
+                                        <th>
+                                            <label>Coût</label>
+                                        </th>
+                                        <th>
+                                            <label>Modifier</label>
+                                        </th>
+                                        <th>
+                                            <label>Supprimer</label>
+                                        </th>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var f in ViewBag.Fixes)
+                                    {
+
+                                        <tr>
+                                            <td>
+                                                @(f.FixDescription)
+                                            </td>
+                                            <td>
+                                                @(f.FixDate)
+                                            </td>
+                                            <td>
+                                                @(f.FixCost)
+                                            </td>
+
+                                            <td>
+                                                <form id="@(f.FixId)" asp-action="Edit" asp-controller="Fix" method="get">
+                                                    <input type="hidden" name="Id" value=@(f.FixId) />
+                                                    <button type="submit" class="btn-custom btn btn-danger">
+                                                        Modifier
+                                                    </button>
+                                                </form>
+                                            </td>
+                                            <td>
+
+                                                <form id="@(f.FixId)" asp-action="Delete" asp-controller="Fix" method="post">
+                                                    <input type="hidden" name="Id" value=@(f.FixId) />
+                                                    <button type="submit" class="btn-custom btn btn-danger">
+                                                        Supprimer
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+
+
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+
+                    </div>
+                    <div style="white-space:pre-line">
+                        <h1></h1>
+                    </div>
+            }
+
+            else 
+            {
+            <button disabled class="btn btn-custom">Créer une réparation</button>
+            }
+                
             <div style="white-space:pre-line">
                 <h1></h1>
             </div>
-            <div>
-                <div class="mb-3 col-8">
-                    <table class="table table-bordered table-striped table-sm">
-                        <thead>
-                            <tr>
-                                <th>
-                                    <label>Réparation</label>
-                                </th>
-                                <th>
-                                    <label>Date</label>
-                                </th>
-                                <th>
-                                    <label>Coût</label>
-                                </th>
-                                <th>
-                                    <label>Modifier</label>
-                                </th>
-                                <th>
-                                    <label>Supprimer</label>
-                                </th>
-                            </thead>
-                            <tbody>
-      
-                                @foreach (var f in ViewBag.Fixes)
-                                {
-
-                                    <tr>
-                                        <td>
-                                            @(f.FixDescription)
-                                        </td>
-                                        <td>
-                                            @(f.FixDate)
-                                        </td>
-                                        <td>
-                                            @(f.FixCost)
-                                        </td>
-                        
-                                        <td>
-                                            <form id="@(f.FixId)" asp-action="Edit" asp-controller="Fix" method="get">
-                                                <input type="hidden" name="Id" value=@(f.FixId) />
-                                                <button type="submit" class="btn-custom btn btn-danger">
-                                                    Modifier
-                                                </button>
-                                            </form>
-                                        </td>
-                                        <td>
-                        
-                                            <form id="@(f.FixId)" asp-action="Delete" asp-controller="Fix" method="post">
-                                                <input type="hidden" name="Id" value=@(f.FixId) />
-                                                <button type="submit" class="btn-custom btn btn-danger">
-                                                    Supprimer
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                }
-
-
-
-                            </tbody>
-                        </table>
-                    </div>
-                    <a class="btn btn-primary btn-custom" asp-controller="Fix" asp-action="Create">Créer une réparation
-                        <input type="hidden" name="Id" value=@(Model.CarBrandId) />
-                    </a>
-
-                </div>
-                <div style="white-space:pre-line">
-                    <h1></h1>
-                </div>
                 <div class="row">
                     <button type="submit" class="btn btn-custom col-12">Créer une voiture</button>
                 </div>
             </div>
         </form>
     </div>
+
+
+
     <div style="white-space:pre-line">
         <h1></h1>
     </div>

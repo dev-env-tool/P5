@@ -144,12 +144,12 @@ namespace P5WebApp.Controllers
         {
             {
                 _fixService.DeleteFix(id);
-                var path = ViewData["ReturnPath"];
+                //var path = ViewData["ReturnPath"];
 
-                if (path == "~/Car/Edit/~")
-                { 
-                    return RedirectToAction("Edit", "Car");
-                }
+                //if (path == "~/Car/Edit/~")
+                //{ 
+                //    return RedirectToAction("Edit", "Car");
+                //}
 
                 return RedirectToAction("Create", "Car");
 

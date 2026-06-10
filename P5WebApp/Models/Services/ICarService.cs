@@ -12,7 +12,7 @@ namespace P5WebApp.Models.Services
         Car GetCarById(int id);
         CarViewModel GetCarByIdViewModel(int id);
         void UpdateCarInfos(CarViewModel Car);
-        void SaveCar(CarViewModel Car);
+        Car SaveCar(CarViewModel Car);
         void DeleteCar(int id);
 
         /// <summary>

@@ -97,11 +97,12 @@ namespace P5WebApp.Controllers
         {
 
             ShortAddViewModel shortAddViewModel = new ShortAddViewModel();
+            shortAddViewModel.Car = new Car();
             shortAddViewModel.CarViewModel = new CarViewModel();
+            shortAddViewModel.CarViewModel.SelectedVinCode = "test";
             shortAddViewModel.CarViewModel.CarVinCodes = new List<string>();
             shortAddViewModel.CarViewModel.CarVinCodes = _carService.GetAllCars().Where(c => c.CarId > 0).Select(c => c.CarVinCode).ToList();
 
-            //shortAddViewModel.CarViewModel.CarVinCodes = _carService.GetAllCars().Where(c => c.CarId >= 0).Select(c => c.CarVinCode).ToList();
             var carInfosBuffer = new List<SelectListItem>();
 
             foreach (var vinCode in shortAddViewModel.CarViewModel.CarVinCodes)
@@ -113,32 +114,43 @@ namespace P5WebApp.Controllers
             ViewBag.CarInfos = carInfosBuffer;
 
 
-
-            //ViewBag.CarInfos = shortAddViewModel.CarViewModel.CarVinCodes
-            //    .Select(vinCode => new SelectListItem
-            //    {
-            //        Value = vinCode,
-            //        Text = vinCode + " - " + (_carService.GetCarModelCarBrandAndYearNameByVinCode(vinCode) ?? "N/A")
-            //    })
-            //    .ToList();
-
-
-            //ViewBag.CarModels = _carModelService.GetAllCarModels().Where(c => c.Id >= 0).Select(c => c.Name).ToList();
-            //ViewBag.CarVinCodes = new List<string>();
-            //ViewBag.CarVinCodes = _carService.GetAllCars().Where(c => c.CarId >= 0).Select(c => c.CarVinCode).ToList();
-
-
-
             return View(shortAddViewModel);
         }
         // POST: ShortAddController/Create
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(ShortAddViewModel ShortAdd)
+        public IActionResult Create(ShortAddViewModel shortAdd)
         {
+            
+            shortAdd.Car = new Car();
 
-            Dictionary<string, string> modelErrors = _shortAddService.CheckShortAddModelErrors(ShortAdd);
+            shortAdd.Car.CarVinCode = shortAdd.CarViewModel.SelectedVinCode;
+
+            shortAdd.CarViewModel = new CarViewModel();
+
+        
+            shortAdd.CarViewModel.CarVinCodes = new List<string>();
+            shortAdd.CarViewModel.CarVinCodes = _carService.GetAllCars().Where(c => c.CarId > 0).Select(c => c.CarVinCode).ToList();
+
+            var carInfosBuffer = new List<SelectListItem>();
+
+            foreach (var vinCode in shortAdd.CarViewModel.CarVinCodes)
+            {
+                var text = vinCode + " - " + (_carService.GetCarModelCarBrandAndYearNameByVinCode(vinCode) ?? "N/A");
+                var item = new SelectListItem { Value = vinCode, Text = text };
+                carInfosBuffer.Add(item);
+            }
+            ViewBag.CarInfos = carInfosBuffer;
+
+
+
+            shortAdd.CarViewModel = _carService.GetCarByIdViewModel(shortAdd.Car.CarId);
+
+
+
+
+            Dictionary<string, string> modelErrors = _shortAddService.CheckShortAddModelErrors(shortAdd);
 
 
             foreach (var key in modelErrors)
@@ -150,12 +162,12 @@ namespace P5WebApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                _shortAddService.SaveShortAdd(ShortAdd);
+                _shortAddService.SaveShortAdd(shortAdd);
                 return RedirectToAction("Admin");
             }
             else
             {
-                return View(ShortAdd);
+                return View(shortAdd);
             }
 
         }

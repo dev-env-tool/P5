@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using P5WebApp.Models.Entities;
 using P5WebApp.Models.Repositories;
 using P5WebApp.Models.ViewModels;
@@ -50,7 +51,6 @@ namespace P5WebApp.Models.Services
             IEnumerable<Car> CarEntities = GetAllCars();
             return MapToViewModel(CarEntities);
         }
-
 
 
 
@@ -184,10 +184,11 @@ namespace P5WebApp.Models.Services
 
         }
 
-        public void SaveCar(CarViewModel Car)
+        public Car SaveCar(CarViewModel Car)
         {
             var CarToAdd = MapToCarEntity(Car);
             _carRepository.SaveCar(CarToAdd);
+            return CarToAdd;
         }
 
 

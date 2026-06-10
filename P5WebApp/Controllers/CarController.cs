@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -109,9 +110,9 @@ namespace P5WebApp.Controllers
         public ViewResult Create(int id)
         {
             ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedCarId == id);
-            CarViewModel CarViewModel = new CarViewModel();
 
-            //CarViewModel.CarId = _carRepository.GetMaxCarId() + 1;
+            CarViewModel CarViewModel = new CarViewModel();
+            CarViewModel.Car = new Car();
 
             CarViewModel.CarBrands = new List<Brand>();
             CarViewModel.CarBrands = _brandService.GetAllBrands();
@@ -122,7 +123,8 @@ namespace P5WebApp.Controllers
             CarViewModel.FinishTypes = new List<FinishType>();
             CarViewModel.FinishTypes = _finishTypeService.GetAllFinishTypes();
 
-            CarViewModel.CarId = _carRepository.GetMaxCarId()+1;
+
+
 
             return View(CarViewModel);
         }
@@ -145,8 +147,27 @@ namespace P5WebApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                _carService.SaveCar(Car);
-                return RedirectToAction("Admin");
+
+                // var to retrieve Car.Id generated automatically via SQL
+                var createdCar = _carService.SaveCar(Car);
+
+                // reload carviewmodel with id, fixes brands ...
+                Car.CarId = createdCar.CarId;
+                Car.CarBrandId = createdCar.CarBrandId;
+
+
+
+                ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedCarId == Car.CarId);
+                Car.CarBrands = new List<Brand>();
+                Car.CarBrands = _brandService.GetAllBrands();
+
+                Car.CarModels = new List<CarModel>();
+                Car.CarModels = _carModelService.GetAllCarModels();
+
+                Car.FinishTypes = new List<FinishType>();
+                Car.FinishTypes = _finishTypeService.GetAllFinishTypes();
+                return View(Car);
+
             }
             else
             {
@@ -217,9 +238,9 @@ namespace P5WebApp.Controllers
         {
 
             ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedCarId == id);
-
+            
             CarViewModel CarViewModel = _carService.GetCarByIdViewModel(id);
-            var editCar = _carService.GetCarById(id);
+            //var editCar = _carService.GetCarById(id);
 
 
             CarViewModel.CarBrands = new List<Brand>();
