@@ -65,10 +65,10 @@ namespace P5WebApp.Models.ViewModels
 
 
 
-        public List<string>? CarVinCodes { get; set; } = new List<string>();
+        //public List<string>? CarVinCodes { get; set; } = new List<string>();
 
 
-        public string SelectedVinCode { get; set; }
+        //public string SelectedVinCode { get; set; }
 
     }
 }

@@ -99,19 +99,19 @@ namespace P5WebApp.Controllers
             ShortAddViewModel shortAddViewModel = new ShortAddViewModel();
             shortAddViewModel.Car = new Car();
             shortAddViewModel.CarViewModel = new CarViewModel();
-            shortAddViewModel.CarViewModel.SelectedVinCode = "test";
-            shortAddViewModel.CarViewModel.CarVinCodes = new List<string>();
-            shortAddViewModel.CarViewModel.CarVinCodes = _carService.GetAllCars().Where(c => c.CarId > 0).Select(c => c.CarVinCode).ToList();
+            //shortAddViewModel.CarViewModel.SelectedVinCode = "test";
+            //shortAddViewModel.CarViewModel.CarVinCodes = new List<string>();
+            //shortAddViewModel.CarViewModel.CarVinCodes = _carService.GetAllCars().Where(c => c.CarId > 0).Select(c => c.CarVinCode).ToList();
 
-            var carInfosBuffer = new List<SelectListItem>();
+            //var carInfosBuffer = new List<SelectListItem>();
 
-            foreach (var vinCode in shortAddViewModel.CarViewModel.CarVinCodes)
-            {
-                var text = vinCode + " - " + (_carService.GetCarModelCarBrandAndYearNameByVinCode(vinCode) ?? "N/A");
-                var item = new SelectListItem { Value = vinCode, Text = text };
-                carInfosBuffer.Add(item);
-            }
-            ViewBag.CarInfos = carInfosBuffer;
+            //foreach (var vinCode in shortAddViewModel.CarViewModel.CarVinCodes)
+            //{
+            //    var text = vinCode + " - " + (_carService.GetCarModelCarBrandAndYearNameByVinCode(vinCode) ?? "N/A");
+            //    var item = new SelectListItem { Value = vinCode, Text = text };
+            //    carInfosBuffer.Add(item);
+            //}
+            //ViewBag.CarInfos = carInfosBuffer;
 
 
             return View(shortAddViewModel);
@@ -125,23 +125,23 @@ namespace P5WebApp.Controllers
             
             shortAdd.Car = new Car();
 
-            shortAdd.Car.CarVinCode = shortAdd.CarViewModel.SelectedVinCode;
+            //shortAdd.Car.CarVinCode = shortAdd.CarViewModel.SelectedVinCode;
 
             shortAdd.CarViewModel = new CarViewModel();
 
         
-            shortAdd.CarViewModel.CarVinCodes = new List<string>();
-            shortAdd.CarViewModel.CarVinCodes = _carService.GetAllCars().Where(c => c.CarId > 0).Select(c => c.CarVinCode).ToList();
+            //shortAdd.CarViewModel.CarVinCodes = new List<string>();
+            //shortAdd.CarViewModel.CarVinCodes = _carService.GetAllCars().Where(c => c.CarId > 0).Select(c => c.CarVinCode).ToList();
 
-            var carInfosBuffer = new List<SelectListItem>();
+            //var carInfosBuffer = new List<SelectListItem>();
 
-            foreach (var vinCode in shortAdd.CarViewModel.CarVinCodes)
-            {
-                var text = vinCode + " - " + (_carService.GetCarModelCarBrandAndYearNameByVinCode(vinCode) ?? "N/A");
-                var item = new SelectListItem { Value = vinCode, Text = text };
-                carInfosBuffer.Add(item);
-            }
-            ViewBag.CarInfos = carInfosBuffer;
+            //foreach (var vinCode in shortAdd.CarViewModel.CarVinCodes)
+            //{
+            //    var text = vinCode + " - " + (_carService.GetCarModelCarBrandAndYearNameByVinCode(vinCode) ?? "N/A");
+            //    var item = new SelectListItem { Value = vinCode, Text = text };
+            //    carInfosBuffer.Add(item);
+            //}
+            //ViewBag.CarInfos = carInfosBuffer;
 
 
 

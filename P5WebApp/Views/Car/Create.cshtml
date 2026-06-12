@@ -7,27 +7,27 @@
     var fixes = ViewBag.Fixes as List<Fix>;
 }
 @{
-    bool IsFormFilled =
-                Model.CarBrandId != 0 &&
-                Model.CarModelId != 0 &&
-                Model.CarFinishTypeId != 0 &&
-                !string.IsNullOrWhiteSpace(Model.CarVinCode) &&
-                Model.CarYear != null &&
-                Model.CarBuyDate != null &&
-                Model.CarBuyPrice != 0;
+    bool IsCarFormFilled =
+                        !string.IsNullOrWhiteSpace(Model.CarVinCode) &&
+                        Model.CarYear != null &&
+                        Model.CarBuyDate != null &&
+                        Model.CarBuyPrice != null &&
+                        Model.CarBuyPrice > 0;
+
 }
 
 
 <div class="row">
+    <p>Formulaire rempli : <span id="IsCarFormFilled">false</span></p>
     <h1 class="mb-3 col-4 offset-md-4">
         Création d'une voiture
     </h1>
     <div style="white-space:pre-line">
         <h1></h1>
     </div>
-    <form method="post">
+    <form id="CarForm" method="post">
         <input type="hidden" name="CarId" value="@Model.CarId" />
-        <input type="hidden" name="SelectedVinCode" value="ok"/>
+        @* <input type="hidden" name="SelectedVinCode" value="ok"/> *@
         <div class="mb-3 col-4 offset-md-4">
             <div style="white-space:pre-line">
                 <h1></h1>
@@ -59,7 +59,7 @@
             <div class="mb-3 col-8">
                 <label>Numéro de plaque*:</label>
             </div>
-            <input asp-for="CarVinCode" class="form-control col-12" />
+            <input asp-for="CarVinCode" class="form-control col-12" required />
             <span asp-validation-for="CarVinCode"></span>
             <div style="white-space:pre-line">
                 <h1></h1>
@@ -94,10 +94,10 @@
 
                 
                     
-            @if (Model.CarId != 0)
+            @if (IsCarFormFilled)
             {
                     <div class="row">
-                        <button class="btn btn-custom"> Créer une réparation</button>
+                    <button id="CreateFixButon" class="btn btn-custom" asp-controller="Fix" asp-action="Create"> Créer une réparation</button>
                     </div>
                     <div style="white-space:pre-line">
                         <h1></h1>
@@ -173,10 +173,11 @@
                     </div>
             }
 
-            else 
-            {
-            <button disabled class="btn btn-custom">Créer une réparation</button>
-            }
+
+                    <div class="row">
+                    <button id="CreateFixButton" class="btn btn-custom" asp-controller="Fix" asp-action="Create" disabled>Créer une réparation</button>
+                    </div>
+
                 
             <div style="white-space:pre-line">
                 <h1></h1>
@@ -200,14 +201,133 @@
         @{
             await Html.RenderPartialAsync("_ValidationScriptsPartial");
             <script type="text/javascript">
-                $(function(){
-                $("#txtDate").datepicker({format:"dd/mm/yyyy"});
+                $(function()
+                {
+                    $("#txtDate").datepicker({format:"dd/mm/yyyy"});
                 });
-                $(function(){
-                $("#txtDate2").datepicker({format:"dd/mm/yyyy"});
+                $(function()
+                {
+                    $("#txtDate2").datepicker({format:"dd/mm/yyyy"});
                 });
+            </script>
             
+            <script type="text/javascript">
+            //display all error messages without any initial interaction
+            $(document).ready(function() 
+            {
+                var form = $("#CarForm");
+                form.validate();
+                form.valid();
+            });
             </script>
 
+
+
+  //           <script type="text/javascript">
+  //           $(document).ready(function() {
+  //               function checkFields()
+  //               {
+  //               let IsCarFormFilled = true;
+  //               $("input[required]").each(function() {console.log($(this).attr('name') + ": '" + $(this).val() + "'");
+  //                       if ($(this).val().trim() === "") {
+  //                       IsCarFormFilled = false;
+  //                           return false;
+  //                       }
+  //                   });
+  //               if (IsCarFormFilled)
+  //                   {
+  //     $("#CreateFixButon").prop('disabled', false);
+  //                   }
+  //                   else
+  //                   {
+  //     $("#CreateFixButon").prop('disabled', true);
+  //                   }
+  //               }
+
+
+  //               checkFields();
+
+
+  // $("input[required]").on("input change", checkFields);
+  //           });
+  //           </script>
+
+  // <script type="text/javascript">
+  //           $(document).ready(function() {
+  //               var form = $("#CarForm");
+  //               form.validate();
+  //               form.valid();
+
+  //               function checkFields() 
+  //               {
+  //                   let IsCarFormFilled = true;
+  //                   $("input[required]:visible:not(:disabled)").each(function() 
+  //                   {
+  //                       if (!$(this).val() || $(this).val().trim() === "") 
+  //                   {
+  //                       IsCarFormFilled = false;
+  //                       return false;
+  //                   }
+  //               });
+                    
+  //                   console.log("Form filled? ", IsCarFormFilled);
+
+  //                   if (IsCarFormFilled)
+  //                   {
+  //     $("#CreateFixButton").prop('disabled', false); // Vérifiez l'id exact ici !
+  //                   }
+  //                   else
+  //                   {
+  //     $("#CreateFixButton").prop('disabled', true);
+  //                   }
+  //               }
+
+  //               setTimeout(checkFields, 100); // validation initiale après léger délai
+  //               $("input[required]").on("input change", checkFields);
+  //               });
+
+  //               $("#IsCarFormFilled").text(IsCarFormFilled);
+
+
+  //               $("#CreateFixButton").prop('disabled', !IsCarFormFilled);
+
+  //               $(document).ready(function() {
+  //               checkFields();
+  //               $("input[required]").on("input change", checkFields);
+  //               });
+  //           </script>
+
+
+            <script type="text/javascript">
+                $(document).ready(function() {
+                var form = $("#CarForm");
+
+
+                function checkFields() {
+                let IsCarFormFilled = true;
+                $("input[required]:visible:not(:disabled)").each(function() {
+                if (!$(this).val() || $(this).val().trim() === "") {
+                IsCarFormFilled = false;
+                return false;
+                }
+                });
+
+                console.log("Form filled? ", IsCarFormFilled);
+
+                $("#IsCarFormFilled").text(IsCarFormFilled);
+                $("#CreateFixButton").prop('disabled', !IsCarFormFilled);
+                }
+
+                setTimeout(checkFields, 100); // validation initiale après léger délai
+                $("input[required]").on("input change", checkFields);
+                // appel initial pour la page chargée
+                checkFields();
+                });
+            </script>
+
+
+
+ 
         }
     }
+            
