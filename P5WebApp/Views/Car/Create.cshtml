@@ -11,9 +11,7 @@
                         !string.IsNullOrWhiteSpace(Model.CarVinCode) &&
                         Model.CarYear != null &&
                         Model.CarBuyDate != null &&
-                        Model.CarBuyPrice != null &&
                         Model.CarBuyPrice > 0;
-
 }
 
 
@@ -92,86 +90,123 @@
             </div>
 
 
-                
-                    
-            @if (IsCarFormFilled)
-            {
-                    <div class="row">
-                    <button id="CreateFixButon" class="btn btn-custom" asp-controller="Fix" asp-action="Create"> Créer une réparation</button>
-                    </div>
-                    <div style="white-space:pre-line">
-                        <h1></h1>
-                    </div>
-                    <div>
+            <div id="CreateFixDiv" >
+                    <div  class="row">
+                        <form id="FixForm" method="post">
+                            <input type="hidden" name="FixId" value="@Model.FixId" />
+                            <div style="white-space:pre-line">
+                                <h1></h1>
+                            </div>
                         <div class="mb-3 col-8">
-                            <table class="table table-bordered table-striped table-sm">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <label>Réparation</label>
-                                        </th>
-                                        <th>
-                                            <label>Date</label>
-                                        </th>
-                                        <th>
-                                            <label>Coût</label>
-                                        </th>
-                                        <th>
-                                            <label>Modifier</label>
-                                        </th>
-                                        <th>
-                                            <label>Supprimer</label>
-                                        </th>
-                                </thead>
-                                <tbody>
-
-                                    @foreach (var f in ViewBag.Fixes)
-                                    {
-
-                                        <tr>
-                                            <td>
-                                                @(f.FixDescription)
-                                            </td>
-                                            <td>
-                                                @(f.FixDate)
-                                            </td>
-                                            <td>
-                                                @(f.FixCost)
-                                            </td>
-
-                                            <td>
-                                                <form id="@(f.FixId)" asp-action="Edit" asp-controller="Fix" method="get">
-                                                    <input type="hidden" name="Id" value=@(f.FixId) />
-                                                    <button type="submit" class="btn-custom btn btn-danger">
-                                                        Modifier
-                                                    </button>
-                                                </form>
-                                            </td>
-                                            <td>
-
-                                                <form id="@(f.FixId)" asp-action="Delete" asp-controller="Fix" method="post">
-                                                    <input type="hidden" name="Id" value=@(f.FixId) />
-                                                    <button type="submit" class="btn-custom btn btn-danger">
-                                                        Supprimer
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    }
-
-
-
-                                </tbody>
-                            </table>
+                            <label>Description de la réparation*:</label>
+                        </div>
+                        <input asp-for="FixDescription" class="form-control col-12"/>
+                        <span asp-validation-for="FixDescription"></span>
+                        <div style="white-space:pre-line">
+                            <h1></h1>
+                        </div>
+                        <div class="mb-3 col-8">
+                            <label>Date de la réparation*:</label>
+                        </div>
+                        <input asp-for="CarYear" type="text" id="txtDate" class="form-control col-12" date="@Model.CarYear" />
+                        <span asp-validation-for="CarYear"></span>
+                        <label class="date"></label>
+                        <div style="white-space:pre-line">
+                            <h1></h1>
+                        </div>
+                        <div class="mb-3 col-8">
+                            <label>Coût de la réparation*:</label>
+                        </div>
+                        <input asp-for="FixCost" class="form-control col-12"/>
+                        <span asp-validation-for="FixCost"></span>
+                        <div style="white-space:pre-line">
+                            <h1></h1>
                         </div>
 
 
 
+
+
+
+
+                        </form>
+
                     </div>
+            </div>
+            <div>
+
+                        <div>
+                            <div class="mb-3 col-8">
+                                <table class="table table-bordered table-striped table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <label>Réparation</label>
+                                            </th>
+                                            <th>
+                                                <label>Date</label>
+                                            </th>
+                                            <th>
+                                                <label>Coût</label>
+                                            </th>
+                                            <th>
+                                                <label>Modifier</label>
+                                            </th>
+                                            <th>
+                                                <label>Supprimer</label>
+                                            </th>
+                                    </thead>
+                                    <tbody>
+
+                                        @foreach (var f in ViewBag.Fixes)
+                                        {
+
+                                            <tr>
+                                                <td>
+                                                    @(f.FixDescription)
+                                                </td>
+                                                <td>
+                                                    @(f.FixDate)
+                                                </td>
+                                                <td>
+                                                    @(f.FixCost)
+                                                </td>
+
+                                                <td>
+                                                    <form id="@(f.FixId)" asp-action="Edit" asp-controller="Fix" method="get">
+                                                        <input type="hidden" name="Id" value=@(f.FixId) />
+                                                        <button type="submit" class="btn-custom btn btn-danger">
+                                                            Modifier
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                                <td>
+
+                                                    <form id="@(f.FixId)" asp-action="Delete" asp-controller="Fix" method="post">
+                                                        <input type="hidden" name="Id" value=@(f.FixId) />
+                                                        <button type="submit" class="btn-custom btn btn-danger">
+                                                            Supprimer
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        }
+
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+
+                    @* </div> *@
                     <div style="white-space:pre-line">
                         <h1></h1>
                     </div>
-            }
+            </div>
+            
 
 
                     <div class="row">
@@ -223,105 +258,52 @@
 
 
 
-  //           <script type="text/javascript">
-  //           $(document).ready(function() {
-  //               function checkFields()
-  //               {
-  //               let IsCarFormFilled = true;
-  //               $("input[required]").each(function() {console.log($(this).attr('name') + ": '" + $(this).val() + "'");
-  //                       if ($(this).val().trim() === "") {
-  //                       IsCarFormFilled = false;
-  //                           return false;
-  //                       }
-  //                   });
-  //               if (IsCarFormFilled)
-  //                   {
-  //     $("#CreateFixButon").prop('disabled', false);
-  //                   }
-  //                   else
-  //                   {
-  //     $("#CreateFixButon").prop('disabled', true);
-  //                   }
-  //               }
-
-
-  //               checkFields();
-
-
-  // $("input[required]").on("input change", checkFields);
-  //           });
-  //           </script>
-
-  // <script type="text/javascript">
-  //           $(document).ready(function() {
-  //               var form = $("#CarForm");
-  //               form.validate();
-  //               form.valid();
-
-  //               function checkFields() 
-  //               {
-  //                   let IsCarFormFilled = true;
-  //                   $("input[required]:visible:not(:disabled)").each(function() 
-  //                   {
-  //                       if (!$(this).val() || $(this).val().trim() === "") 
-  //                   {
-  //                       IsCarFormFilled = false;
-  //                       return false;
-  //                   }
-  //               });
-                    
-  //                   console.log("Form filled? ", IsCarFormFilled);
-
-  //                   if (IsCarFormFilled)
-  //                   {
-  //     $("#CreateFixButton").prop('disabled', false); // Vérifiez l'id exact ici !
-  //                   }
-  //                   else
-  //                   {
-  //     $("#CreateFixButton").prop('disabled', true);
-  //                   }
-  //               }
-
-  //               setTimeout(checkFields, 100); // validation initiale après léger délai
-  //               $("input[required]").on("input change", checkFields);
-  //               });
-
-  //               $("#IsCarFormFilled").text(IsCarFormFilled);
-
-
-  //               $("#CreateFixButton").prop('disabled', !IsCarFormFilled);
-
-  //               $(document).ready(function() {
-  //               checkFields();
-  //               $("input[required]").on("input change", checkFields);
-  //               });
-  //           </script>
 
 
             <script type="text/javascript">
-                $(document).ready(function() {
-                var form = $("#CarForm");
+                $(document).ready(function() 
+                {
+                    var form = $("#CarForm");
+
+                    function checkFields() 
+                    {
+                        let IsCarFormFilled = true;
+                        $("input[required]:visible:not(:disabled)").each(function() {
+                        if (!$(this).val() || $(this).val().trim() === "") {
+                        IsCarFormFilled = false;
+                        return false;
+                        }
+                        });
+
+                        console.log("Form filled? ", IsCarFormFilled);
+
+                        $("#IsCarFormFilled").text(IsCarFormFilled);
+                        $("#CreateFixButton").prop('disabled', !IsCarFormFilled);
+
+                        if (IsCarFormFilled)
+                        {
+                        $("#CreateFixDiv").show();
+                        }
+                        else
+                        {
+                        $("#CreateFixDiv").hide();
+                        }
+                    }
 
 
-                function checkFields() {
-                let IsCarFormFilled = true;
-                $("input[required]:visible:not(:disabled)").each(function() {
-                if (!$(this).val() || $(this).val().trim() === "") {
-                IsCarFormFilled = false;
-                return false;
+                let debounceTimer;
+
+                function debounceCheck() {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(checkFields, 400);
                 }
-                });
 
-                console.log("Form filled? ", IsCarFormFilled);
+                $("input[required]").on("input change", debounceCheck);
+                $("input[required]").on("blur", checkFields);
 
-                $("#IsCarFormFilled").text(IsCarFormFilled);
-                $("#CreateFixButton").prop('disabled', !IsCarFormFilled);
-                }
 
-                setTimeout(checkFields, 100); // validation initiale après léger délai
-                $("input[required]").on("input change", checkFields);
-                // appel initial pour la page chargée
-                checkFields();
+                setTimeout(checkFields, 100);
+
                 });
             </script>
 
