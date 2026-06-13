@@ -43,20 +43,20 @@ namespace P5WebApp.Models.ViewModels
         public int CarFinishTypeId { get; set; }
 
 
-        public int FixId { get; set; }
+        //public int FixId { get; set; }
 
-        [Required(ErrorMessage = "Veuillez renseigner la description de la réparation")]
-        public string FixDescription { get; set; }
-
-
-        [Required(ErrorMessage = "Veuillez renseigner la date de la réparation")]
-        public DateOnly? FixDate { get; set; }
+        //[Required(ErrorMessage = "Veuillez renseigner la description de la réparation")]
+        //public string FixDescription { get; set; }
 
 
-        [Required(ErrorMessage = "Veuillez renseigner le coût de la réparation")]
-        [RegularExpression("^(-?(\\d+\\.?\\d+|\\d))+$", ErrorMessage = "Le coût n'est pas un nombre")]
-        [Range(0.0001, double.MaxValue, ErrorMessage = "Le coût n'est pas supérieur à 0")]
-        public double FixCost { get; set; }
+        //[Required(ErrorMessage = "Veuillez renseigner la date de la réparation")]
+        //public DateOnly? FixDate { get; set; }
+
+
+        //[Required(ErrorMessage = "Veuillez renseigner le coût de la réparation")]
+        //[RegularExpression("^(-?(\\d+\\.?\\d+|\\d))+$", ErrorMessage = "Le coût n'est pas un nombre")]
+        //[Range(0.0001, double.MaxValue, ErrorMessage = "Le coût n'est pas supérieur à 0")]
+        //public double FixCost { get; set; }
 
 
 
@@ -69,7 +69,12 @@ namespace P5WebApp.Models.ViewModels
         public int AssociatedShortAddId { get; set; }
 
 
-        public virtual ICollection<Fix> CarFixesList { get; set; } = new List<Fix>();
+        //public virtual ICollection<Fix> CarFixesList { get; set; } = new List<Fix>();
+
+        public virtual List<FixViewModel> CarFixesViewModelList { get; set; } = new List<FixViewModel>();
+
+
+
 
         public virtual ICollection<Brand> CarBrands { get; set; } = new List<Brand>();
 

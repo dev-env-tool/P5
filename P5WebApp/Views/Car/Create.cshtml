@@ -7,11 +7,13 @@
     var fixes = ViewBag.Fixes as List<Fix>;
 }
 @{
-    bool IsCarFormFilled =
-                        !string.IsNullOrWhiteSpace(Model.CarVinCode) &&
-                        Model.CarYear != null &&
-                        Model.CarBuyDate != null &&
-                        Model.CarBuyPrice > 0;
+    bool IsCarFormFilled = !string.IsNullOrWhiteSpace(Model.CarVinCode) &&
+                           !Model.CarYear.Equals("") &&
+                           !Model.CarYear.Equals("");
+                                
+
+
+    int CountCreateNewFixButtonClicked = 0;
 }
 
 
@@ -65,7 +67,7 @@
             <div class="mb-3 col-8">
                 <label>Année de production*:</label>
             </div>
-            <input asp-for="CarYear" type="text" id="txtDate" class="form-control col-12" date="@Model.CarYear" />
+            <input asp-for="CarYear" type="text" id="txtDate" class="form-control col-12" date="@Model.CarYear" required/>
             <span asp-validation-for="CarYear"></span>
             <label class="date"></label>
             <div style="white-space:pre-line">
@@ -74,7 +76,7 @@
             <div class="mb-3 col-8">
                 <label>Date d'achat*':</label>
             </div>
-            <input asp-for="CarBuyDate" type="text" id="txtDate2" class="form-control col-12" date="@Model.CarBuyDate" />
+            <input asp-for="CarBuyDate" type="text" id="txtDate2" class="form-control col-12" date="@Model.CarBuyDate" required/>
             <span asp-validation-for="CarBuyDate"></span>
             <label class="date"></label>
             <div style="white-space:pre-line">
@@ -83,7 +85,7 @@
             <div class="mb-3 col-8">
                 <label>Prix d'achat*':</label>
             </div>
-            <input asp-for="CarBuyPrice" class="form-control col-12">
+            <input asp-for="CarBuyPrice" class="form-control col-12" required>
             <span asp-validation-for="CarBuyPrice"></span>
             <div style="white-space:pre-line">
                 <h1></h1>
@@ -91,17 +93,61 @@
 
 
             <div id="CreateFixDiv" >
-                    <div  class="row">
-                        <form id="FixForm" method="post">
+                <div class="row">
+                    <div>
+                        @for (int i = 0; i < Model.CarFixesViewModelList.Count; i++)
+                        {
+                            <div class="fix">
+                                <div class="mb-3 col-8">
+                                    <label>Description de la réparation*:</label>
+                                </div>
+                                <input asp-for="CarFixesViewModelList[i].FixDescription" class="form-control col-12" />
+                                <span asp-validation-for="CarFixesViewModelList[i].FixDescription"></span>
+                                <div style="white-space:pre-line">
+                                    <h1></h1>
+                                </div>
+
+                                <div class="mb-3 col-8">
+                                    <label>Date de la réparation*:</label>
+                                </div>
+                                <input asp-for="CarFixesViewModelList[i].FixDate" type="text" id="txtDate" class="form-control col-12" date="CarFixesList[i].FixDate" />
+                                <span asp-validation-for="CarFixesViewModelList[i].FixDate"></span>
+                                <label class="date"></label>
+                                <div style="white-space:pre-line">
+                                    <h1></h1>
+                                </div>
+
+                                <div class="mb-3 col-8">
+                                    <label>Coût de la réparation*:</label>
+                                </div>
+                                <input asp-for="CarFixesViewModelList[i].FixCost" class="form-control col-12" />
+                                <span asp-validation-for="CarFixesViewModelList[i].FixCost"></span>
+                                <div style="white-space:pre-line">
+                                    <h1></h1>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+                    
+@*                         <form id="FixForm" method="post">
                             <input type="hidden" name="FixId" value="@Model.FixId" />
                             <div style="white-space:pre-line">
                                 <h1></h1>
                             </div>
-                        <div class="mb-3 col-8">
-                            <label>Description de la réparation*:</label>
-                        </div>
-                        <input asp-for="FixDescription" class="form-control col-12"/>
-                        <span asp-validation-for="FixDescription"></span>
+                        
+                        
+                        
                         <div style="white-space:pre-line">
                             <h1></h1>
                         </div>
@@ -129,11 +175,11 @@
 
 
 
-                        </form>
+                        </form> *@
 
-                    </div>
+                </div>
             </div>
-            <div>
+            @* <div>
 
                         <div>
                             <div class="mb-3 col-8">
@@ -201,18 +247,20 @@
 
 
 
-                    @* </div> *@
+                    </div>
                     <div style="white-space:pre-line">
                         <h1></h1>
                     </div>
-            </div>
-            
+            </div> *@
+
 
 
                     <div class="row">
-                    <button id="CreateFixButton" class="btn btn-custom" asp-controller="Fix" asp-action="Create" disabled>Créer une réparation</button>
+                        <button id="CreateNewFixButton" class="btn btn-custom" href="#CreateFixDiv" disabled>Saisir une nouvelle réparation</button>
                     </div>
-
+                    <div class="row">
+                        <button id="DeleteLastFixButton" class="btn btn-custom" disabled>Suprimer la dernière réparation</button>
+                    </div>
                 
             <div style="white-space:pre-line">
                 <h1></h1>
@@ -275,19 +323,15 @@
                         }
                         });
 
+
+
+
                         console.log("Form filled? ", IsCarFormFilled);
 
                         $("#IsCarFormFilled").text(IsCarFormFilled);
-                        $("#CreateFixButton").prop('disabled', !IsCarFormFilled);
+                        $("#CreateNewFixButton").prop('disabled', !IsCarFormFilled);
+                        $("#DeleteLastFixButton").prop('disabled', !IsCarFormFilled);
 
-                        if (IsCarFormFilled)
-                        {
-                        $("#CreateFixDiv").show();
-                        }
-                        else
-                        {
-                        $("#CreateFixDiv").hide();
-                        }
                     }
 
 
@@ -307,8 +351,119 @@
                 });
             </script>
 
+            <script type="text/javascript">
+            $(document).ready(function()
+            {
+                var container = $("#CreateFixDiv");
+                var createButton = $("#CreateNewFixButton")
+                var deleteButton = $("#DeleteLastFixButton")
+                var count = container.find(".fix").length;
+
+                createButton.click(function(e)
+                {
+                        
+                        e.preventDefault();
+                        console.log("clic bouton");
+                    
+                        var newsection = 
+                        `
+                            <div class="fix">
+                            <div class="mb-3 col-8">
+                            <label>Description de la réparation*:</label>
+                            </div>
+                            <input asp-for="CarFixesViewModelList[${count}].FixDescription" class="form-control col-12" />
+                            <span asp-validation-for="CarFixesViewModelList[i].FixDescription"></span>
+                            <div style="white-space:pre-line">
+                            <h1></h1>
+                            </div>
+
+                            <div class="mb-3 col-8">
+                            <label>Date de la réparation*:</label>
+                            </div>
+                            <input asp-for="CarFixesViewModelList[${count}].FixDate" type="text" id="txtDate" class="form-control col-12" date="CarFixesList[i].FixDate" />
+                            <span asp-validation-for="CarFixesViewModelList[i].FixDate"></span>
+                            <label class="date"></label>
+                            <div style="white-space:pre-line">
+                            <h1></h1>
+                            </div>
+
+                            <div class="mb-3 col-8">
+                            <label>Coût de la réparation*:</label>
+                            </div>
+                            <input asp-for="CarFixesViewModelList[${count}].FixCost" class="form-control col-12" />
+                            <span asp-validation-for="CarFixesViewModelList[i].FixCost"></span>
+                            <div style="white-space:pre-line">
+                            <h1></h1>
+                            </div>
+                            </div>
+                        `;
+
+                        container.append(newsection);
+                        count++;
+                        $.validator.unobtrusive.parse(container);
+                });
+
+                deleteButton.click(function(e)
+                {
+                    e.preventDefault();
+                    console.log("clic bouton2");
+                    var sectionToDelete = container.find(".fix").last();
+                    console.log(sectionToDelete.get(0));
+                    if(sectionToDelete.length>0)
+                    {
+                        console.log(count);
+                        sectionToDelete.remove();
+                        if(count==0)
+                        {
+                            count = 0;
+                        }
+                        else
+                        {
+                            count--;
+                        }
+                        $.validator.unobtrusive.parse(container);
+                    }
+                });
 
 
+            });
+
+
+
+
+            // $(document).ready(function()
+            // {
+            //     var container = $("#CreateFixDiv");
+            //     var deleteButton = $("#DeleteLastFixButton")
+            //     var count = container.find(".fix").length;
+
+            //     deleteButton.click(function(e)
+            //     {
+            //         e.preventDefault();
+            //         console.log("clic bouton2");
+            //         var sectionToDelete = container.find(".fix").last();
+            //         console.log(sectionToDelete.get(0));
+            //         if(sectionToDelete.length>0)
+            //         {
+            //         console.log(count);
+            //             sectionToDelete.remove();
+            //             if(count=0)
+            //             {
+            //                 count = 0;
+            //             }
+            //             else
+            //             {
+            //                 count--;
+            //             }
+            //             $.validator.unobtrusive.parse(container);
+            //         }
+            //     });
+
+
+
+
+            // });
+            </script>
  
         }
     }

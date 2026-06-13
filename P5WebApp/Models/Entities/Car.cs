@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using P5WebApp.Models.ViewModels;
 
 namespace P5WebApp.Models.Entities
 {
@@ -23,7 +24,9 @@ namespace P5WebApp.Models.Entities
 
         public List<int>? AssociatedFixIds { get; set; } = new List<int>();
 
-        public ICollection<Fix> CarFixesList { get; set; } = new List<Fix>();
+        //public virtual List<FixViewModel> CarFixesViewModel { get; set; } = new List<FixViewModel>();
+
+        public virtual ICollection<Fix> CarFixesList { get; set; } = new List<Fix>();
 
     }
 }
