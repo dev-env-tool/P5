@@ -122,7 +122,7 @@ namespace P5WebApp.Controllers
             CarViewModel.FinishTypes = new List<FinishType>();
             CarViewModel.FinishTypes = _finishTypeService.GetAllFinishTypes();
 
-
+            CarViewModel.CarFixesViewModelList = new List<FixViewModel> { new FixViewModel() };
 
 
             return View(CarViewModel);
@@ -267,10 +267,10 @@ namespace P5WebApp.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(CarViewModel Car)
+        public IActionResult Edit(CarViewModel CarViewModel)
         {
             
-            Dictionary<string, string> modelErrors = _carService.CheckCarModelErrors(Car);
+            Dictionary<string, string> modelErrors = _carService.CheckCarModelErrors(CarViewModel);
 
 
             foreach (var key in modelErrors)
@@ -282,12 +282,12 @@ namespace P5WebApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                _carService.UpdateCarInfos(Car);
+                _carService.UpdateCarInfos(CarViewModel);
                 return RedirectToAction("Admin");
             }
             else
             {
-                return View(Car);
+                return View(CarViewModel);
             }
         }
 
