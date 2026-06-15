@@ -337,22 +337,7 @@
 
 
 
-@*     <div id="fix-template" style="display:none;">
-        <div class="fix">
-        <input type="hidden" name="CarFixesViewModelList[__index__].FixId" value="0" />
-        <input type="hidden" name="CarFixesViewModelList[__index__].AssociatedCarId" value="@Model.CarId" />
 
-        <label>Description de la réparation* :</label>
-        <input name="CarFixesViewModelList[__index__].FixDescription" data-val="true" class="form-control" data-val-required="La description est obligatoire." />
-        <span data-valmsg-for="CarFixesViewModelList[__index__].FixDescription" data-valmsg-replace="true"></span>
-        <label>Date de la réparation* :</label>
-        <input type="date" name="CarFixesViewModelList[__index__].FixDate" data-val="true" class="form-control" data-val-required="La description est obligatoire." />
-        <span data-valmsg-for="CarFixesViewModelList[__index__].FixDate" data-valmsg-replace="true"></span>
-        <label>Coût de la réparation* :</label>
-        <input type="number" name="CarFixesViewModelList[__index__].FixCost" data-val="true" class="form-control" data-val-required="La description est obligatoire." />
-        <span data-valmsg-for="CarFixesViewModelList[__index__].FixCost" data-valmsg-replace="true"></span>
-        </div>
-    </div> *@
 </div>
 
 
@@ -388,9 +373,6 @@
             </script>
 
 
-
-
-
             <script type="text/javascript">
                 $(document).ready(function() 
                 {
@@ -419,7 +401,7 @@
 
 
                 let debounceTimer;
-
+                //put 400 ms delay to avoid random validation
                 function debounceCheck() {
                 clearTimeout(debounceTimer);
                 debounceTimer = setTimeout(checkFields, 400);
@@ -449,7 +431,6 @@
                     var templateForFix = $('#fix-template').html();
 
                     templateForFix = templateForFix.replace(/__index__/g, '[' + count + ']');
-                    // templateHtmlForFix = templateHtmlForFix.replace(/_0__/g, '_' + count + '__');
 
                     container.append(templateForFix);
 
@@ -458,55 +439,23 @@
                     form.removeData('unobtrusiveValidation');
                     $.validator.unobtrusive.parse(form);
 
+
+                    var lastFix = container.children(".fix").last();
+                    $.validator.unobtrusive.parse(newFix);
+
+                    form.validate();
+                    form.valid();
+                    lastFix.find("input[type='date']").datepicker({ format: "dd/mm/yyyy" });
                 }
 
 
 
                 createButton.click(function(e)
-                {
-                        
+                { 
                         e.preventDefault();
                         console.log("clic bouton");
-                    
-                        // var newsection = 
-                        // `
-                        //     <div class="fix">
-                        //     <input type="hidden" name="CarFixesViewModelList[${count}].FixId" value="0" />
-                        //     <input type="hidden" name="CarFixesViewModelList[${count}].AssociatedCarId" value="@Model.CarId" />
-                        //     <div class="mb-3 col-8">
-                        //     <label>Description de la réparation*:</label>
-                        //     </div>
-                        //     <input input name="CarFixesViewModelList[${count}].FixDescription" class="form-control col-12" />
-                        //     <span data-valmsg-for="CarFixesViewModelList[i].FixDescription" data-valmsg-replace="true"></span>
-                        //     <div style="white-space:pre-line">
-                        //     <h1></h1>
-                        //     </div>
-
-                        //     <div class="mb-3 col-8">
-                        //     <label>Date de la réparation*:</label>
-                        //     </div>
-                        //     <input asp-for="CarFixesViewModelList[${count}].FixDate" type="text" id="txtDate" class="form-control col-12" date="CarFixesList[i].FixDate" />
-                        //     <span asp-validation-for="CarFixesViewModelList[i].FixDate"></span>
-                        //     <label class="date"></label>
-                        //     <div style="white-space:pre-line">
-                        //     <h1></h1>
-                        //     </div>
-
-                        //     <div class="mb-3 col-8">
-                        //     <label>Coût de la réparation*:</label>
-                        //     </div>
-                        //     <input asp-for="CarFixesViewModelList[${count}].FixCost" class="form-control col-12" />
-                        //     <span asp-validation-for="CarFixesViewModelList[i].FixCost"></span>
-                        //     <div style="white-space:pre-line">
-                        //     <h1></h1>
-                        //     </div>
-                        //     </div>
-                        // `;
-
-                        //container.append(newsection);
                         addFix(count);
                         count++;
-                        // $.validator.unobtrusive.parse(container2);
                 });
 
                 deleteButton.click(function(e)
@@ -536,42 +485,6 @@
 
 
             });
-
-
-
-
-            // $(document).ready(function()
-            // {
-            //     var container = $("#CreateFixDiv");
-            //     var deleteButton = $("#DeleteLastFixButton")
-            //     var count = container.find(".fix").length;
-
-            //     deleteButton.click(function(e)
-            //     {
-            //         e.preventDefault();
-            //         console.log("clic bouton2");
-            //         var sectionToDelete = container.find(".fix").last();
-            //         console.log(sectionToDelete.get(0));
-            //         if(sectionToDelete.length>0)
-            //         {
-            //         console.log(count);
-            //             sectionToDelete.remove();
-            //             if(count=0)
-            //             {
-            //                 count = 0;
-            //             }
-            //             else
-            //             {
-            //                 count--;
-            //             }
-            //             $.validator.unobtrusive.parse(container);
-            //         }
-            //     });
-
-
-
-
-            // });
             </script>
  
         }
