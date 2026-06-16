@@ -1,10 +1,13 @@
 ﻿using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using P5WebApp.Data;
 using P5WebApp.Models.Entities;
 using P5WebApp.Models.Repositories;
 using P5WebApp.Models.ViewModels;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Common;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.ConstrainedExecution;
@@ -16,11 +19,13 @@ namespace P5WebApp.Models.Services
         private readonly ICarRepository ?_carRepository;
         private readonly ICarModelService? _carModelService;
         private readonly IBrandService? _brandService;
-        public CarService(ICarRepository carRepository, ICarModelService carModelService, IBrandService brandService) 
+        private readonly P5Referential? _dbContext;
+        public CarService(ICarRepository carRepository, ICarModelService carModelService, IBrandService brandService,P5Referential dbContext) 
         {
             _carRepository = carRepository;
             _carModelService = carModelService;
             _brandService = brandService;
+            _dbContext = dbContext;
         }
 
         public List<Car> GetAllCars()
@@ -191,6 +196,7 @@ namespace P5WebApp.Models.Services
             CarToEdit.CarModelId = Car.CarModelId;
             CarToEdit.CarFinishTypeId = Car.CarFinishTypeId;
             CarToEdit.CarFixesList = MapFixesViewModelToFixEntities(Car.CarFixesViewModelList);
+            CarToEdit.AssociatedFixIds = PopulateFixIds(Car.CarFixesViewModelList);
 
 
             _carRepository.UpdateCar(CarToEdit);
@@ -204,6 +210,17 @@ namespace P5WebApp.Models.Services
             return CarToAdd;
         }
 
+        private static List<int> PopulateFixIds(IEnumerable<FixViewModel> carFixViewModels)
+        {
+            List<int> fixIds = new List<int>();
+
+            foreach (var fix in carFixViewModels) 
+            {
+                fixIds.Add(fix.FixId);
+            }
+
+            return fixIds;
+        }
         private static List<Fix> MapFixesViewModelToFixEntities(IEnumerable<FixViewModel> carFixViewModels)
         {
             List<Fix> fixes = new List<Fix>();
@@ -238,7 +255,7 @@ namespace P5WebApp.Models.Services
                 CarFinishTypeId = Car.CarFinishTypeId,
                 //AssociatedShortAddId = Car.AssociatedShortAddId,
                 CarFixesList = MapFixesViewModelToFixEntities(Car.CarFixesViewModelList),
-               
+                AssociatedFixIds = PopulateFixIds(Car.CarFixesViewModelList),
             };
             return CarEntity;
         }
@@ -260,6 +277,26 @@ namespace P5WebApp.Models.Services
             var Cars = await _carRepository.GetCar();
             return Cars;
         }
+
+        public async Task<DbTransaction> BeginTransaction()
+        {
+            using var dbContext = await _dbContext.Database.BeginTransactionAsync();
+
+            return dbContext.GetDbTransaction();
+
+        }
+
+       
+
+
+
+
+
+
+
+
+
+
 
     }
 }

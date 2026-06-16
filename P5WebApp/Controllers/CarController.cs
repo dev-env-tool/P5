@@ -105,7 +105,6 @@ namespace P5WebApp.Controllers
         // GET: CarController/Create
         [Authorize]
 
-
         public ViewResult Create(int id)
         {
             ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedCarId == id);
@@ -127,51 +126,86 @@ namespace P5WebApp.Controllers
 
             return View(CarViewModel);
         }
-        // POST: CarController/Create
+
+
+        // GET: CarController/Create
         [Authorize]
+
+        public ViewResult ConfirmCreated()
+        {
+            return View();
+        }
+
+
+
+        //// POST: CarController/Create
+        //[Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(CarViewModel Car)
+        public async Task<IActionResult> Create(CarViewModel Car)
         {
 
-            Dictionary<string, string> modelErrors = _carService.CheckCarModelErrors(Car);
+            var transaction = _carService.BeginTransaction();
 
-
-            foreach (var key in modelErrors)
+            try
             {
-                string field = key.Key;
-                string error = key.Value;
+                
 
-                ModelState.AddModelError(field, error);
+                foreach (var fix  in Car.CarFixesViewModelList) 
+                {
+                    Dictionary<string, string> modelErrorsForFixes = _fixService.CheckFixModelErrors(fix);
+
+                    foreach (var key in modelErrorsForFixes)
+                    {
+                        string field = key.Key;
+                        string error = key.Value;
+
+                        ModelState.AddModelError(field, error);
+                    }
+                }
+
+                Dictionary<string, string> modelErrorsForCar = _carService.CheckCarModelErrors(Car);
+
+                foreach (var key in modelErrorsForCar)
+                {
+                    string field = key.Key;
+                    string error = key.Value;
+
+                    ModelState.AddModelError(field, error);
+                }
+                if (ModelState.IsValid)
+                {
+
+                    // var to retrieve Car.Id generated automatically via SQL
+                    var createdCar = _carService.SaveCar(Car);
+
+                    return RedirectToAction("ConfirmCreated");
+                    //ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedCarId == Car.CarId);
+
+                    //return View(Car);
+
+                }
+                else
+                {
+                    //reload menus for brands car models finishtypes
+
+                    Car.CarBrands = new List<Brand>();
+                    Car.CarBrands = _brandService.GetAllBrands();
+
+                    Car.CarModels = new List<CarModel>();
+                    Car.CarModels = _carModelService.GetAllCarModels();
+
+                    Car.FinishTypes = new List<FinishType>();
+                    Car.FinishTypes = _finishTypeService.GetAllFinishTypes();
+                    return View(Car);
+                }
             }
-            if (ModelState.IsValid)
+            catch(Exception)
             {
-
-                // var to retrieve Car.Id generated automatically via SQL
-                var createdCar = _carService.SaveCar(Car);
-
-                // reload carviewmodel with id, fixes brands ...
-                Car.CarId = createdCar.CarId;
-                Car.CarBrandId = createdCar.CarBrandId;
-
-
-
-                ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedCarId == Car.CarId);
-                Car.CarBrands = new List<Brand>();
-                Car.CarBrands = _brandService.GetAllBrands();
-
-                Car.CarModels = new List<CarModel>();
-                Car.CarModels = _carModelService.GetAllCarModels();
-
-                Car.FinishTypes = new List<FinishType>();
-                Car.FinishTypes = _finishTypeService.GetAllFinishTypes();
-                return View(Car);
-
+                await transaction.Result.RollbackAsync();
+                throw;
             }
-            else
-            {
-                return View(Car);
-            }
+
 
         }
         //// GET: CarController/Create after newly a created fix

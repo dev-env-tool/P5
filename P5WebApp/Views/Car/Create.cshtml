@@ -283,7 +283,7 @@
         </form>
 
 
-    @{
+    @* @{
         var firstLoadForErrorViewModel = 0;
     }
 
@@ -330,7 +330,60 @@
                     <h1></h1>
                 </div>
             </div>
-        </div>
+        </div> *@
+
+
+    @{
+        var prefix = "CarFixesViewModelList";
+    }
+
+    <div id="fix-template" style="display:none;">
+        <div class="row">
+
+            <input type="hidden" name="@($"{prefix}[__index__].FixId")" id="@($"{prefix}___index___FixId")" value="0" />
+            <input type="hidden" name="@($"{prefix}[__index__].AssociatedCarId")" id="@($"{prefix}___index___AssociatedCarId")" value=@Model.CarId />
+            <div class="mb-3 col-8">
+                <label>Description de la réparation*:</label>
+            </div>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+
+            <input type="text" name="@($"{prefix}[__index__].FixDescription")" id="@($"{prefix}___index___FixDescription")" class="form-control col-12" value="" />
+            <span class="text-danger" data-valmsg-for="@($"{prefix}[__index__].FixDescription")" data-valmsg-replace="true"></span>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Date de la réparation*:</label>
+            </div>
+            <input type="date" name="@($"{prefix}[__index__].FixDate")" id="@($"{prefix}___index___FixDate")" class="form-control col-12" value="" />
+            <span class="text-danger" data-valmsg-for="@($"{prefix}[__index__].FixDate")" data-valmsg-replace="true"></span>
+
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Coût de la réparation*:</label>
+            </div>
+            <input type="text" name="@($"{prefix}[__index__].FixCost")" id="@($"{prefix}___index___FixCost")" class="form-control col-12" value="" />
+            <span class="text-danger" data-valmsg-for="@($"{prefix}[__index__].FixCost")" data-valmsg-replace="true"></span>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+    </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
     </div>
 
 
@@ -430,7 +483,7 @@
                 {
                     var templateForFix = $('#fix-template').html();
 
-                    templateForFix = templateForFix.replace(/__index__/g, '[' + count + ']');
+                    templateForFix = templateForFix.replace(/__index__/g,count);
 
                     container.append(templateForFix);
 
@@ -441,7 +494,7 @@
 
 
                     var lastFix = container.children(".fix").last();
-                    $.validator.unobtrusive.parse(newFix);
+                    $.validator.unobtrusive.parse(lastFix);
 
                     form.validate();
                     form.valid();
@@ -456,6 +509,7 @@
                         console.log("clic bouton");
                         addFix(count);
                         count++;
+                        console.log(count);
                 });
 
                 deleteButton.click(function(e)

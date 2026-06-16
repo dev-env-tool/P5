@@ -1,5 +1,6 @@
 ﻿using P5WebApp.Models.Entities;
 using P5WebApp.Models.ViewModels;
+using System.Data.Common;
 
 namespace P5WebApp.Models.Services
 {
@@ -23,6 +24,8 @@ namespace P5WebApp.Models.Services
 
         Task<Car> GetCar(int id);
         Task<IList<Car>> GetCar();
+
+        Task<DbTransaction> BeginTransaction();
 
     }
 }
