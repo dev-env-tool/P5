@@ -107,10 +107,10 @@ namespace P5WebApp.Controllers
 
         public ViewResult Create(int id)
         {
-            ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedCarId == id);
+            //ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedCarId == id);
 
             CarViewModel CarViewModel = new CarViewModel();
-            CarViewModel.Car = new Car();
+            //CarViewModel.Car = new Car();
 
             CarViewModel.CarBrands = new List<Brand>();
             CarViewModel.CarBrands = _brandService.GetAllBrands();
@@ -121,7 +121,7 @@ namespace P5WebApp.Controllers
             CarViewModel.FinishTypes = new List<FinishType>();
             CarViewModel.FinishTypes = _finishTypeService.GetAllFinishTypes();
 
-            CarViewModel.CarFixesViewModelList = new List<FixViewModel> { new FixViewModel() };
+            CarViewModel.CarFixesViewModelList = new List<FixViewModel>();
 
 
             return View(CarViewModel);
@@ -149,21 +149,21 @@ namespace P5WebApp.Controllers
 
             try
             {
-                
-
-                foreach (var fix  in Car.CarFixesViewModelList) 
-                {
-                    Dictionary<string, string> modelErrorsForFixes = _fixService.CheckFixModelErrors(fix);
-
-                    foreach (var key in modelErrorsForFixes)
+                if (Car.CarFixesViewModelList != null)
+                { 
+                    foreach (var fix  in Car.CarFixesViewModelList) 
                     {
-                        string field = key.Key;
-                        string error = key.Value;
+                        Dictionary<string, string> modelErrorsForFixes = _fixService.CheckFixModelErrors(fix);
 
-                        ModelState.AddModelError(field, error);
+                        foreach (var key in modelErrorsForFixes)
+                        {
+                            string field = key.Key;
+                            string error = key.Value;
+
+                            ModelState.AddModelError(field, error);
+                        }
                     }
                 }
-
                 Dictionary<string, string> modelErrorsForCar = _carService.CheckCarModelErrors(Car);
 
                 foreach (var key in modelErrorsForCar)
@@ -187,6 +187,7 @@ namespace P5WebApp.Controllers
                 }
                 else
                 {
+                    ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedCarId == Car.CarId);
                     //reload menus for brands car models finishtypes
 
                     Car.CarBrands = new List<Brand>();

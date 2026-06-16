@@ -4,7 +4,7 @@
 
 @{
     Layout = "_Layout";
-    var fixes = ViewBag.Fixes as List<Fix>;
+    // var fixes = ViewBag.Fixes as List<Fix>;
 }
 @{
     bool IsCarFormFilled = !string.IsNullOrWhiteSpace(Model.CarVinCode) &&
@@ -13,8 +13,8 @@
 
 
 
-    int CountCreateNewFixButtonClicked = 0;
 }
+
 
 
 <div class="row">
@@ -92,53 +92,58 @@
             </div>
 
 
-            <div id="CreateFixDiv" >
-                <div class="row">
-                    <div>
-                        @for (int i = 0; i < Model.CarFixesViewModelList.Count; i++)
-                        {
-                                if (i == 0) continue;
+
+
+
+            <div id="CreateFixDiv" style="display:none">
+                @if (Model.CarFixesViewModelList != null && Model.CarFixesViewModelList.Count() > 0)
+                {
+                    <div class="row">
+                        <div>
+                            @for (int i = 0; i < Model.CarFixesViewModelList.Count; i++)
+                            {
+                                @* if (i == 0) continue; *@
                                 <div class="fix">
-                                @Html.HiddenFor(m => m.CarFixesViewModelList[i].FixId)
-                                @Html.HiddenFor(m => m.CarFixesViewModelList[i].AssociatedCarId)
-                                @* <input type="hidden" name="FixId" value="CarFixesViewModelList[i].FixId" />
-                                <input type="hidden" name="AssociatedCarId" value="@Model.CarId" /> *@
-                                <div class="mb-3 col-8">
-                                    <label>Description de la réparation*:</label>
-                                </div>
-                                @* <input asp-for="CarFixesViewModelList[i].FixDescription" class="form-control col-12" /> *@
-                                @Html.TextBoxFor(m => m.CarFixesViewModelList[i].FixDescription, new {@class= "form-control col-12" })
-                                @* <span asp-validation-for="CarFixesViewModelList[i].FixDescription"></span> *@
-                                <span> @Html.ValidationMessageFor(m => m.CarFixesViewModelList[i].FixDescription)</span>
-                                <div style="white-space:pre-line">
-                                    <h1></h1>
-                                </div>
+                                    @Html.HiddenFor(m => m.CarFixesViewModelList[i].FixId)
+                                    @Html.HiddenFor(m => m.CarFixesViewModelList[i].AssociatedCarId)
+                                    @* <input type="hidden" name="FixId" value="CarFixesViewModelList[i].FixId" />
+                                    <input type="hidden" name="AssociatedCarId" value="@Model.CarId" /> *@
+                                    <div class="mb-3 col-8">
+                                        <label>Description de la réparation*:</label>
+                                    </div>
+                                    @* <input asp-for="CarFixesViewModelList[i].FixDescription" class="form-control col-12" /> *@
+                                    @Html.TextBoxFor(m => m.CarFixesViewModelList[i].FixDescription, new { @class = "form-control col-12" })
+                                    @* <span asp-validation-for="CarFixesViewModelList[i].FixDescription"></span> *@
+                                    <span> @Html.ValidationMessageFor(m => m.CarFixesViewModelList[i].FixDescription)</span>
+                                    <div style="white-space:pre-line">
+                                        <h1></h1>
+                                    </div>
 
-                                <div class="mb-3 col-8">
-                                    <label>Date de la réparation*:</label>
-                                </div>
-                                @Html.TextBoxFor(m => m.CarFixesViewModelList[i].FixDate, new { @type = "date", @class = "form-control col-12" })
-     @*                            <input asp-for="CarFixesViewModelList[i].FixDate" type="text" id="txtDate" class="form-control col-12" date="CarFixesList[i].FixDate" />
-                                <span asp-validation-for="CarFixesViewModelList[i].FixDate"></span> *@
-                                <span> @Html.ValidationMessageFor(m => m.CarFixesViewModelList[i].FixDate)</span>
-                                <label class="date"></label>
-                                <div style="white-space:pre-line">
-                                    <h1></h1>
-                                </div>
+                                    <div class="mb-3 col-8">
+                                        <label>Date de la réparation*:</label>
+                                    </div>
+                                    @Html.TextBoxFor(m => m.CarFixesViewModelList[i].FixDate, new { @type = "date", @class = "form-control col-12" })
+                                    @*                            <input asp-for="CarFixesViewModelList[i].FixDate" type="text" id="txtDate" class="form-control col-12" date="CarFixesList[i].FixDate" />
+                                    <span asp-validation-for="CarFixesViewModelList[i].FixDate"></span> *@
+                                    <span> @Html.ValidationMessageFor(m => m.CarFixesViewModelList[i].FixDate)</span>
+                                    <label class="date"></label>
+                                    <div style="white-space:pre-line">
+                                        <h1></h1>
+                                    </div>
 
-                                <div class="mb-3 col-8">
-                                    <label>Coût de la réparation*:</label>
+                                    <div class="mb-3 col-8">
+                                        <label>Coût de la réparation*:</label>
+                                    </div>
+                                    @Html.TextBoxFor(m => m.CarFixesViewModelList[i].FixCost, new { @class = "form-control col-12" })
+                                    @*                                 <input asp-for="CarFixesViewModelList[i].FixCost" class="form-control col-12" />
+                                    <span asp-validation-for="CarFixesViewModelList[i].FixCost"></span> *@
+                                    <span> @Html.ValidationMessageFor(m => m.CarFixesViewModelList[i].FixCost)</span>
+                                    <div style="white-space:pre-line">
+                                        <h1></h1>
+                                    </div>
                                 </div>
-                                @Html.TextBoxFor(m => m.CarFixesViewModelList[i].FixCost, new { @class = "form-control col-12" })
-@*                                 <input asp-for="CarFixesViewModelList[i].FixCost" class="form-control col-12" />
-                                <span asp-validation-for="CarFixesViewModelList[i].FixCost"></span> *@
-                                <span> @Html.ValidationMessageFor(m => m.CarFixesViewModelList[i].FixCost)</span>
-                                <div style="white-space:pre-line">
-                                    <h1></h1>
-                                </div>
-                            </div>
-                        }
-                    </div>
+                            }
+                        </div>
 
 
 
@@ -188,9 +193,11 @@
 
                         </form> *@
 
-                </div>
+                    </div>
+                    
+                }
             </div>
-            @* <div>
+                @* <div>
 
                         <div>
                             <div class="mb-3 col-8">
@@ -262,7 +269,7 @@
                     <div style="white-space:pre-line">
                         <h1></h1>
                     </div>
-            </div> *@
+                </div> *@
 
 
 
@@ -273,14 +280,14 @@
                         <button id="DeleteLastFixButton" class="btn btn-custom" disabled>Suprimer la dernière réparation</button>
                     </div>
                 
-            <div style="white-space:pre-line">
+                <div style="white-space:pre-line">
                 <h1></h1>
-            </div>
+                </div>
                 <div class="row">
                     <button type="submit" class="btn btn-custom col-12">Créer une voiture</button>
                 </div>
-            </div>
-        </form>
+        </div>
+    </form>
 
 
     @* @{
@@ -339,16 +346,16 @@
 
     <div id="fix-template" style="display:none;">
         <div class="row">
-
+            <div class="fix">
             <input type="hidden" name="@($"{prefix}[__index__].FixId")" id="@($"{prefix}___index___FixId")" value="0" />
             <input type="hidden" name="@($"{prefix}[__index__].AssociatedCarId")" id="@($"{prefix}___index___AssociatedCarId")" value=@Model.CarId />
-            <div class="mb-3 col-8">
-                <label>Description de la réparation*:</label>
-            </div>
+
             <div style="white-space:pre-line">
                 <h1></h1>
             </div>
-
+            <div class="mb-3 col-8">
+                <label>Description de la réparation*:</label>
+            </div>
             <input type="text" name="@($"{prefix}[__index__].FixDescription")" id="@($"{prefix}___index___FixDescription")" class="form-control col-12" value="" />
             <span class="text-danger" data-valmsg-for="@($"{prefix}[__index__].FixDescription")" data-valmsg-replace="true"></span>
             <div style="white-space:pre-line">
@@ -366,10 +373,11 @@
             <div class="mb-3 col-8">
                 <label>Coût de la réparation*:</label>
             </div>
-            <input type="text" name="@($"{prefix}[__index__].FixCost")" id="@($"{prefix}___index___FixCost")" class="form-control col-12" value="" />
+            <input type="text" name="@($"{prefix}[__index__].FixCost")" id="@($"{prefix}___index___FixCost")" class="form-control col-12" value=""  />
             <span class="text-danger" data-valmsg-for="@($"{prefix}[__index__].FixCost")" data-valmsg-replace="true"></span>
             <div style="white-space:pre-line">
                 <h1></h1>
+            </div>
             </div>
     </div>
     </div>
@@ -431,6 +439,23 @@
                 {
                     var form = $("#CarForm");
 
+                    // After an input change, check if form is valid.
+                    // If there is another input change in less than 400ms then wait.
+                    // Else, onto the next input change, checkField occurs.
+                    let debounceTimer;
+                    function debounceCheck() {
+                    clearTimeout(debounceTimer);
+                    debounceTimer = setTimeout(checkFields, 400);
+                    }
+                    $("input[required]").on("input change", debounceCheck);
+
+                    // After a blur action, check if form is valid.
+                    setTimeout(checkFields, 100);
+                    $("input[required]").on("blur", checkFields);
+
+                    
+
+
                     function checkFields() 
                     {
                         let IsCarFormFilled = true;
@@ -441,9 +466,6 @@
                         }
                         });
 
-
-
-
                         console.log("Form filled? ", IsCarFormFilled);
 
                         $("#IsCarFormFilled").text(IsCarFormFilled);
@@ -453,18 +475,7 @@
                     }
 
 
-                let debounceTimer;
-                //put 400 ms delay to avoid random validation
-                function debounceCheck() {
-                clearTimeout(debounceTimer);
-                debounceTimer = setTimeout(checkFields, 400);
-                }
 
-                $("input[required]").on("input change", debounceCheck);
-                $("input[required]").on("blur", checkFields);
-
-
-                setTimeout(checkFields, 100);
 
                 });
             </script>
@@ -476,7 +487,8 @@
                 var container2 = $("#CarForm");
                 var createButton = $("#CreateNewFixButton")
                 var deleteButton = $("#DeleteLastFixButton")
-                var count = container.find(".fix").length;
+                // var count = container.find(".fix").length;
+                var count = 0;
 
 
                 function addFix(count) 
@@ -486,18 +498,23 @@
                     templateForFix = templateForFix.replace(/__index__/g,count);
 
                     container.append(templateForFix);
+                    container.show();
 
                     var form = container2;
                     form.removeData('validator');
                     form.removeData('unobtrusiveValidation');
                     $.validator.unobtrusive.parse(form);
 
-
-                    var lastFix = container.children(".fix").last();
-                    $.validator.unobtrusive.parse(lastFix);
-
                     form.validate();
                     form.valid();
+
+                    var lastFix = container.children(".fix").last();
+                    // $.validator.unobtrusive.parse(lastFix);
+
+
+                    // $.validator.unobtrusive.parse(container);
+
+
                     lastFix.find("input[type='date']").datepicker({ format: "dd/mm/yyyy" });
                 }
 
@@ -506,41 +523,70 @@
                 createButton.click(function(e)
                 { 
                         e.preventDefault();
-                        console.log("clic bouton");
+                        console.log("clic button");
                         addFix(count);
                         count++;
                         console.log(count);
                 });
 
+
+                function removeFix(count)
+                {
+
+                    var sectionToDelete = container.find(".fix").last();
+
+                    if(sectionToDelete.length>0)
+                    {
+                    console.log(count);
+                    sectionToDelete.remove();
+                    if(count==0)
+                    {
+                    count = 0;
+                    }
+                    else
+                    {
+                    count--;
+                    container2.removeData("validator");
+                    container2.removeData("unobtrusiveValidation");
+                    $.validator.unobtrusive.parse(container2);
+                    }
+
+                        
+                    }
+
+                }
                 deleteButton.click(function(e)
                 {
                     e.preventDefault();
-                    console.log("clic bouton2");
-                    var sectionToDelete = container.find(".fix").last();
-                    console.log(sectionToDelete.get(0));
-                    if(sectionToDelete.length>0)
-                    {
-                        console.log(count);
-                        sectionToDelete.remove();
-                        if(count==0)
-                        {
-                            count = 0;
-                        }
-                        else
-                        {
-                            count--;
-                            container2.removeData("validator");
-                            container2.removeData("unobtrusiveValidation");
-                        }
-
-                        $.validator.unobtrusive.parse(container2);
-                    }
+                    console.log("clic button2");
+                    removeFix(count);
                 });
 
 
             });
+
+
+
             </script>
- 
+            
+
+            // <script type="text/javascript">
+            //             $("#CarForm").on("submit", function(e) {
+            //     if (!$(this).valid()) {
+            //         e.preventDefault(); 
+            //         alert("Merci de corriger les erreurs dans le formulaire.");
+            //     }
+            // });
+            
+            // </script>
+
+            <script type="text/javascript">
+            $(document).ready(function() {
+            if ($("#CreateFixDiv").children().length > 0) {
+            $("#CreateFixDiv").show();
+                }
+            });
+            </script>
         }
     }
             

@@ -78,21 +78,21 @@ namespace P5WebApp.Models.Services
 
             if (!Attribute1.IsValid(Fix.FixDescription))
             {
-                modelErrors.Add("", "Veuillez renseigner la description de la réparation");
+                modelErrors.Add("1", "Veuillez renseigner la description de la réparation");
             }
 
             var Attribute2 = new RequiredAttribute();
 
             if (!Attribute2.IsValid(Fix.FixDate))
             {
-                modelErrors.Add("", "Veuillez renseigner la date de la réparation");
+                modelErrors.Add("2", "Veuillez renseigner la date de la réparation");
             }
 
             var Attribute3 = new RequiredAttribute();
 
             if (!Attribute3.IsValid(Fix.FixCost))
             {
-                modelErrors.Add("", "Veuillez renseigner le coût de la réparation");
+                modelErrors.Add("3", "Veuillez renseigner le coût de la réparation");
             }
 
 
@@ -100,7 +100,7 @@ namespace P5WebApp.Models.Services
 
             if (!Attribute4.IsValid(Fix.FixCost))
             {
-                modelErrors.Add("", "Le coût n'est pas un nombre");
+                modelErrors.Add("4", "Le coût n'est pas un nombre");
 
 
             }
@@ -108,7 +108,7 @@ namespace P5WebApp.Models.Services
 
             if (!Attribute5.IsValid(Fix.FixCost))
             {
-                modelErrors.Add("", "Le coût n'est pas supérieur à 0\"");
+                modelErrors.Add("5", "Le coût n'est pas supérieur à 0");
             }
 
 
@@ -116,7 +116,7 @@ namespace P5WebApp.Models.Services
 
             if (!Attribute6.IsValid(Fix.AssociatedCarId))
             {
-                modelErrors.Add("", "Veuillez choisir une voiture associée");
+                modelErrors.Add("6", "Veuillez choisir une voiture associée");
             }
 
             return modelErrors;
