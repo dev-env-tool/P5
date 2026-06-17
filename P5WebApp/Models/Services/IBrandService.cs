@@ -10,7 +10,7 @@ namespace P5WebApp.Models.Services
         Brand GetBrandById(int id);
         BrandViewModel GetBrandByIdViewModel(int id);
 
-        Dictionary<string, string> CheckBrandModelErrors(BrandViewModel product);
+        Dictionary<string, string> CheckBrandModelErrors(BrandViewModel brand);
 
         void UpdateBrand(BrandViewModel brand);
         void SaveBrand(BrandViewModel Brand);

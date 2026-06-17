@@ -21,10 +21,13 @@ namespace P5WebApp.Controllers
         private readonly IFinishTypeRepository _finishTypeRepository;
         private readonly IFixService _fixService;
         private readonly IFixRepository _fixRepository;
+        private readonly IPhotoService _photoService;
+        private readonly IPhotoRepository _photoRepository;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
         public CarController(ICarService carService, ICarRepository carRepository,
             IBrandService brandService, ICarModelService carModelService, IFinishTypeService finishTypeService, IFinishTypeRepository finishTypeRepository,
-            IFixService fixService, IFixRepository fixRepository)
+            IFixService fixService, IFixRepository fixRepository, IWebHostEnvironment webHostEnvironment, IPhotoService photoService, IPhotoRepository photoRepository)
         {
             _carService = carService;
             _carRepository = carRepository;
@@ -34,6 +37,9 @@ namespace P5WebApp.Controllers
             _finishTypeRepository = finishTypeRepository;
             _fixService = fixService;
             _fixRepository = fixRepository;
+            _photoService = photoService;
+            _photoRepository = photoRepository;
+            _webHostEnvironment = webHostEnvironment;
         }
 
 
@@ -121,6 +127,7 @@ namespace P5WebApp.Controllers
             CarViewModel.FinishTypes = new List<FinishType>();
             CarViewModel.FinishTypes = _finishTypeService.GetAllFinishTypes();
 
+
             CarViewModel.CarFixesViewModelList = new List<FixViewModel>();
 
 
@@ -161,6 +168,12 @@ namespace P5WebApp.Controllers
             }
 
 
+
+
+
+            // Here, transaction will help data recording into distinct tables.
+            // If one object is not valid or complete, then transaction stops and rollbacks the tables in the databse.
+            // Rollback means it manages to let the whole database as it was before transaction started.
             try
             {
                 if (Car.CarFixesViewModelList != null)
@@ -190,8 +203,28 @@ namespace P5WebApp.Controllers
                 if (ModelState.IsValid)
                 {
 
+
                     // var to retrieve Car.Id generated automatically via SQL
+                    // fixes are created via var createdCar = _carService.SaveCar(Car);
                     var createdCar = _carService.SaveCar(Car);
+
+
+                    if (Car.Photo != null)
+                    {
+                        string folder = "Cars/Images/";
+                        // Use a new Guid to create a unique photo Id
+                        folder += Guid.NewGuid().ToString() + "_" + Car.Photo.FileName;
+                        string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+
+                        // Copy the uploaded photo and paste it into our new web folder
+                        await Car.Photo.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+
+                        Car.PhotoForDb.PhotoName = Car.Photo.FileName;
+                        Car.PhotoForDb.PhotoPath = serverFolder;
+                        Car.PhotoForDb.AssociatedCarId = createdCar.CarId;
+
+                        _photoService.SavePhoto(Car.PhotoForDb);
+                    }
 
                     return RedirectToAction("ConfirmCreated");
                     //ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedCarId == Car.CarId);

@@ -11,16 +11,14 @@ namespace P5WebApp.Models.ViewModels
         // Input fields of Photo class
         public int PhotoId { get; set; }
 
+        public string PhotoName { get; set; }
+
         [Required]
-        public required string PhotoPath { get; set; }
+        public string PhotoPath { get; set; }
 
         // Foreign Key
-
-        public required int AssociatedAddId { get; set; }
-
-        public required virtual ShortAdd AssociatedAdd { get; set; }
-
-
+        [Required]
+        public int AssociatedCarId { get; set; }
 
     }
 }

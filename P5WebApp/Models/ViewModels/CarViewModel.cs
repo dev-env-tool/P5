@@ -71,14 +71,9 @@ namespace P5WebApp.Models.ViewModels
 
         public virtual ShortAdd? AssociatedShortAdd { get; set; }
 
-        //public virtual Car? Car { get; set; }
+        [Required(ErrorMessage = "Veuillez choisir une photo associée")]
+        public IFormFile Photo { get; set; }
 
-
-
-        //public List<string>? CarVinCodes { get; set; } = new List<string>();
-
-
-        //public string SelectedVinCode { get; set; }
-
+        public PhotoViewModel PhotoForDb { get; set; }
     }
 }

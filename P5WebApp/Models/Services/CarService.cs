@@ -198,7 +198,6 @@ namespace P5WebApp.Models.Services
             CarToEdit.CarFixesList = MapFixesViewModelToFixEntities(Car.CarFixesViewModelList);
             CarToEdit.AssociatedFixIds = PopulateFixIds(Car.CarFixesViewModelList);
 
-
             _carRepository.UpdateCar(CarToEdit);
 
         }

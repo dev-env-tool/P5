@@ -13,6 +13,7 @@
 
 
 
+
 }
 
 
@@ -25,7 +26,7 @@
     <div style="white-space:pre-line">
         <h1></h1>
     </div>
-    <form id="CarForm" method="post">
+    <form id="CarForm" method="post" enctype="multipart/form-data">
         <input type="hidden" name="CarId" value="@Model.CarId" />
         @* <input type="hidden" name="SelectedVinCode" value="ok"/> *@
         <div class="mb-3 col-4 offset-md-4">
@@ -90,8 +91,18 @@
             <div style="white-space:pre-line">
                 <h1></h1>
             </div>
-
-
+            <div class="mb-3 col-8">
+                <label>Photo*':</label>
+            </div>
+            <labem asp-for="Photo"
+            <div class="custom-file">
+                <input asp-for="Photo" class="custom-file-input form-control col-12" id="customFile" />
+                <label class="custom-file-label" for="customFile" required></label>
+            </div>
+            <span asp-validation-for="Photo"></span>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
 
 
 
@@ -102,29 +113,21 @@
                         <div>
                             @for (int i = 0; i < Model.CarFixesViewModelList.Count; i++)
                             {
-                                @* if (i == 0) continue; *@
                                 <div class="fix">
                                     @Html.HiddenFor(m => m.CarFixesViewModelList[i].FixId)
                                     @Html.HiddenFor(m => m.CarFixesViewModelList[i].AssociatedCarId)
-                                    @* <input type="hidden" name="FixId" value="CarFixesViewModelList[i].FixId" />
-                                    <input type="hidden" name="AssociatedCarId" value="@Model.CarId" /> *@
                                     <div class="mb-3 col-8">
                                         <label>Description de la réparation*:</label>
                                     </div>
-                                    @* <input asp-for="CarFixesViewModelList[i].FixDescription" class="form-control col-12" /> *@
                                     @Html.TextBoxFor(m => m.CarFixesViewModelList[i].FixDescription, new { @class = "form-control col-12" })
-                                    @* <span asp-validation-for="CarFixesViewModelList[i].FixDescription"></span> *@
                                     <span> @Html.ValidationMessageFor(m => m.CarFixesViewModelList[i].FixDescription)</span>
                                     <div style="white-space:pre-line">
                                         <h1></h1>
                                     </div>
-
                                     <div class="mb-3 col-8">
                                         <label>Date de la réparation*:</label>
                                     </div>
                                     @Html.TextBoxFor(m => m.CarFixesViewModelList[i].FixDate, new { @type = "date", @class = "form-control col-12" })
-                                    @*                            <input asp-for="CarFixesViewModelList[i].FixDate" type="text" id="txtDate" class="form-control col-12" date="CarFixesList[i].FixDate" />
-                                    <span asp-validation-for="CarFixesViewModelList[i].FixDate"></span> *@
                                     <span> @Html.ValidationMessageFor(m => m.CarFixesViewModelList[i].FixDate)</span>
                                     <label class="date"></label>
                                     <div style="white-space:pre-line">
@@ -135,8 +138,6 @@
                                         <label>Coût de la réparation*:</label>
                                     </div>
                                     @Html.TextBoxFor(m => m.CarFixesViewModelList[i].FixCost, new { @class = "form-control col-12" })
-                                    @*                                 <input asp-for="CarFixesViewModelList[i].FixCost" class="form-control col-12" />
-                                    <span asp-validation-for="CarFixesViewModelList[i].FixCost"></span> *@
                                     <span> @Html.ValidationMessageFor(m => m.CarFixesViewModelList[i].FixCost)</span>
                                     <div style="white-space:pre-line">
                                         <h1></h1>
@@ -381,27 +382,7 @@
             </div>
     </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-    </div>
-
-
-
-
-
-
 </div>
-
-
-
 <div style="white-space:pre-line">
     <h1></h1>
 </div>
@@ -470,7 +451,6 @@
                         $("#IsCarFormFilled").text(IsCarFormFilled);
                         $("#CreateNewFixButton").prop('disabled', !IsCarFormFilled);
                         $("#DeleteLastFixButton").prop('disabled', !IsCarFormFilled);
-
                     }
 
 
@@ -508,18 +488,10 @@
                     form.removeData('unobtrusiveValidation');
                     $.validator.unobtrusive.parse(form);
 
-            
-
                     form.validate();
                     form.valid();
 
                     var lastFix = container.children(".fix").last();
-                    // $.validator.unobtrusive.parse(lastFix);
-
-
-                    // $.validator.unobtrusive.parse(container);
-
-
                     lastFix.find("input[type='date']").datepicker({ format: "dd/mm/yyyy" });
                     
                     
@@ -581,7 +553,6 @@
             });
             </script>
 
-            
             <script type="text/template" id="fix-fake-template">
                 <div class="fix" style="display:none;">
                 <input type="hidden" name="CarFixesViewModelList[0].FixId" value="0" />
@@ -592,7 +563,6 @@
                 </div>
             </script>
 
-
             <script type="text/javascript">
             $(document).ready(function() {
             if ($("#CreateFixDiv").children().length > 0) {
@@ -600,13 +570,6 @@
                 }
             });
             </script>
-
-//             <script type="text/javascript">
-//             $("#CarForm").on("submit", function(e) {
-//     e.preventDefault();
-//     console.log("Formulaire soumis, mais submission bloquée pour test.");
-// });
-//         </script>
         }
     }
             

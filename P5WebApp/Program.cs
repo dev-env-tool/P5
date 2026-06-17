@@ -36,6 +36,9 @@ namespace P5WebApp
             builder.Services.AddScoped<IShortAddService, ShortAddService>();
             builder.Services.AddScoped<IShortAddRepository, ShortAddRepository>();
 
+            builder.Services.AddScoped<IPhotoService, PhotoService>();
+            builder.Services.AddScoped<IPhotoRepository, PhotoRepository>();
+
             // Add DB contexts to the app.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -102,6 +105,10 @@ namespace P5WebApp
             Console.WriteLine(canConnect ? "SQL Connection OK" : "SQL connection failed");
 
             await IdentitySeedData.EnsurePopulated(app);
+
+
+            app.UseAntiforgery();
+
 
             app.Run();
         }

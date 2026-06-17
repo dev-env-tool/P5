@@ -65,7 +65,7 @@ namespace P5WebApp.Models.Repositories
         // Asynchronous task to retrieve the associated photos from Db.
         public IEnumerable<Photo> GetAssociatedPhotosOfShortAdd(int id)
         {
-            IEnumerable<Photo> photos = _context!.Photos.Where(p => p.AssociatedShortAddId == id);
+            IEnumerable<Photo> photos = _context!.Photos.Where(p => p.AssociatedCarId == id);
             if (photos == null)
             {
                 throw new InvalidOperationException("The photos requested does not exist");
