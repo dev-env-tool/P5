@@ -220,7 +220,7 @@ namespace P5WebApp.Controllers
                         await Car.Photo.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
 
                         Car.PhotoForDb.PhotoName = Car.Photo.FileName;
-                        Car.PhotoForDb.PhotoPath = serverFolder;
+                        Car.PhotoForDb.PhotoPath = folder;
                         Car.PhotoForDb.AssociatedCarId = createdCar.CarId;
 
                         _photoService.SavePhoto(Car.PhotoForDb);

@@ -11,6 +11,7 @@ namespace P5WebApp.Models.ViewModels
         // Input fields of Photo class
         public int PhotoId { get; set; }
 
+        [Required]
         public string PhotoName { get; set; }
 
         [Required]

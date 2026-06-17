@@ -46,6 +46,7 @@ namespace P5WebApp.Models.Services
                 photos.Add(new PhotoViewModel
                 {
                     PhotoId = photo.PhotoId,
+                    PhotoName = photo.PhotoName,
                     PhotoPath = photo.PhotoPath,
                     AssociatedCarId = photo.AssociatedCarId,
                 });
@@ -115,6 +116,7 @@ namespace P5WebApp.Models.Services
 
             var photoToEdit = GetPhotoById(photo.PhotoId);
    
+            photoToEdit.PhotoName = photo.PhotoName;
             photoToEdit.PhotoPath = photo.PhotoPath;
 
             _photoRepository.UpdatePhoto(photoToEdit);
@@ -135,6 +137,7 @@ namespace P5WebApp.Models.Services
             Photo photoEntity = new Photo
             {
                 PhotoId = photo.PhotoId,
+                PhotoName = photo.PhotoName,
                 PhotoPath = photo.PhotoPath,
                 AssociatedCarId = photo.AssociatedCarId,
             };

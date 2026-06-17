@@ -28,6 +28,12 @@
     </div>
     <form id="CarForm" method="post" enctype="multipart/form-data">
         <input type="hidden" name="CarId" value="@Model.CarId" />
+        <input type="hidden" name="PhotoForDb.PhotoId" value="0" />
+        <input type="hidden" name="PhotoForDb.PhotoName" value="name" />
+        <input type="hidden" name="PhotoForDb.PhotoPath" value="path" />
+        <input type="hidden" name="PhotoForDb.AssociatedCarId" value="0" />
+
+
         @* <input type="hidden" name="SelectedVinCode" value="ok"/> *@
         <div class="mb-3 col-4 offset-md-4">
             <div style="white-space:pre-line">
@@ -94,10 +100,10 @@
             <div class="mb-3 col-8">
                 <label>Photo*':</label>
             </div>
-            <labem asp-for="Photo"
+            
             <div class="custom-file">
                 <input asp-for="Photo" class="custom-file-input form-control col-12" id="customFile" />
-                <label class="custom-file-label" for="customFile" required></label>
+                <label class="custom-file-label" for="customFile" ></label>
             </div>
             <span asp-validation-for="Photo"></span>
             <div style="white-space:pre-line">
