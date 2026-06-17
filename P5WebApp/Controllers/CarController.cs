@@ -147,6 +147,20 @@ namespace P5WebApp.Controllers
 
             var transaction = _carService.BeginTransaction();
 
+            // Remove from memory "dummyfix1900" from CarFixesViewModelList. Avoiding any dummy fix to be recorded in Db
+            // "dummyfix1900" comes from the front-end as hidden entry to enable form validation without any fix
+            // Hence required and other fix validation attribute work on manual fix entries.
+
+            FixViewModel dummyfix1900 = new FixViewModel();
+                
+            dummyfix1900 = Car.CarFixesViewModelList.SingleOrDefault(f => f.FixDescription == "dummyfix1900");
+
+            if (dummyfix1900 != null)
+            {
+                Car.CarFixesViewModelList.Remove(dummyfix1900);
+            }
+
+
             try
             {
                 if (Car.CarFixesViewModelList != null)

@@ -391,7 +391,6 @@
 
 
 
-
     </div>
 
 
@@ -487,14 +486,18 @@
                 var container2 = $("#CarForm");
                 var createButton = $("#CreateNewFixButton")
                 var deleteButton = $("#DeleteLastFixButton")
-                // var count = container.find(".fix").length;
                 var count = 0;
 
+                if(count == 0)
+                {
+                    var fakeFix = $('#fix-fake-template').html();
+                    container.append(fakeFix);
+                }
 
-                function addFix(count) 
+
+                function addFix() 
                 {
                     var templateForFix = $('#fix-template').html();
-
                     templateForFix = templateForFix.replace(/__index__/g,count);
 
                     container.append(templateForFix);
@@ -504,6 +507,8 @@
                     form.removeData('validator');
                     form.removeData('unobtrusiveValidation');
                     $.validator.unobtrusive.parse(form);
+
+            
 
                     form.validate();
                     form.valid();
@@ -516,69 +521,77 @@
 
 
                     lastFix.find("input[type='date']").datepicker({ format: "dd/mm/yyyy" });
+                    
+                    
                 }
 
 
 
                 createButton.click(function(e)
                 { 
+                        var fakeFix = container.find(".fix:hidden");
+                        if(fakeFix.length > 0) {
+                            fakeFix.remove();
+                            count = 0;
+                        }
                         e.preventDefault();
                         console.log("clic button");
                         addFix(count);
+                        console.log(count);
                         count++;
                         console.log(count);
                 });
 
 
-                function removeFix(count)
+                function removeFix()
                 {
 
                     var sectionToDelete = container.find(".fix").last();
 
-                    if(sectionToDelete.length>0)
-                    {
-                    console.log(count);
-                    sectionToDelete.remove();
-                    if(count==0)
-                    {
-                    count = 0;
-                    }
-                    else
-                    {
-                    count--;
-                    container2.removeData("validator");
-                    container2.removeData("unobtrusiveValidation");
-                    $.validator.unobtrusive.parse(container2);
-                    }
 
-                        
-                    }
+                        console.log(count);
+                        sectionToDelete.remove();
+                        if(count==0)
+                        {
+                            container.hide();
+                            container.empty();
+                            var fakeFix = $('#fix-fake-template').html();
+                            container.append(fakeFix);
+                            count = 0;
+                        }
+                        else
+                        {
+                        count--;
+                        console.log(count, "ici");
+                        container2.removeData("validator");
+                        container2.removeData("unobtrusiveValidation");
+                        $.validator.unobtrusive.parse(container2);
 
+                        }
                 }
                 deleteButton.click(function(e)
                 {
                     e.preventDefault();
                     console.log("clic button2");
                     removeFix(count);
+                    console.log(count);
                 });
 
 
             });
-
-
-
             </script>
-            
 
-            // <script type="text/javascript">
-            //             $("#CarForm").on("submit", function(e) {
-            //     if (!$(this).valid()) {
-            //         e.preventDefault(); 
-            //         alert("Merci de corriger les erreurs dans le formulaire.");
-            //     }
-            // });
             
-            // </script>
+            <script type="text/template" id="fix-fake-template">
+                <div class="fix" style="display:none;">
+                <input type="hidden" name="CarFixesViewModelList[0].FixId" value="0" />
+                <input type="hidden" name="CarFixesViewModelList[0].AssociatedCarId" value=@Model.CarId />
+                <input type="text" name="CarFixesViewModelList[0].FixDescription" value="dummyfix1900" />
+                <input type="date" name="CarFixesViewModelList[0].FixDate" value="1900-01-01" />
+                <input type="text" name="CarFixesViewModelList[0].FixCost" value="1" />
+                </div>
+            </script>
+
 
             <script type="text/javascript">
             $(document).ready(function() {
@@ -587,6 +600,13 @@
                 }
             });
             </script>
+
+//             <script type="text/javascript">
+//             $("#CarForm").on("submit", function(e) {
+//     e.preventDefault();
+//     console.log("Formulaire soumis, mais submission bloquée pour test.");
+// });
+//         </script>
         }
     }
             

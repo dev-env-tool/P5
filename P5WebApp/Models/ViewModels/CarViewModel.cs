@@ -55,7 +55,7 @@ namespace P5WebApp.Models.ViewModels
 
         //public virtual ICollection<Fix> CarFixesList { get; set; } = new List<Fix>();
 
-        public virtual List<FixViewModel> CarFixesViewModelList { get; set; } = new List<FixViewModel> { new Fix() };
+        public virtual List<FixViewModel> CarFixesViewModelList { get; set; } = new List<FixViewModel> { new FixViewModel() };
 
 
 
