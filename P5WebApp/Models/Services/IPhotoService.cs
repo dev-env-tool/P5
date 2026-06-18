@@ -8,6 +8,8 @@ namespace P5WebApp.Models.Services
         List<Photo> GetAllPhotos();
         List<PhotoViewModel> GetAllPhotosViewModel();
         Photo GetPhotoById(int id);
+
+        int GetPhotoIdByAssociatedCarId(int associatedCarId);
         PhotoViewModel GetPhotoByIdViewModel(int id);
 
         Dictionary<string, string> CheckPhotoModelErrors(PhotoViewModel photo);

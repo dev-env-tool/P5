@@ -63,7 +63,22 @@ namespace P5WebApp.Models.Services
             return photoToReturn;
         }
 
+        public int GetPhotoIdByAssociatedCarId(int associatedCarId)
+        {
+            int photoIdToReturn = 0;
+            List<Photo> photos = GetAllPhotos().ToList();
+            var photoToReturn = photos.Find(p => p.AssociatedCarId == associatedCarId);
+            if (photoToReturn != null)
+            { 
+                photoIdToReturn = photoToReturn.PhotoId;
+            }
+            else
+            {
+                photoIdToReturn = 0;
+            }
 
+            return photoIdToReturn;
+        }
 
         public Dictionary<string, string> CheckPhotoModelErrors(PhotoViewModel photo)
         {
@@ -147,12 +162,9 @@ namespace P5WebApp.Models.Services
 
         public void DeletePhoto(int id)
         {
-            int numberofTimesPhotoUsed = _photoRepository.GetAllPhotos().Where(p => p.PhotoId == id).Count();
+            int PhotoId = _photoRepository.GetAllPhotos().Where(p => p.PhotoId == id).Select(p => p.PhotoId).FirstOrDefault();
 
-            if (numberofTimesPhotoUsed > 0)
-            {
-            }
-            else 
+            if (PhotoId > 0)
             {
                 _photoRepository.DeletePhoto(id);
             }

@@ -191,6 +191,7 @@ namespace P5WebApp.Controllers
                         }
                     }
                 }
+
                 Dictionary<string, string> modelErrorsForCar = _carService.CheckCarModelErrors(Car);
 
                 foreach (var key in modelErrorsForCar)
@@ -200,6 +201,7 @@ namespace P5WebApp.Controllers
 
                     ModelState.AddModelError(field, error);
                 }
+
                 if (ModelState.IsValid)
                 {
 
@@ -234,7 +236,7 @@ namespace P5WebApp.Controllers
                 }
                 else
                 {
-                    ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedCarId == Car.CarId);
+                    //ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedCarId == Car.CarId);
                     //reload menus for brands car models finishtypes
 
                     Car.CarBrands = new List<Brand>();
@@ -398,6 +400,11 @@ namespace P5WebApp.Controllers
         public IActionResult Delete(int id, IFormCollection collection)
         {
             {
+                int photoId = _photoService.GetPhotoIdByAssociatedCarId(id);
+                if (photoId != 0)
+                { 
+                    _photoService.DeletePhoto(photoId);
+                }
                 _carService.DeleteCar(id);
                 return RedirectToAction("Admin");
             }

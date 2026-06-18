@@ -90,6 +90,11 @@ namespace P5WebApp.Models.Services
                     CarModelId = Car.CarModelId,
                     CarFinishTypeId = Car.CarFinishTypeId,
                     CarFixesViewModelList = MapFixesToViewModel(Car.CarFixesList),
+                    CarDescription = Car.CarDescription,
+                    CarAddAvailabilityDate = Car.CarAddAvailabilityDate,
+                    CarDateSold = Car.CarDateSold,
+                    CarPublished = Car.CarPublished,
+                    CarSellingPrice = Car.CarSellingPrice,
                 });
             }
 
@@ -171,10 +176,10 @@ namespace P5WebApp.Models.Services
             }
 
 
-            if (Car.CarYear > Car.CarBuyDate)
-            {
-                modelErrors.Add("", "Veuillez renseigner une date de production plus ancienne que la date d'achat");
-            }
+            //if (Car.CarYear > Car.CarBuyDate)
+            //{
+            //    modelErrors.Add("", "Veuillez renseigner une date de production plus ancienne que la date d'achat");
+            //}
 
 
             return modelErrors;
@@ -202,7 +207,12 @@ namespace P5WebApp.Models.Services
             CarToEdit.CarModelId = Car.CarModelId;
             CarToEdit.CarFinishTypeId = Car.CarFinishTypeId;
             CarToEdit.CarFixesList = MapFixesViewModelToFixEntities(Car.CarFixesViewModelList);
-            CarToEdit.AssociatedFixIds = PopulateFixIds(Car.CarFixesViewModelList);
+            CarToEdit.AssociatedFixIds = PopulateAssociatedFixIds(Car.CarFixesViewModelList);
+            CarToEdit.CarDescription = Car.CarDescription;
+            CarToEdit.CarAddAvailabilityDate = Car.CarAddAvailabilityDate;
+            CarToEdit.CarDateSold = Car.CarDateSold;
+            CarToEdit.CarPublished = Car.CarPublished;
+            CarToEdit.CarSellingPrice = Car.CarSellingPrice;
 
             _carRepository.UpdateCar(CarToEdit);
 
@@ -215,7 +225,7 @@ namespace P5WebApp.Models.Services
             return CarToAdd;
         }
 
-        private static List<int> PopulateFixIds(IEnumerable<FixViewModel> carFixViewModels)
+        private static List<int> PopulateAssociatedFixIds(IEnumerable<FixViewModel> carFixViewModels)
         {
             List<int> fixIds = new List<int>();
 
@@ -260,7 +270,12 @@ namespace P5WebApp.Models.Services
                 CarFinishTypeId = Car.CarFinishTypeId,
                 //AssociatedShortAddId = Car.AssociatedShortAddId,
                 CarFixesList = MapFixesViewModelToFixEntities(Car.CarFixesViewModelList),
-                AssociatedFixIds = PopulateFixIds(Car.CarFixesViewModelList),
+                AssociatedFixIds = PopulateAssociatedFixIds(Car.CarFixesViewModelList),
+                CarDescription = Car.CarDescription,
+                CarAddAvailabilityDate = Car.CarAddAvailabilityDate,
+                CarDateSold = Car.CarDateSold,
+                CarPublished = Car.CarPublished,
+                CarSellingPrice = Car.CarSellingPrice,
             };
             return CarEntity;
         }
@@ -290,18 +305,5 @@ namespace P5WebApp.Models.Services
             return dbContext.GetDbTransaction();
 
         }
-
-       
-
-
-
-
-
-
-
-
-
-
-
     }
 }

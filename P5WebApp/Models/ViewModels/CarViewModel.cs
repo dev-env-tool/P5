@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.FileProviders.Embedded;
+using Microsoft.Identity.Client;
 using P5WebApp.Models.Entities;
+using P5WebApp.Models.ViewModels;
 using System.Collections;
 using System.ComponentModel.DataAnnotations;
 
@@ -21,6 +23,7 @@ namespace P5WebApp.Models.ViewModels
 
 
         [Required(ErrorMessage = "Veuillez renseigner une date d'achat")]
+        [DateCustom]
         public DateOnly ?CarBuyDate { get; set; }
 
 
@@ -93,4 +96,63 @@ namespace P5WebApp.Models.ViewModels
 
         public double CarSellingPrice { get; set; }
     }
+}
+
+
+
+public class DateCustom : ValidationAttribute
+{
+    //public DateCustom(DateOnly date)
+    //    => date = date;
+
+
+    public string GetErrorMessage() =>
+        $"";
+
+    public string errorMessage1 = "La date d'achat doit être ultérieure à l'année de production de la voiture";
+    public string errorMessage2 = "La date de disponibilité doit être ultérieure à la date d'achat de la voiture";
+    public string errorMessage3 = "La date de vente doit être ultérieure à la date de disponibilité de la voiture";
+    public string errorMessage4 = "La date renseignée ne peut être ultérieure à la date d'aujourd'hui";
+
+    protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
+    {
+        var car = (CarViewModel)validationContext.ObjectInstance;
+        var carYear = car.CarYear;
+        var carBuyDate = car.CarBuyDate;
+        var carAddAvailabilityDate = car.CarAddAvailabilityDate;
+        var carDateSold = car.CarDateSold;
+
+        var timeNow = DateTime.Now;
+
+        if (carYear != null && carBuyDate != null) 
+        {
+            if(carYear > carBuyDate)
+            {
+                return new ValidationResult(errorMessage1);
+            }
+        
+        }
+
+        if (carYear != null && carBuyDate != null && carAddAvailabilityDate != null)
+        {
+            if (carBuyDate > carAddAvailabilityDate)
+            {
+                return new ValidationResult(errorMessage2);
+            }
+
+        }
+
+        if (carYear != null && carBuyDate != null && carAddAvailabilityDate != null && carDateSold != null)
+        {
+            if (carAddAvailabilityDate > carDateSold)
+            {
+                return new ValidationResult(errorMessage3);
+            }
+
+        }
+
+
+        return base.IsValid(value, validationContext);
+    }
+
 }

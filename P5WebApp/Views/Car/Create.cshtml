@@ -74,7 +74,7 @@
             <div class="mb-3 col-8">
                 <label>Année de production*:</label>
             </div>
-            <input asp-for="CarYear" type="text" id="txtDate" class="form-control col-12" date="@Model.CarYear" required/>
+            <input asp-for="CarYear" type="date" class="form-control col-12" date="@Model.CarYear" required/>
             <span asp-validation-for="CarYear"></span>
             <label class="date"></label>
             <div style="white-space:pre-line">
@@ -83,7 +83,7 @@
             <div class="mb-3 col-8">
                 <label>Date d'achat*':</label>
             </div>
-            <input asp-for="CarBuyDate" type="text" id="txtDate2" class="form-control col-12" date="@Model.CarBuyDate" required/>
+            <input asp-for="CarBuyDate" type="date" class="form-control col-12" date="@Model.CarBuyDate" required/>
             <span asp-validation-for="CarBuyDate"></span>
             <label class="date"></label>
             <div style="white-space:pre-line">
@@ -92,7 +92,7 @@
             <div class="mb-3 col-8">
                 <label>Prix d'achat*':</label>
             </div>
-            <input asp-for="CarBuyPrice" class="form-control col-12" required>
+            <input asp-for="CarBuyPrice" type="number" class="form-control col-12" id="CarBuyPrice" required>
             <span asp-validation-for="CarBuyPrice"></span>
             <div style="white-space:pre-line">
                 <h1></h1>
@@ -109,6 +109,52 @@
             <div style="white-space:pre-line">
                 <h1></h1>
             </div>
+            <div class="mb-3 col-8">
+                <label>Description*:</label>
+            </div>
+            <input asp-for="CarDescription" class="form-control col-12"/>
+            <span asp-validation-for="CarDescription"></span>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Date de disponibilité:</label>
+            </div>
+            <input asp-for="CarAddAvailabilityDate" type="text" id="txtDate3" class="form-control col-12" date="@Model.CarAddAvailabilityDate"/>
+            <span asp-validation-for="CarAddAvailabilityDate"></span>
+            <label class="date"></label>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Date de vente:</label>
+            </div>
+            <input asp-for="CarDateSold" type="text" id="txtDate4" class="form-control col-12" date="@Model.CarDateSold"/>
+            <span asp-validation-for="CarDateSold"></span>
+            <label class="date"></label>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Prix de vente*':</label>
+            </div>
+            <label asp-for="CarSellingPrice" type="number" class="form-control col-12" id="CarSellingPrice"></label>
+            <span asp-validation-for="CarSellingPrice"></span>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Publier l'annonce':</label>
+            </div>
+            <input asp-for="CarPublished" class="form-check-input btn-custom fs-4" type="checkbox" role="switch" id="CarPublished">
+            <span asp-validation-for="CarPublished"></span>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+
+
+
+
 
 
 
@@ -407,6 +453,14 @@
                 {
                     $("#txtDate2").datepicker({format:"dd/mm/yyyy"});
                 });
+                $(function()
+                {
+                $("#txtDate3").datepicker({format:"dd/mm/yyyy"});
+                });
+                $(function()
+                {
+                $("#txtDate4").datepicker({format:"dd/mm/yyyy"});
+                });
             </script>
             
             <script type="text/javascript">
@@ -435,12 +489,19 @@
                     }
                     $("input[required]").on("input change", debounceCheck);
 
-                    // After a blur action, check if form is valid.
+                    After a blur action, check if form is valid.
                     setTimeout(checkFields, 100);
                     $("input[required]").on("blur", checkFields);
 
+                    setTimeout(updateCarSellingPrice, 100);
+                    $("#CarSellingPrice").on("blur", updateCarSellingPrice);
                     
-
+                    function updateCarSellingPrice()
+                    {
+                        var CarBuyPriceForFunction = $("#CarBuyPrice").val(""); 
+                        var CarSellingPriceForFunction = CarBuyPriceForFunction + 500;
+                        $("#CarBuyPrice").val("CarSellingPriceForFunction");
+                    }
 
                     function checkFields() 
                     {
