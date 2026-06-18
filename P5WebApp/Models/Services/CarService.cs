@@ -171,6 +171,12 @@ namespace P5WebApp.Models.Services
             }
 
 
+            if (Car.CarYear > Car.CarBuyDate)
+            {
+                modelErrors.Add("", "Veuillez renseigner une date de production plus ancienne que la date d'achat");
+            }
+
+
             return modelErrors;
         }
 

@@ -16,6 +16,7 @@ namespace P5WebApp.Models.ViewModels
 
 
         [Required(ErrorMessage = "Veuillez renseigner une année de production")]
+        
         public DateOnly? CarYear { get; set; }
 
 
@@ -69,11 +70,27 @@ namespace P5WebApp.Models.ViewModels
         public virtual ICollection<FinishType> FinishTypes { get; set; } = new List<FinishType>();
 
 
-        public virtual ShortAdd? AssociatedShortAdd { get; set; }
+        //public virtual ShortAdd? AssociatedShortAdd { get; set; }
 
         [Required(ErrorMessage = "Veuillez choisir une photo associée")]
         public IFormFile Photo { get; set; }
 
         public PhotoViewModel PhotoForDb { get; set; }
+
+
+        public string? CarDescription { get; set; }
+
+
+        public DateOnly? CarAddAvailabilityDate { get; set; }
+
+        public bool CarPublished { get; set; }
+
+        public DateOnly? CarDateSold { get; set; }
+
+
+        public const double CarMargin = 500;
+
+
+        public double CarSellingPrice { get; set; }
     }
 }

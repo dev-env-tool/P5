@@ -9,106 +9,106 @@ namespace P5WebApp.Models.Repositories
 {
     public class ShortAddRepository : IShortAddRepository
     {
-        private static P5Referential? _context;
+        //    private static P5Referential? _context;
 
-        public ShortAddRepository(P5Referential context)
-        {
-            _context = context;
-        }
-
-
-        public IEnumerable<ShortAdd> GetAllShortAdds()
-        {
-            IEnumerable<ShortAdd> shortAdds = _context!.ShortAdds.Where(s => s.ShortAddId >= 0);
-            return shortAdds;
-        }
+        //    public ShortAddRepository(P5Referential context)
+        //    {
+        //        _context = context;
+        //    }
 
 
-        public int GetMaxShortAddId()
-        {
-            int maxShortAddId;
-
-            if (!_context.ShortAdds.Any())
-            {
-                return maxShortAddId = 0;
-            }
-            else
-            {
-                return maxShortAddId = _context.ShortAdds.Max(c => c.ShortAddId);
-            }
-        }
-
-        // Asynchronous task to retrieve an add from Db.
-        public async Task<ShortAdd> GetShortAdd(int id)
-        {
-            var shortAdd = await _context!.ShortAdds.SingleOrDefaultAsync(s => s.ShortAddId == id);
-
-            if (shortAdd == null)
-            {
-                throw new InvalidOperationException("The add requested does not exist");
-            }
-            else
-            {
-                return shortAdd;
-            }
-
-        }
+        //    public IEnumerable<ShortAdd> GetAllShortAdds()
+        //    {
+        //        IEnumerable<ShortAdd> shortAdds = _context!.ShortAdds.Where(s => s.ShortAddId >= 0);
+        //        return shortAdds;
+        //    }
 
 
+        //    public int GetMaxShortAddId()
+        //    {
+        //        int maxShortAddId;
 
-        public async Task<IList<ShortAdd>> GetShortAddList()
-        {
-            var shortAdds = await _context!.ShortAdds.ToListAsync();
-            return shortAdds;
-        }
+        //        if (!_context.ShortAdds.Any())
+        //        {
+        //            return maxShortAddId = 0;
+        //        }
+        //        else
+        //        {
+        //            return maxShortAddId = _context.ShortAdds.Max(c => c.ShortAddId);
+        //        }
+        //    }
 
-        // Asynchronous task to retrieve the associated photos from Db.
-        public IEnumerable<Photo> GetAssociatedPhotosOfShortAdd(int id)
-        {
-            IEnumerable<Photo> photos = _context!.Photos.Where(p => p.AssociatedCarId == id);
-            if (photos == null)
-            {
-                throw new InvalidOperationException("The photos requested does not exist");
-            }
-            else
-            {
-                return photos;
-            }
-        }
-        public void UpdateShortAdd(ShortAdd ShortAdd)
-        {
-            if (ShortAdd != null)
-            {
-                _context.Entry(ShortAdd).State = EntityState.Modified;
-                _context.SaveChanges();
-            }
-        }
+        //    // Asynchronous task to retrieve an add from Db.
+        //    public async Task<ShortAdd> GetShortAdd(int id)
+        //    {
+        //        var shortAdd = await _context!.ShortAdds.SingleOrDefaultAsync(s => s.ShortAddId == id);
 
-        public void SaveShortAdd(ShortAdd shortAdd)
-        {
-            if (shortAdd != null)
-            {
-                _context!.ShortAdds.Add(shortAdd);
-                _context.SaveChanges();
-            }
-        }
+        //        if (shortAdd == null)
+        //        {
+        //            throw new InvalidOperationException("The add requested does not exist");
+        //        }
+        //        else
+        //        {
+        //            return shortAdd;
+        //        }
+
+        //    }
 
 
-        public void DeleteShortAdd(int id)
-        {
-            ShortAdd shortAdd = _context!.ShortAdds.First(s => s.ShortAddId == id);
-            if (shortAdd != null)
-            {
-                _context!.ShortAdds.Remove(shortAdd);
-                _context.SaveChanges();
-            }
-        }
+
+        //    public async Task<IList<ShortAdd>> GetShortAddList()
+        //    {
+        //        var shortAdds = await _context!.ShortAdds.ToListAsync();
+        //        return shortAdds;
+        //    }
+
+        //    // Asynchronous task to retrieve the associated photos from Db.
+        //    public IEnumerable<Photo> GetAssociatedPhotosOfShortAdd(int id)
+        //    {
+        //        IEnumerable<Photo> photos = _context!.Photos.Where(p => p.AssociatedCarId == id);
+        //        if (photos == null)
+        //        {
+        //            throw new InvalidOperationException("The photos requested does not exist");
+        //        }
+        //        else
+        //        {
+        //            return photos;
+        //        }
+        //    }
+        //    public void UpdateShortAdd(ShortAdd ShortAdd)
+        //    {
+        //        if (ShortAdd != null)
+        //        {
+        //            _context.Entry(ShortAdd).State = EntityState.Modified;
+        //            _context.SaveChanges();
+        //        }
+        //    }
+
+        //    public void SaveShortAdd(ShortAdd shortAdd)
+        //    {
+        //        if (shortAdd != null)
+        //        {
+        //            _context!.ShortAdds.Add(shortAdd);
+        //            _context.SaveChanges();
+        //        }
+        //    }
 
 
-        public async Task<IList<ShortAdd>> GetShortAdd()
-        {
-            var shortAdds = await _context.ShortAdds.ToListAsync();
-            return shortAdds;
-        }
+        //    public void DeleteShortAdd(int id)
+        //    {
+        //        ShortAdd shortAdd = _context!.ShortAdds.First(s => s.ShortAddId == id);
+        //        if (shortAdd != null)
+        //        {
+        //            _context!.ShortAdds.Remove(shortAdd);
+        //            _context.SaveChanges();
+        //        }
+        //    }
+
+
+        //    public async Task<IList<ShortAdd>> GetShortAdd()
+        //    {
+        //        var shortAdds = await _context.ShortAdds.ToListAsync();
+        //        return shortAdds;
+        //    }
     }
 }

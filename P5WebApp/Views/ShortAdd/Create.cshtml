@@ -2,7 +2,7 @@
 @using P5WebApp.Models.Entities
 
 
-@{
+@* @{
     Layout = "_Layout";
     var fixes = ViewBag.Fixes as List<Fix>;
     var vinCodes = ViewBag.CarVinCodes as List<Car>;
@@ -20,7 +20,7 @@
     <form method="post">
         <input type="hidden" name="ShortAddId" value="@Model.ShortAddId" />
         @* @Html.HiddenFor(m => m.CarViewModel.SelectedVinCode) *@
-        <div class="mb-3 col-4 offset-md-4">
+@*         <div class="mb-3 col-4 offset-md-4">
             <div style="white-space:pre-line">
                 <h1></h1>
             </div>
@@ -61,10 +61,10 @@
             </div>
             <div class="mb-3 col-8">
                 <label>Voiture*:</label>
-            </div>
+            </div>  *@
 @*             @Html.DropDownListFor(m => m.CarViewModel.SelectedVinCode,
                 new SelectList(carInfos, "Value", "Text"), htmlAttributes: new {@class ="form-control col-12"}) *@
-
+@* 
             <span asp-validation-for="ShortAddCarId"></span>
             <div style="white-space:pre-line">
                 <h1></h1>
@@ -73,7 +73,7 @@
                 <label>Prix d'achat*:</label>
             </div>
             <input asp-for="ShortAddBuyPrice" class="form-control col-12" />
-            <span asp-validation-for="ShortAddBuyPrice"></span>
+            <span asp-validation-for="ShortAddBuyPrice"></span> *@
 
 
 
@@ -148,7 +148,7 @@
                     </a>
 
                 </div> *@
-                <div style="white-space:pre-line">
+               @*  <div style="white-space:pre-line">
                     <h1></h1>
                 </div>
                 <div class="row">
@@ -177,4 +177,4 @@
             </script>
 
         }
-    }
+    } *@

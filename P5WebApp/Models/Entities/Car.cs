@@ -28,6 +28,21 @@ namespace P5WebApp.Models.Entities
 
         public virtual ICollection<Fix> CarFixesList { get; set; } = new List<Fix>();
 
+
+        public string? CarDescription { get; set; }
+
+
+        public DateOnly? CarAddAvailabilityDate { get; set; }
+
+        public bool CarPublished { get; set; }
+
+        public DateOnly? CarDateSold { get; set; }
+
+
+        public const double CarMargin = 500;
+
+
+        public double CarSellingPrice { get; set; }
     }
 }
 

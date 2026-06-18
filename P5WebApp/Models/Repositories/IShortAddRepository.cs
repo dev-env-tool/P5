@@ -8,15 +8,15 @@ namespace P5WebApp.Models.Repositories
 {
     public interface IShortAddRepository
     {
-        IEnumerable<ShortAdd> GetAllShortAdds();
+        //IEnumerable<ShortAdd> GetAllShortAdds();
 
-        int GetMaxShortAddId();
+        //int GetMaxShortAddId();
 
-        void UpdateShortAdd(ShortAdd ShortAdd);
-        void SaveShortAdd(ShortAdd ShortAdd);
-        void DeleteShortAdd(int id);
-        Task<ShortAdd> GetShortAdd(int id);
-        Task<IList<ShortAdd>> GetShortAdd();
+        //void UpdateShortAdd(ShortAdd ShortAdd);
+        //void SaveShortAdd(ShortAdd ShortAdd);
+        //void DeleteShortAdd(int id);
+        //Task<ShortAdd> GetShortAdd(int id);
+        //Task<IList<ShortAdd>> GetShortAdd();
     }
 }
 

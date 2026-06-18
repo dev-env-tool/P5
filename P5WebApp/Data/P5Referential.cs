@@ -46,7 +46,7 @@ namespace P5WebApp.Data
 
         public virtual DbSet<Photo> Photos { get; set; }
 
-        public virtual DbSet<ShortAdd> ShortAdds { get; set; }
+        //public virtual DbSet<ShortAdd> ShortAdds { get; set; }
 
 
 
@@ -150,9 +150,9 @@ namespace P5WebApp.Data
 
             // Create a table for adds 
 
-            modelBuilder.Entity<ShortAdd>()
-                .ToTable("ShortAdds")
-                .HasKey(s => s.ShortAddId);
+            //modelBuilder.Entity<ShortAdd>()
+            //    .ToTable("ShortAdds")
+            //    .HasKey(s => s.ShortAddId);
 
         }
 

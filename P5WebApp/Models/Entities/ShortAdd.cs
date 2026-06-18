@@ -5,36 +5,36 @@ namespace P5WebApp.Models.Entities
     public partial class ShortAdd
     {
 
-        // Input fields of ShortAdd class
-        public int ShortAddId { get; set; }
+        //// Input fields of ShortAdd class
+        //public int ShortAddId { get; set; }
 
-        public string ?Description { get; set; }
+        //public string ?Description { get; set; }
 
-        public DateOnly ?ShortAddAvailabilityDate { get; set; }
+        //public DateOnly ?ShortAddAvailabilityDate { get; set; }
 
-        public bool ShortAddPublished { get; set; }
+        //public bool ShortAddPublished { get; set; }
 
-        public DateOnly ?ShortAddDateSold { get; set; }
+        //public DateOnly ?ShortAddDateSold { get; set; }
 
-        public bool ShortAddSold { get; set; }
+        //public bool ShortAddSold { get; set; }
 
-        // Virtual coupling.
-        public int ShortAddCarId { get; set; }
+        //// Virtual coupling.
+        //public int ShortAddCarId { get; set; }
 
-        public double ShortAddBuyPrice { get; set; }
-
-
-        public const double Margin = 500;
-
-        public double ShortAddSellingPrice { get; set; }
-
-        // Virtual coupling.
-        public virtual ICollection<Photo> ShortAddPhotosList { get; set; } = new List<Photo>();
+        //public double ShortAddBuyPrice { get; set; }
 
 
-        // Virtual couplings below to be able to override children 
+        //public const double Margin = 500;
 
-        public virtual Car ?Car { get; set; }
+        //public double ShortAddSellingPrice { get; set; }
+
+        //// Virtual coupling.
+        //public virtual ICollection<Photo> ShortAddPhotosList { get; set; } = new List<Photo>();
+
+
+        //// Virtual couplings below to be able to override children 
+
+        //public virtual Car ?Car { get; set; }
 
 
     }

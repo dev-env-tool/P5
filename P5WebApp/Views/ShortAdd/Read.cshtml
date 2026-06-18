@@ -2,7 +2,7 @@
 @using P5WebApp.Models.ViewModels
 @using P5WebApp.Models.Entities
 
-@{
+@* @{
     Layout = "_Layout";
     var brands = ViewBag.Brands as List<Brand>;
     var carModels = ViewBag.CarModels as List<CarModel>;
@@ -156,7 +156,7 @@
                 </tbody>
             </table>
          *@
-
+@* 
                 </tbody>
         </table>
             
@@ -181,4 +181,4 @@
                 </script>
 
             }
-        }
+        } *@ 
