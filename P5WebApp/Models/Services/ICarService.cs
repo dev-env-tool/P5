@@ -9,6 +9,8 @@ namespace P5WebApp.Models.Services
         List<Car> GetAllCars();
 
         string GetCarModelCarBrandAndYearNameByVinCode(string CarVinCode);
+
+        string GetCarModelCarBrandAndYearNameAndFinishTypeAndPhotoPathByCarId(int carId);
         List<CarViewModel> GetAllCarsViewModel();
         Car GetCarById(int id);
         CarViewModel GetCarByIdViewModel(int id);

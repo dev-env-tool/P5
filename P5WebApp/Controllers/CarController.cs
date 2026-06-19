@@ -214,6 +214,13 @@ namespace P5WebApp.Controllers
                     if (Car.Photo != null)
                     {
                         string folder = "Cars/Images/";
+                        // Check if the flder exists or not
+                        bool isDirExisting = Directory.Exists(folder);
+                        // Create the directory in case it doesn't exist
+                        if(!isDirExisting)
+                        {
+                            Directory.CreateDirectory(folder);
+                        }
                         // Use a new Guid to create a unique photo Id
                         folder += Guid.NewGuid().ToString() + "_" + Car.Photo.FileName;
                         string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);

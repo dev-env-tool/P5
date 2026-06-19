@@ -19,12 +19,16 @@ namespace P5WebApp.Models.Services
         private readonly ICarRepository ?_carRepository;
         private readonly ICarModelService? _carModelService;
         private readonly IBrandService? _brandService;
+        private readonly IFinishTypeService? _finishTypeService;
+        private readonly IPhotoService? _photoService;
         private readonly P5Referential? _dbContext;
-        public CarService(ICarRepository carRepository, ICarModelService carModelService, IBrandService brandService,P5Referential dbContext) 
+        public CarService(ICarRepository carRepository, ICarModelService carModelService, IBrandService brandService, IFinishTypeService finishTypeService, IPhotoService photoService, P5Referential dbContext) 
         {
             _carRepository = carRepository;
             _carModelService = carModelService;
             _brandService = brandService;
+            _finishTypeService = finishTypeService;
+            _photoService = photoService;
             _dbContext = dbContext;
         }
 
@@ -43,13 +47,40 @@ namespace P5WebApp.Models.Services
             int carBrandId = GetAllCars().Where(c => c.CarVinCode == CarVinCode).Select(c => c.CarBrandId).FirstOrDefault();
             string brandName = _brandService.GetAllBrands().Where(b => b.BrandId == carBrandId).Select(b => b.BrandName).Single();
 
+
+            int carFinishTypeId = GetAllCars().Where(c => c.CarVinCode == CarVinCode).Select(c => c.CarFinishTypeId).FirstOrDefault();
+            string finishType = _finishTypeService.GetAllFinishTypes().Where(f => f.FinishTypeId == carFinishTypeId).Select(b => b.FinishTypeName).Single();
+
+
+
             string carBrandYear = GetAllCars().Where(c => c.CarVinCode == CarVinCode).Select(c => c.CarYear).FirstOrDefault().ToString();
 
 
             return (carModelName + " " + brandName + " " + carBrandYear);
         }
 
+        public string GetCarModelCarBrandAndYearNameAndFinishTypeAndPhotoPathByCarId(int carId)
+        {
+            int carModelId = GetAllCars().Where(c => c.CarId == carId).Select(c => c.CarModelId).FirstOrDefault();
+            string carModelName = _carModelService.GetAllCarModels().Where(c => c.Id == carModelId).Select(c => c.Name).Single();
 
+
+            int carBrandId = GetAllCars().Where(c => c.CarId == carId).Select(c => c.CarBrandId).FirstOrDefault();
+            string brandName = _brandService.GetAllBrands().Where(b => b.BrandId == carBrandId).Select(b => b.BrandName).Single();
+
+
+            int carFinishTypeId = GetAllCars().Where(c => c.CarId == carId).Select(c => c.CarFinishTypeId).FirstOrDefault();
+            string finishTypeName = _finishTypeService.GetAllFinishTypes().Where(f => f.FinishTypeId == carFinishTypeId).Select(b => b.FinishTypeName).Single();
+
+
+
+            string carBrandYear = GetAllCars().Where(c => c.CarId == carId).Select(c => c.CarYear).FirstOrDefault().ToString();
+
+
+            string photoPath = _photoService.GetAllPhotos().Where(p => p.AssociatedCarId == carId).Select(p => p.PhotoPath).FirstOrDefault();
+
+            return (carModelName + " " + brandName + " " + carBrandYear + " " + finishTypeName + " " + photoPath);
+        }
 
 
         public List<CarViewModel> GetAllCarsViewModel()

@@ -1,50 +1,55 @@
-﻿@{
+﻿@model P5WebApp.Models.ViewModels.CarViewModel
+@using P5WebApp.Models.Entities
+
+@{
     ViewData["Title"] = "Home Page";
+    var carInfos = ViewBag.CarInfos as List<string>;
 }
 
+
+
+
+<div style="white-space:pre-line">
+    <h1></h1>
+</div>
 <div class="text-center">
     <h1 class="display-4">Nos Voitures</h1>
-    
-    <div>
-        @using (Html.BeginForm("Index", "Home", FormMethod.Get))
-        {
-            <div class="row">
-                <div>
+</div>
+<div style="white-space:pre-line">
+    <h1></h1>
+</div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="container">
+                
+                    @if(Model != null && Model.Any())
+                    {
+                        @foreach(var car in ViewBag)
+                        {  
+                            <div class="card">
+                                <h5 class="card-header fw-bold">Voiture</h5>
+                                <div class="card-body">
+                                    <h5 class="card-title">@Model.</h5>
+                                    <img src="@ViewBag" height="280" width="400" />
+                                    <p class="card-text">Texte</p>
+                                    <button type="button" class="btn-custom btn btn-danger">
+                                        Consulter
+                                    </button>
+                                </div>
+                            </div> 
+                            <div style="white-space:pre-line">
+                                <h1></h1>
+                            </div>
 
-
-                </div>
-
-
+                        }
+                    }
+                    else
+                    {
+                        <div>Aucune voiture n'est disponible actuellement</div>
+                    }
+                
             </div>
-
-
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        </div>
+    
     </div>
 
-
-
-
-
-
-
-
-
-
-</div>
