@@ -57,11 +57,20 @@ namespace P5WebApp
 
 
 
+            var supportedCultures = new[] { "fr-FR", "fr" };
+
 
 
             var app = builder.Build();
 
             app.UseStaticFiles();
+
+
+            var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[0])
+                .AddSupportedCultures(supportedCultures.ToArray())
+                .AddSupportedUICultures(supportedCultures);
+
+            app.UseRequestLocalization(localizationOptions);
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

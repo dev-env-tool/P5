@@ -10,10 +10,6 @@
     bool IsCarFormFilled = !string.IsNullOrWhiteSpace(Model.CarVinCode) &&
                                    !Model.CarYear.Equals("") &&
                                    !Model.CarBuyDate.Equals("");
-
-
-
-
 }
 
 
@@ -27,11 +23,11 @@
         <h1></h1>
     </div>
     <form id="CarForm" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="CarId" value="@Model.CarId" />
-        <input type="hidden" name="PhotoForDb.PhotoId" value="0" />
-        <input type="hidden" name="PhotoForDb.PhotoName" value="name" />
-        <input type="hidden" name="PhotoForDb.PhotoPath" value="path" />
-        <input type="hidden" name="PhotoForDb.AssociatedCarId" value="0" />
+        <input type="hidden" name="CarId" value="@Model.CarId"/>
+        <input type="hidden" name="PhotoForDb.PhotoId" value="0"/>
+        <input type="hidden" name="PhotoForDb.PhotoName" value="name"/>
+        <input type="hidden" name="PhotoForDb.PhotoPath" value="path"/>
+        <input type="hidden" name="PhotoForDb.AssociatedCarId" value="0"/>
 
 
         @* <input type="hidden" name="SelectedVinCode" value="ok"/> *@
@@ -92,7 +88,7 @@
             <div class="mb-3 col-8">
                 <label>Prix d'achat*':</label>
             </div>
-            <input asp-for="CarBuyPrice" type="number" class="form-control col-12" id="CarBuyPrice" required>
+            <input asp-for="CarBuyPrice" type="text" class="form-control col-12" id="CarBuyPrice" required>
             <span asp-validation-for="CarBuyPrice"></span>
             <div style="white-space:pre-line">
                 <h1></h1>
@@ -120,7 +116,7 @@
             <div class="mb-3 col-8">
                 <label>Date de disponibilité:</label>
             </div>
-            <input asp-for="CarAddAvailabilityDate" type="text" id="txtDate3" class="form-control col-12" date="@Model.CarAddAvailabilityDate"/>
+            <input asp-for="CarAddAvailabilityDate" type="date" class="form-control col-12" date="@Model.CarAddAvailabilityDate"/>
             <span asp-validation-for="CarAddAvailabilityDate"></span>
             <label class="date"></label>
             <div style="white-space:pre-line">
@@ -129,7 +125,7 @@
             <div class="mb-3 col-8">
                 <label>Date de vente:</label>
             </div>
-            <input asp-for="CarDateSold" type="text" id="txtDate4" class="form-control col-12" date="@Model.CarDateSold"/>
+            <input asp-for="CarDateSold" type="date" class="form-control col-12" date="@Model.CarDateSold"/>
             <span asp-validation-for="CarDateSold"></span>
             <label class="date"></label>
             <div style="white-space:pre-line">
@@ -139,7 +135,7 @@
                 <label>Prix de vente*':</label>
             </div>
             <label asp-for="CarSellingPrice" type="number" class="form-control col-12" id="CarSellingPrice"></label>
-            <span asp-validation-for="CarSellingPrice"></span>
+            <input type="hidden" name="CarSellingPrice" id="CarSellingPriceHidden" value="@Model.CarSellingPrice" />
             <div style="white-space:pre-line">
                 <h1></h1>
             </div>
@@ -472,7 +468,24 @@
                 form.valid();
             });
             </script>
-
+            
+            <script type="text/javascript">
+                $(document).ready(function()
+                {
+                setTimeout(updateCarSellingPrice, 100);
+                $("#CarBuyPrice").on("blur", updateCarSellingPrice);
+                    
+                function updateCarSellingPrice()
+                {
+                    var CarBuyPriceForFunction = parseFloat($("#CarBuyPrice").val())|| 0;
+                    console.log("Valeur entrée:", CarBuyPriceForFunction);
+                    var CarSellingPriceForFunction = CarBuyPriceForFunction + 500;
+                    console.log("Valeur entrée:", CarSellingPriceForFunction);
+                    $("#CarSellingPrice").text(CarSellingPriceForFunction);
+                    $("#CarSellingPriceHidden").val(CarSellingPriceForFunction);
+                }
+                });
+            </script>
 
             <script type="text/javascript">
                 $(document).ready(function() 
@@ -489,19 +502,19 @@
                     }
                     $("input[required]").on("input change", debounceCheck);
 
-                    After a blur action, check if form is valid.
+                    // After a blur action, check if form is valid.
                     setTimeout(checkFields, 100);
                     $("input[required]").on("blur", checkFields);
 
-                    setTimeout(updateCarSellingPrice, 100);
-                    $("#CarSellingPrice").on("blur", updateCarSellingPrice);
+                    // setTimeout(updateCarSellingPrice, 100);
+                    // $("#CarSellingPrice").on("blur", updateCarSellingPrice);
                     
-                    function updateCarSellingPrice()
-                    {
-                        var CarBuyPriceForFunction = $("#CarBuyPrice").val(""); 
-                        var CarSellingPriceForFunction = CarBuyPriceForFunction + 500;
-                        $("#CarBuyPrice").val("CarSellingPriceForFunction");
-                    }
+                    // function updateCarSellingPrice()
+                    // {
+                    //     var CarBuyPriceForFunction = $("#CarBuyPrice").val(""); 
+                    //     var CarSellingPriceForFunction = CarBuyPriceForFunction + 500;
+                    //     $("#CarBuyPrice").val("CarSellingPriceForFunction");
+                    // }
 
                     function checkFields() 
                     {

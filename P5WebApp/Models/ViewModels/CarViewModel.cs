@@ -18,11 +18,12 @@ namespace P5WebApp.Models.ViewModels
 
 
         [Required(ErrorMessage = "Veuillez renseigner une année de production")]
-        
+        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateOnly? CarYear { get; set; }
 
 
         [Required(ErrorMessage = "Veuillez renseigner une date d'achat")]
+        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DateCustom]
         public DateOnly ?CarBuyDate { get; set; }
 
@@ -83,11 +84,12 @@ namespace P5WebApp.Models.ViewModels
 
         public string? CarDescription { get; set; }
 
-
+        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateOnly? CarAddAvailabilityDate { get; set; }
 
         public bool CarPublished { get; set; }
 
+        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateOnly? CarDateSold { get; set; }
 
 
@@ -151,8 +153,8 @@ public class DateCustom : ValidationAttribute
 
         }
 
-
-        return base.IsValid(value, validationContext);
+        return ValidationResult.Success;
+        //return base.GetValidationResult(value, validationContext);
     }
 
 }
