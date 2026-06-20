@@ -10,13 +10,15 @@ namespace P5WebApp.Models.ViewModels
 {
     public class HomeViewModel
     {
+        public int Id { get; set; }
+        public string CarModelName { get; set; } 
+        public string BrandName { get; set; }
+        public DateOnly ? CarYear { get; set; }
+        public double CarSellingPrice { get; set; }
+        public string FinishTypeName { get; set; }
+        public string PhotoPath { get; set; }
 
-        public virtual List<Car> Cars { get; set; }
-        public virtual List<Brand> Brands { get; set; }
-        public virtual List<CarModel> CarModels { get; set; }
-        public virtual List<FinishType> FinishTypes { get; set; }
-        public virtual List<Fix> Fixess { get; set; }
-        public virtual List<Photo> Photos { get; set; }
+        public bool isIdPair { get; set; }
 
     }
 }

@@ -43,6 +43,8 @@ namespace P5WebApp.Models.Entities
 
 
         public double CarSellingPrice { get; set; }
+
+        public List<int> AssociatedPhotoIds { get; set; } = new List<int>();
     }
 }
 

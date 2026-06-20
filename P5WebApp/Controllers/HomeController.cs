@@ -17,30 +17,18 @@ namespace P5WebApp.Controllers
         private readonly IBrandService _brandService;
         private readonly ICarModelService _carModelService;
         private readonly IFinishTypeService _finishTypeService;
-        private readonly IFixService _fixService;
         private readonly IPhotoService _photoService;
         private readonly IPhotoRepository _photoRepository;
 
 
-
-
-
-
-
-
-
-
-
-
         public HomeController(ICarService carService, ICarRepository carRepository, IBrandService brandService, ICarModelService carModelService,
-           IFixService fixService, IFinishTypeService finishTypeService, IPhotoService photoService, IPhotoRepository photoRepository)
+            IFinishTypeService finishTypeService, IPhotoService photoService, IPhotoRepository photoRepository)
         {
             _carService = carService;
             _carRepository = carRepository;
             _brandService = brandService;
             _carModelService = carModelService;
             _finishTypeService = finishTypeService;
-            _fixService = fixService;
             _photoService = photoService;
             _photoRepository = photoRepository;
 
@@ -48,24 +36,63 @@ namespace P5WebApp.Controllers
 
         public IActionResult Index()
         {
-            var cars = _carService.GetAllCars();
-            var brands = _brandService.GetAllBrands();
-            var carModels = _carModelService.GetAllCarModels();
-            var finishTypes = _finishTypeService.GetAllFinishTypes();
-            var photos = _photoService.GetAllPhotos();
+            
+            var cars = _carService.GetAllCars().ToList();
+            var brands = _brandService.GetAllBrands().ToList();
+            var carModels = _carModelService.GetAllCarModels().ToList();
+            var finishTypes = _finishTypeService.GetAllFinishTypes().ToList();
+            var photos = _photoService.GetAllPhotos().ToList();
+
+            //var testPhoto = photos.FirstOrDefault(p => p.AssociatedCarId == 180);
+
+            //var homeViewModel =
+            //                    (
+            //                    from car in cars
+            //                    join brand in brands on car.CarBrandId equals brand.BrandId
+            //                    join carModel in carModels on car.CarModelId equals carModel.Id
+            //                    join finishType in finishTypes on car.CarFinishTypeId equals finishType.FinishTypeId
+            //                    from AssociatedPhotoIds in car.AssociatedPhotoIds
+            //                    let firstPhoto = (from photo in photos
+            //                                      where photo.AssociatedCarId == car.CarId
+            //                                      select photo).FirstOrDefault()
+
+            //                    select new HomeViewModel
+            //                    {
+            //                        CarModelName = carModel.Name,
+            //                        BrandName = brand.BrandName,
+            //                        CarYear = car.CarYear,
+            //                        CarSellingPrice = car.CarSellingPrice,
+            //                        FinishTypeName = finishType.FinishTypeName,
+            //                        PhotoPath = firstPhoto?.PhotoPath,
+            //                    }).ToList();
 
 
-            var viewModel = new HomeViewModel
+            //var testCarId = cars.First().CarId;
+            //var photoTest = photos.FirstOrDefault(p => p.AssociatedCarId == testCarId);
+            //Console.WriteLine(photoTest != null ? photoTest.PhotoPath : "Pas de photo");
+
+            var homeViewModel = cars.Select(car =>
             {
-                Cars = cars,
-                Brands = brands,
-                CarModels = carModels,
-                FinishTypes = finishTypes,
+                var brand = brands.FirstOrDefault(b => b.BrandId == car.CarBrandId);
+                var carModel = carModels.FirstOrDefault(cm => cm.Id == car.CarModelId);
+                var finishType = finishTypes.FirstOrDefault(ft => ft.FinishTypeId == car.CarFinishTypeId);
+                var firstPhoto = photos.FirstOrDefault(p => p.AssociatedCarId == car.CarId);
+                var carId = car.CarId;
 
-                
-            };
+                return new HomeViewModel
+                {
+                    Id = carId,
+                    CarModelName = carModel?.Name,
+                    BrandName = brand?.BrandName,
+                    CarYear = car.CarYear,
+                    CarSellingPrice = car.CarSellingPrice,
+                    FinishTypeName = finishType?.FinishTypeName,
+                    PhotoPath = firstPhoto?.PhotoPath,
+                    isIdPair = carId % 2 == 0,
+                };
+            }).ToList();
 
-            return View(cars);
+            return View(homeViewModel.OrderByDescending(c => c.Id));
         }
 
         public IActionResult Privacy()
