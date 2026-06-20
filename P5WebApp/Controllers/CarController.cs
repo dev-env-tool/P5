@@ -63,9 +63,9 @@ namespace P5WebApp.Controllers
 
 
 
-        [Authorize]
 
-        // GET: View only for registered admin user. Car list to see one Cars.
+
+        // GET: View only for every user. Car list to see one Car.
         public IActionResult Read(int id)
         {
             ViewBag.Brands = _brandService.GetAllBrands();
@@ -73,8 +73,6 @@ namespace P5WebApp.Controllers
             ViewBag.FinishTypes = _finishTypeService.GetAllFinishTypes();
 
             CarViewModel CarViewModel = _carService.GetCarByIdViewModel(id);
-            var editCar = _carService.GetCarById(id);
-
 
             CarViewModel.CarBrands = new List<Brand>();
             CarViewModel.CarBrands = _brandService.GetAllBrands();
@@ -92,7 +90,7 @@ namespace P5WebApp.Controllers
 
             CarViewModel.CarModels = new List<CarModel>();
             CarViewModel.CarModels = _carModelService.GetAllCarModels();
-            CarViewModel.CarModelId = CarViewModel.CarModelId;
+
 
             return View(CarViewModel);
         }

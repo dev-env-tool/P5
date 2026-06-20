@@ -19,43 +19,7 @@
     <h1></h1>
 </div>
     <div class="row">
-        <div class="col-sm-6">
-            <div class="container">
-                    @if(Model != null && Model.Any())
-                    {
-                        @foreach (var homeViewModel in Model)
-                        {
-                            if(homeViewModel.isIdPair == true)
-                            {
-                                <div class="card ">
-                                    <h5 class="card-header fw-bold btn-custom">Voiture</h5>
-                                    <div class="card-body">
-                                        <h1 class="card-title">@homeViewModel.CarSellingPrice euro</h1>
-                                        <h5 class="card-title">@homeViewModel.CarYear</h5>
-                                        <h5 class="card-title">@homeViewModel.BrandName</h5>
-                                        <h5 class="card-title">@homeViewModel.CarModelName</h5>
-                                        <h5 class="card-title">@homeViewModel.FinishTypeName</h5>
-                                        <img src="@homeViewModel.PhotoPath" height="280" width="400" />
-                                        <p class="card-text">Texte</p>
-                                        <button type="button" class="btn-custom btn btn-danger">
-                                            Consulter
-                                        </button>
-                                    </div>
-                                </div> 
-                                <div style="white-space:pre-line">
-                                    <h1></h1>
-                                </div>
-                            }
-                            else{}
-                        }
-                    }
-                    else
-                    {
-                        <div>Aucune voiture n'est disponible actuellement</div>
-                    }
-                
-            </div>
-        </div>
+        
 
     <div class="col-sm-6">
         <div class="container">
@@ -66,7 +30,7 @@
                     if (homeViewModel.isIdPair == false)
                     {
                         <div class="card ">
-                            <h5 class="card-header fw-bold btn-custom">Voiture</h5>
+                            <h5 class="card-header fw-bold">Référence de l'annonce : @homeViewModel.Id</h5>
                             <div class="card-body">
                                 <h1 class="card-title">@homeViewModel.CarSellingPrice euro</h1>
                                 <h5 class="card-title">@homeViewModel.CarYear</h5>
@@ -74,17 +38,53 @@
                                 <h5 class="card-title">@homeViewModel.CarModelName</h5>
                                 <h5 class="card-title">@homeViewModel.FinishTypeName</h5>
                                 <img src="@homeViewModel.PhotoPath" height="280" width="400" />
-                                <p class="card-text">Texte</p>
-                                <button type="button" class="btn-custom btn btn-danger">
-                                    Consulter
-                                </button>
+                                <p class="card-text"></p>
+                                <form id="@homeViewModel.Id" asp-action="Read" asp-controller="Car" method="get">
+                                    <input type="hidden" name="id" value="@homeViewModel.Id" />
+                                    <button type="submit" class="btn-custom btn btn-danger">
+                                        Consulter
+                                    </button>
+                                </form>
                             </div>
                         </div>
                         <div style="white-space:pre-line">
                             <h1></h1>
                         </div>
                     }
-                    else { }
+                }
+            } 
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="container">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var homeViewModel in Model)
+                {
+                    if (homeViewModel.isIdPair == true)
+                    {
+                        <div class="card ">
+                            <h5 class="card-header fw-bold">Référence de l'annonce : @homeViewModel.Id</h5>
+                            <div class="card-body">
+                                <h1 class="card-title">@homeViewModel.CarSellingPrice euro</h1>
+                                <h5 class="card-title">@homeViewModel.CarYear</h5>
+                                <h5 class="card-title">@homeViewModel.BrandName</h5>
+                                <h5 class="card-title">@homeViewModel.CarModelName</h5>
+                                <h5 class="card-title">@homeViewModel.FinishTypeName</h5>
+                                <img src="@homeViewModel.PhotoPath" height="280" width="400" />
+                                <p class="card-text"></p>
+                                <form id="@homeViewModel.Id" asp-action="Read" asp-controller="Car" method="get">
+                                    <input type="hidden" name="id" value="@homeViewModel.Id" />
+                                    <button type="submit" class="btn-custom btn btn-danger">
+                                        Consulter
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <div style="white-space:pre-line">
+                            <h1></h1>
+                        </div>
+                    }
                 }
             }
             else
@@ -94,6 +94,5 @@
                 
         </div>
     </div>
-    
     </div>
 
