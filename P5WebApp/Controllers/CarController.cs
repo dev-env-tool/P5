@@ -9,6 +9,7 @@ using P5WebApp.Models.Services;
 using P5WebApp.Models.ViewModels;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Runtime.ConstrainedExecution;
 
 namespace P5WebApp.Controllers
 {
@@ -234,8 +235,8 @@ namespace P5WebApp.Controllers
 
                     if (Car.Photo != null)
                     {
-                        string folder = "Cars/Images/";
-                        // Check if the flder exists or not
+                        string folder = "P5WebApp/P5WebApp/wwwroot/Cars/Images";
+                        // Check if the folder exists or not
                         bool isDirExisting = Directory.Exists(folder);
                         // Create the directory in case it doesn't exist
                         if(!isDirExisting)
@@ -354,9 +355,12 @@ namespace P5WebApp.Controllers
         // GET: CarController/Edit/5
         public ActionResult Edit(int id)
         {
+            var photos = _photoService.GetAllPhotos().ToList();
 
+            ViewBag.PhotoPath = photos.FirstOrDefault(p => p.AssociatedCarId == id);
             ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedCarId == id);
-            
+
+
             CarViewModel CarViewModel = _carService.GetCarByIdViewModel(id);
             //var editCar = _carService.GetCarById(id);
 
@@ -370,6 +374,7 @@ namespace P5WebApp.Controllers
 
             CarViewModel.FinishTypes = new List<FinishType>();
             CarViewModel.FinishTypes = _finishTypeService.GetAllFinishTypes();
+
 
 
             //CarViewModel.CarFixesList = new List<Fix>();
