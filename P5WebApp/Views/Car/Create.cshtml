@@ -1,6 +1,6 @@
 ﻿@model P5WebApp.Models.ViewModels.CarViewModel
-@using P5WebApp.Models.Entities
-
+@* @using P5WebApp.Models.Entities *@
+@using P5WebApp.Models.ViewModels
 
 @{
     Layout = "_Layout";
@@ -10,8 +10,12 @@
     bool IsCarFormFilled = !string.IsNullOrWhiteSpace(Model.CarVinCode) &&
                                    !Model.CarYear.Equals("") &&
                                    !Model.CarBuyDate.Equals("");
-}
 
+
+}
+@{
+    Model.CarFixesViewModelList = Model.CarFixesViewModelList ?? new List<FixViewModel>();
+}
 
 
 <div class="row">
@@ -23,6 +27,8 @@
         <h1></h1>
     </div>
     <form id="CarForm" method="post" enctype="multipart/form-data">
+        @* @Html.ValidationSummary(true, "", new { @class = "text-danger" }) *@
+        @* <div asp-validation-summary="All" class="text-danger"></div> *@
         <input type="hidden" name="CarId" value="@Model.CarId"/>
         <input type="hidden" name="PhotoForDb.PhotoId" value="0"/>
         <input type="hidden" name="PhotoForDb.PhotoName" value="name"/>
@@ -70,18 +76,16 @@
             <div class="mb-3 col-8">
                 <label>Année de production*:</label>
             </div>
-            <input asp-for="CarYear" type="date" class="form-control col-12" date="@Model.CarYear" required/>
+            <input asp-for="CarYear" type="date" class="form-control col-12" required/>
             <span asp-validation-for="CarYear"></span>
-            <label class="date"></label>
             <div style="white-space:pre-line">
                 <h1></h1>
             </div>
             <div class="mb-3 col-8">
                 <label>Date d'achat*':</label>
             </div>
-            <input asp-for="CarBuyDate" type="date" class="form-control col-12" date="@Model.CarBuyDate" required/>
+            <input asp-for="CarBuyDate" type="date" class="form-control col-12" required />
             <span asp-validation-for="CarBuyDate"></span>
-            <label class="date"></label>
             <div style="white-space:pre-line">
                 <h1></h1>
             </div>
@@ -116,7 +120,7 @@
             <div class="mb-3 col-8">
                 <label>Date de disponibilité:</label>
             </div>
-            <input asp-for="CarAddAvailabilityDate" type="date" class="form-control col-12" date="@Model.CarAddAvailabilityDate"/>
+            <input asp-for="CarAddAvailabilityDate" type="date" class="form-control col-12" />
             <span asp-validation-for="CarAddAvailabilityDate"></span>
             <label class="date"></label>
             <div style="white-space:pre-line">
@@ -125,7 +129,7 @@
             <div class="mb-3 col-8">
                 <label>Date de vente:</label>
             </div>
-            <input asp-for="CarDateSold" type="date" class="form-control col-12" date="@Model.CarDateSold"/>
+            <input asp-for="CarDateSold" type="date" class="form-control col-12" />
             <span asp-validation-for="CarDateSold"></span>
             <label class="date"></label>
             <div style="white-space:pre-line">
@@ -164,6 +168,8 @@
                                 <div class="fix">
                                     @Html.HiddenFor(m => m.CarFixesViewModelList[i].FixId)
                                     @Html.HiddenFor(m => m.CarFixesViewModelList[i].AssociatedCarId)
+                                    @* @Html.HiddenFor(m => m.CarFixesViewModelList[i].ValidateFix) *@
+                                    @* @Html.Hidden("CarFixesViewModelList[" + i + "].ValidateFix", true) *@
                                     <div class="mb-3 col-8">
                                         <label>Description de la réparation*:</label>
                                     </div>
@@ -195,17 +201,8 @@
                         </div>
 
 
-
-
-
-
-
-
-
-
-
                     
-@*                         <form id="FixForm" method="post">
+                        @* <form id="FixForm" method="post">
                             <input type="hidden" name="FixId" value="@Model.FixId" />
                             <div style="white-space:pre-line">
                                 <h1></h1>
@@ -234,92 +231,12 @@
                             <h1></h1>
                         </div>
 
-
-
-
-
-
-
                         </form> *@
 
                     </div>
                     
                 }
             </div>
-                @* <div>
-
-                        <div>
-                            <div class="mb-3 col-8">
-                                <table class="table table-bordered table-striped table-sm">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                <label>Réparation</label>
-                                            </th>
-                                            <th>
-                                                <label>Date</label>
-                                            </th>
-                                            <th>
-                                                <label>Coût</label>
-                                            </th>
-                                            <th>
-                                                <label>Modifier</label>
-                                            </th>
-                                            <th>
-                                                <label>Supprimer</label>
-                                            </th>
-                                    </thead>
-                                    <tbody>
-
-                                        @foreach (var f in ViewBag.Fixes)
-                                        {
-
-                                            <tr>
-                                                <td>
-                                                    @(f.FixDescription)
-                                                </td>
-                                                <td>
-                                                    @(f.FixDate)
-                                                </td>
-                                                <td>
-                                                    @(f.FixCost)
-                                                </td>
-
-                                                <td>
-                                                    <form id="@(f.FixId)" asp-action="Edit" asp-controller="Fix" method="get">
-                                                        <input type="hidden" name="Id" value=@(f.FixId) />
-                                                        <button type="submit" class="btn-custom btn btn-danger">
-                                                            Modifier
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                                <td>
-
-                                                    <form id="@(f.FixId)" asp-action="Delete" asp-controller="Fix" method="post">
-                                                        <input type="hidden" name="Id" value=@(f.FixId) />
-                                                        <button type="submit" class="btn-custom btn btn-danger">
-                                                            Supprimer
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        }
-
-
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-
-
-                    </div>
-                    <div style="white-space:pre-line">
-                        <h1></h1>
-                    </div>
-                </div> *@
-
 
 
                     <div class="row">
@@ -339,54 +256,7 @@
     </form>
 
 
-    @* @{
-        var firstLoadForErrorViewModel = 0;
-    }
-
-        <div id="fix-template" style="display:none;">
-        <div class="row">
-
-                <div class="fix">
-                <div style="white-space:pre-line">
-                    <h1></h1>
-                </div>
-                @Html.HiddenFor(m => m.CarFixesViewModelList[firstLoadForErrorViewModel].FixId)
-                @Html.HiddenFor(m => m.CarFixesViewModelList[firstLoadForErrorViewModel].AssociatedCarId)
-                <div style="white-space:pre-line">
-                    <h1></h1>
-                </div>
-                <div class="mb-3 col-8">
-                    <label>Description de la réparation*:</label>
-                </div>
-                <div style="white-space:pre-line">
-                    <h1></h1>
-                </div>
-                @Html.TextBoxFor(m => m.CarFixesViewModelList[firstLoadForErrorViewModel].FixDescription, new { @class = "form-control col-12" })
-                @Html.ValidationMessageFor(m => m.CarFixesViewModelList[firstLoadForErrorViewModel].FixDescription)
-                <div style="white-space:pre-line">
-                    <h1></h1>
-                </div>
-                <div class="mb-3 col-8">
-                    <label>Date de la réparation*:</label>
-                </div>
-                <div style="white-space:pre-line">
-                    <h1></h1>
-                </div>
-                @Html.TextBoxFor(m => m.CarFixesViewModelList[firstLoadForErrorViewModel].FixDate, new { @type = "date", @class = "form-control col-12" })
-                @Html.ValidationMessageFor(m => m.CarFixesViewModelList[firstLoadForErrorViewModel].FixDate)
-                <div style="white-space:pre-line">
-                    <h1></h1>
-                </div>
-                <div class="mb-3 col-8">
-                    <label>Coût de la réparation*:</label>
-                </div>
-                @Html.TextBoxFor(m => m.CarFixesViewModelList[firstLoadForErrorViewModel].FixCost, new { @class = "form-control col-12" })
-                @Html.ValidationMessageFor(m => m.CarFixesViewModelList[firstLoadForErrorViewModel].FixCost)
-                <div style="white-space:pre-line">
-                    <h1></h1>
-                </div>
-            </div>
-        </div> *@
+   
 
 
     @{
@@ -399,6 +269,7 @@
             <input type="hidden" name="@($"{prefix}[__index__].FixId")" id="@($"{prefix}___index___FixId")" value="0" />
             <input type="hidden" name="@($"{prefix}[__index__].AssociatedCarId")" id="@($"{prefix}___index___AssociatedCarId")" value=@Model.CarId />
 
+
             <div style="white-space:pre-line">
                 <h1></h1>
             </div>
@@ -406,7 +277,7 @@
                 <label>Description de la réparation*:</label>
             </div>
             <input type="text" name="@($"{prefix}[__index__].FixDescription")" id="@($"{prefix}___index___FixDescription")" class="form-control col-12" value="" />
-            <span class="text-danger" data-valmsg-for="@($"{prefix}[__index__].FixDescription")" data-valmsg-replace="true"></span>
+            <span data-valmsg-for="@($"{prefix}[__index__].FixDescription")" data-valmsg-replace="true"></span>
             <div style="white-space:pre-line">
                 <h1></h1>
             </div>
@@ -414,7 +285,7 @@
                 <label>Date de la réparation*:</label>
             </div>
             <input type="date" name="@($"{prefix}[__index__].FixDate")" id="@($"{prefix}___index___FixDate")" class="form-control col-12" value="" />
-            <span class="text-danger" data-valmsg-for="@($"{prefix}[__index__].FixDate")" data-valmsg-replace="true"></span>
+            <span data-valmsg-for="@($"{prefix}[__index__].FixDate")" data-valmsg-replace="true"></span>
 
             <div style="white-space:pre-line">
                 <h1></h1>
@@ -423,7 +294,7 @@
                 <label>Coût de la réparation*:</label>
             </div>
             <input type="text" name="@($"{prefix}[__index__].FixCost")" id="@($"{prefix}___index___FixCost")" class="form-control col-12" value=""  />
-            <span class="text-danger" data-valmsg-for="@($"{prefix}[__index__].FixCost")" data-valmsg-replace="true"></span>
+            <span data-valmsg-for="@($"{prefix}[__index__].FixCost")" data-valmsg-replace="true"></span>
             <div style="white-space:pre-line">
                 <h1></h1>
             </div>
@@ -440,34 +311,10 @@
     @section Scripts {
         @{
             await Html.RenderPartialAsync("_ValidationScriptsPartial");
-            <script type="text/javascript">
-                $(function()
-                {
-                    $("#txtDate").datepicker({format:"dd/mm/yyyy"});
-                });
-                $(function()
-                {
-                    $("#txtDate2").datepicker({format:"dd/mm/yyyy"});
-                });
-                $(function()
-                {
-                $("#txtDate3").datepicker({format:"dd/mm/yyyy"});
-                });
-                $(function()
-                {
-                $("#txtDate4").datepicker({format:"dd/mm/yyyy"});
-                });
-            </script>
-            
-            <script type="text/javascript">
-            //display all error messages without any initial interaction
-            $(document).ready(function() 
-            {
-                var form = $("#CarForm");
-                form.validate();
-                form.valid();
-            });
-            </script>
+        }
+
+        @{
+
             
             <script type="text/javascript">
                 $(document).ready(function()
@@ -548,11 +395,11 @@
                 var deleteButton = $("#DeleteLastFixButton")
                 var count = 0;
 
-                if(count == 0)
-                {
-                    var fakeFix = $('#fix-fake-template').html();
-                    container.append(fakeFix);
-                }
+                // if(count == 0)
+                // {
+                    // var fakeFix = $('#fix-fake-template').html();
+                    // container.append(fakeFix);
+                // }
 
 
                 function addFix() 
@@ -581,17 +428,22 @@
 
                 createButton.click(function(e)
                 { 
-                        var fakeFix = container.find(".fix:hidden");
-                        if(fakeFix.length > 0) {
-                            fakeFix.remove();
-                            count = 0;
+                        // var fakeFix = container.find(".fix:hidden");
+                        // if(fakeFix.length > 0) 
+                        // {
+                        //     fakeFix.remove();
+                        //     count = 0;
+                        // }
+                        // else
+                        {
+                            e.preventDefault();
+                            console.log("clic button");
+                            addFix(count);
+                            console.log(count);
+                            count++;
+                            console.log(count);
                         }
-                        e.preventDefault();
-                        console.log("clic button");
-                        addFix(count);
-                        console.log(count);
-                        count++;
-                        console.log(count);
+
                 });
 
 
@@ -602,13 +454,14 @@
 
 
                         console.log(count);
+                        sectionToDelete.empty();
                         sectionToDelete.remove();
                         if(count==0)
                         {
                             container.hide();
                             container.empty();
-                            var fakeFix = $('#fix-fake-template').html();
-                            container.append(fakeFix);
+                            // var fakeFix = $('#fix-fake-template').html();
+                            // container.append(fakeFix);
                             count = 0;
                         }
                         else
@@ -631,16 +484,6 @@
 
 
             });
-            </script>
-
-            <script type="text/template" id="fix-fake-template">
-                <div class="fix" style="display:none;">
-                <input type="hidden" name="CarFixesViewModelList[0].FixId" value="0" />
-                <input type="hidden" name="CarFixesViewModelList[0].AssociatedCarId" value=@Model.CarId />
-                <input type="text" name="CarFixesViewModelList[0].FixDescription" value="dummyfix1900" />
-                <input type="date" name="CarFixesViewModelList[0].FixDate" value="1900-01-01" />
-                <input type="text" name="CarFixesViewModelList[0].FixCost" value="1" />
-                </div>
             </script>
 
             <script type="text/javascript">

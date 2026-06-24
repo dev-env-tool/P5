@@ -69,56 +69,59 @@ namespace P5WebApp.Models.Services
             /// </summary >
             Dictionary<string, string> modelErrors = new Dictionary<string, string>();
 
-
-            /// <summary>
-            /// Declaration of the same ProductViewModel RegularExpression attributes
-            /// to run server side attribute validation.
-            /// </summary >
-            var Attribute1 = new RequiredAttribute();
-
-            if (!Attribute1.IsValid(Fix.FixDescription))
+            if (Fix != null)
             {
-                modelErrors.Add("1", "Veuillez renseigner la description de la réparation");
+                /// <summary>
+                /// Declaration of the same ProductViewModel RegularExpression attributes
+                /// to run server side attribute validation.
+                /// </summary >
+                var Attribute1 = new RequiredAttribute();
+
+                if (!Attribute1.IsValid(Fix.FixDescription))
+                {
+                    modelErrors.Add("1", "Veuillez renseigner la description de la réparation");
+                }
+
+                var Attribute2 = new RequiredAttribute();
+
+                if (!Attribute2.IsValid(Fix.FixDate))
+                {
+                    modelErrors.Add("2", "Veuillez renseigner la date de la réparation");
+                }
+
+                var Attribute3 = new RequiredAttribute();
+
+                if (!Attribute3.IsValid(Fix.FixCost))
+                {
+                    modelErrors.Add("3", "Veuillez renseigner le coût de la réparation");
+                }
+
+
+                var Attribute4 = new RegularExpressionAttribute("^(-?(\\d+\\.?\\d+|\\d))+$");
+
+                if (!Attribute4.IsValid(Fix.FixCost))
+                {
+                    modelErrors.Add("4", "Le coût n'est pas un nombre");
+
+
+                }
+                var Attribute5 = new RangeAttribute(0.0001, double.MaxValue);
+
+                if (!Attribute5.IsValid(Fix.FixCost))
+                {
+                    modelErrors.Add("5", "Le coût n'est pas supérieur à 0");
+                }
+
+
+                var Attribute6 = new RequiredAttribute();
+
+                if (!Attribute6.IsValid(Fix.AssociatedCarId))
+                {
+                    modelErrors.Add("6", "Veuillez choisir une voiture associée");
+                }
+
+                return modelErrors;
             }
-
-            var Attribute2 = new RequiredAttribute();
-
-            if (!Attribute2.IsValid(Fix.FixDate))
-            {
-                modelErrors.Add("2", "Veuillez renseigner la date de la réparation");
-            }
-
-            var Attribute3 = new RequiredAttribute();
-
-            if (!Attribute3.IsValid(Fix.FixCost))
-            {
-                modelErrors.Add("3", "Veuillez renseigner le coût de la réparation");
-            }
-
-
-            var Attribute4 = new RegularExpressionAttribute("^(-?(\\d+\\.?\\d+|\\d))+$");
-
-            if (!Attribute4.IsValid(Fix.FixCost))
-            {
-                modelErrors.Add("4", "Le coût n'est pas un nombre");
-
-
-            }
-            var Attribute5 = new RangeAttribute(0.0001, double.MaxValue);
-
-            if (!Attribute5.IsValid(Fix.FixCost))
-            {
-                modelErrors.Add("5", "Le coût n'est pas supérieur à 0");
-            }
-
-
-            var Attribute6 = new RequiredAttribute();
-
-            if (!Attribute6.IsValid(Fix.AssociatedCarId))
-            {
-                modelErrors.Add("6", "Veuillez choisir une voiture associée");
-            }
-
             return modelErrors;
         }
 

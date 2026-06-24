@@ -170,12 +170,15 @@ namespace P5WebApp.Models.Services
                 modelErrors.Add("", "Veuillez renseigner une année de production");
             }
 
+
+
             var Attribute3 = new RequiredAttribute();
 
             if (!Attribute3.IsValid(Car.CarBuyDate))
             {
                 modelErrors.Add("", "Veuillez renseigner une date d'achat");
             }
+
 
             var Attribute4 = new RequiredAttribute();
 
@@ -260,30 +263,33 @@ namespace P5WebApp.Models.Services
         {
             List<int> fixIds = new List<int>();
 
-            foreach (var fix in carFixViewModels) 
+            if(carFixViewModels != null) 
             {
-                fixIds.Add(fix.FixId);
+                foreach (var fix in carFixViewModels) 
+                {
+                    fixIds.Add(fix.FixId);
+                }
             }
-
             return fixIds;
         }
         private static List<Fix> MapFixesViewModelToFixEntities(IEnumerable<FixViewModel> carFixViewModels)
         {
             List<Fix> fixes = new List<Fix>();
 
-            if (carFixViewModels == null)
-                return fixes;
-
-            foreach (FixViewModel carFix in carFixViewModels)
-            {
-                fixes.Add(new Fix
+            if (carFixViewModels != null)
+            { 
+                foreach (FixViewModel carFix in carFixViewModels)
                 {
-                    FixDescription = carFix.FixDescription,
-                    FixDate = carFix.FixDate,
-                    FixCost = carFix.FixCost
-                });
-            }
+                    fixes.Add(new Fix
+                    {
+                        FixDescription = carFix.FixDescription,
+                        FixDate = carFix.FixDate,
+                        FixCost = carFix.FixCost
+                    });
+                }
 
+                return fixes;
+            }
             return fixes;
         }
 

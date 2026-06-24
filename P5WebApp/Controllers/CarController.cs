@@ -7,6 +7,7 @@ using P5WebApp.Models.Entities;
 using P5WebApp.Models.Repositories;
 using P5WebApp.Models.Services;
 using P5WebApp.Models.ViewModels;
+using System.Diagnostics;
 
 namespace P5WebApp.Controllers
 {
@@ -152,18 +153,18 @@ namespace P5WebApp.Controllers
 
             var transaction = _carService.BeginTransaction();
 
-            // Remove from memory "dummyfix1900" from CarFixesViewModelList. Avoiding any dummy fix to be recorded in Db
-            // "dummyfix1900" comes from the front-end as hidden entry to enable form validation without any fix
+            // Remove from memory "dummyfix1980" from CarFixesViewModelList. Avoiding any dummy fix to be recorded in Db
+            // "dummyfix1980" comes from the front-end as hidden entry to enable form validation without any fix
             // Hence required and other fix validation attribute work on manual fix entries.
 
-            FixViewModel dummyfix1900 = new FixViewModel();
+            //FixViewModel dummyfix1980 = new FixViewModel();
                 
-            dummyfix1900 = Car.CarFixesViewModelList.SingleOrDefault(f => f.FixDescription == "dummyfix1900");
+            //dummyfix1980 = Car.CarFixesViewModelList.SingleOrDefault(f => f.FixDescription == "dummyfix1900");
 
-            if (dummyfix1900 != null)
-            {
-                Car.CarFixesViewModelList.Remove(dummyfix1900);
-            }
+            //if (dummyfix1980 != null)
+            //{
+            //    Car.CarFixesViewModelList.Remove(dummyfix1980);
+            //}
 
 
 
@@ -174,6 +175,10 @@ namespace P5WebApp.Controllers
             // Rollback means it manages to let the whole database as it was before transaction started.
             try
             {
+                if (!TryValidateModel(Car))
+                {
+                    
+                }
                 if (Car.CarFixesViewModelList != null)
                 { 
                     foreach (var fix  in Car.CarFixesViewModelList) 
@@ -252,6 +257,13 @@ namespace P5WebApp.Controllers
 
                     Car.FinishTypes = new List<FinishType>();
                     Car.FinishTypes = _finishTypeService.GetAllFinishTypes();
+                    //ModelState.Remove("CarBuyDate");
+                    //foreach (var error in ModelState["CarBuyDate"]?.Errors ?? Enumerable.Empty<ModelError>())
+                    //{
+                    //    Console.WriteLine(error.ErrorMessage);
+                    //    ViewBag.CarBuyDateErrors = ModelState["CarBuyDate"]?.Errors.Select(e => e.ErrorMessage).ToList();
+                    //}
+                    //ModelState.AddModelError("CarBuyDate", "Test message d'erreur manuel");
                     return View(Car);
                 }
             }

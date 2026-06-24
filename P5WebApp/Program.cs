@@ -5,6 +5,8 @@ using P5WebApp.Data;
 using P5WebApp.Models.Repositories;
 using P5WebApp.Models.Services;
 using System.Runtime.CompilerServices;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
+
 
 namespace P5WebApp
 {
@@ -59,7 +61,10 @@ namespace P5WebApp
 
             var supportedCultures = new[] { "fr-FR", "fr" };
 
-
+            builder.Services.AddControllers(options =>
+            {
+                options.ModelMetadataDetailsProviders.Add(new SystemTextJsonValidationMetadataProvider());
+            });
 
             var app = builder.Build();
 
