@@ -29,31 +29,5 @@ namespace P5WebApp.Models.ViewModels
 
         public bool ValidateFix { get; set; }
 
-        //public List<FixViewModel> Fix { get; set; }
-
-        //public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        //{
-        //    if (ValidateFix)
-        //    {
-        //        foreach (var obj in Fix)
-        //        {
-        //            if (string.IsNullOrWhiteSpace(obj.FixDescription))
-        //            {
-        //                yield return new ValidationResult("Veuillez renseigner la description de la réparation", new[] { nameof(obj.FixDescription) });
-        //            }
-        //            if (obj.FixDate==null)
-        //            {
-        //                yield return new ValidationResult("Veuillez renseigner la date de la réparation", new[] { nameof(obj.FixDate) });
-        //            }
-        //            if (obj.FixCost==null)
-        //            {
-        //                yield return new ValidationResult("Veuillez renseigner le coût de la réparation", new[] { nameof(obj.FixCost) });
-        //            }
-        //        }
-        //    }
-
-        //}
-
-
     }
 }

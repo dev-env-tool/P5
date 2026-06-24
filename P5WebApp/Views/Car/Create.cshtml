@@ -103,7 +103,7 @@
             
             <div class="custom-file">
                 <input asp-for="Photo" class="custom-file-input form-control col-12" id="customFile" />
-                <label class="custom-file-label" for="customFile" ></label>
+                <label class="custom-file-label" for="customFile" hidden></label>
             </div>
             <span asp-validation-for="Photo"></span>
             <div style="white-space:pre-line">
@@ -155,7 +155,7 @@
 
 
 
-
+  
 
 
             <div id="CreateFixDiv" style="display:none">
@@ -169,7 +169,7 @@
                                     @Html.HiddenFor(m => m.CarFixesViewModelList[i].FixId)
                                     @Html.HiddenFor(m => m.CarFixesViewModelList[i].AssociatedCarId)
                                     @* @Html.HiddenFor(m => m.CarFixesViewModelList[i].ValidateFix) *@
-                                    @* @Html.Hidden("CarFixesViewModelList[" + i + "].ValidateFix", true) *@
+                                    @Html.Hidden("CarFixesViewModelList[" + i + "].ValidateFix", true)
                                     <div class="mb-3 col-8">
                                         <label>Description de la réparation*:</label>
                                     </div>
@@ -268,6 +268,7 @@
             <div class="fix">
             <input type="hidden" name="@($"{prefix}[__index__].FixId")" id="@($"{prefix}___index___FixId")" value="0" />
             <input type="hidden" name="@($"{prefix}[__index__].AssociatedCarId")" id="@($"{prefix}___index___AssociatedCarId")" value=@Model.CarId />
+            <input type="hidden" name="@($"{prefix}[__index__].ValidateFix")" id="@($"{prefix}___index___ValidateFix")" value=true />
 
 
             <div style="white-space:pre-line">

@@ -7,6 +7,7 @@ using P5WebApp.Models.Entities;
 using P5WebApp.Models.Repositories;
 using P5WebApp.Models.Services;
 using P5WebApp.Models.ViewModels;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 
 namespace P5WebApp.Controllers
@@ -179,21 +180,38 @@ namespace P5WebApp.Controllers
                 {
                     
                 }
-                if (Car.CarFixesViewModelList != null)
-                { 
-                    foreach (var fix  in Car.CarFixesViewModelList) 
-                    {
-                        Dictionary<string, string> modelErrorsForFixes = _fixService.CheckFixModelErrors(fix);
+                //if (Car.CarFixesViewModelList != null)
+                //{ 
+                //    foreach (var fix  in Car.CarFixesViewModelList) 
+                //    {
+                //        Dictionary<string, string> modelErrorsForFixes = _fixService.CheckFixModelErrors(fix);
 
-                        foreach (var key in modelErrorsForFixes)
-                        {
-                            string field = key.Key;
-                            string error = key.Value;
+                //        foreach (var key in modelErrorsForFixes)
+                //        {
+                //            string field = key.Key;
+                //            string error = key.Value;
 
-                            ModelState.AddModelError(field, error);
-                        }
-                    }
-                }
+                //            ModelState.AddModelError(field, error);
+                //        }
+                //    }
+                //}
+
+                //var validationContext = new ValidationContext(Car, null, null);
+                //var validationResults = Car.Validate(validationContext);
+
+
+                //for (int i = 0; i < Car.CarFixesViewModelList.Count; i++)
+                //{
+                //    var fix = Car.CarFixesViewModelList[i];
+
+                //    var errors = validationResults;
+
+
+                //    foreach (var error in errors)
+                //    {
+                //        ModelState.AddModelError($"CarFixesViewModelList[{i}].{error.MemberNames}", error.ErrorMessage);
+                //    }
+                //}
 
                 Dictionary<string, string> modelErrorsForCar = _carService.CheckCarModelErrors(Car);
 

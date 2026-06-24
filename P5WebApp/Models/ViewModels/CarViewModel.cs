@@ -51,7 +51,7 @@ namespace P5WebApp.Models.ViewModels
             }
             if (CarBuyDate >= dateToday)
             {
-                yield return new ValidationResult("La date d'achat ne peut être ultérieure à la date du jour"+ maxCarYear, new[] { nameof(CarBuyDate) });
+                yield return new ValidationResult("La date d'achat ne peut être ultérieure à la date du jour", new[] { nameof(CarBuyDate) });
             }
 
             if (CarAddAvailabilityDate <= CarBuyDate)
@@ -59,7 +59,12 @@ namespace P5WebApp.Models.ViewModels
                 yield return new ValidationResult("La date de disponibilité doit être ultérieure à la date d'achat de la voiture", new[] { nameof(CarAddAvailabilityDate) });
             }
 
-            if(CarDateSold <= CarAddAvailabilityDate)
+            if (CarDateSold >= dateToday)
+            {
+                yield return new ValidationResult("La date de vente ne peut être ultérieure à la date du jour", new[] { nameof(CarDateSold) });
+            }
+
+            if (CarDateSold <= CarAddAvailabilityDate)
             {
                 yield return new ValidationResult("La date de vente doit être ultérieure à la date de disponibilité de la voiture", new[] { nameof(CarDateSold) });
 
@@ -67,23 +72,46 @@ namespace P5WebApp.Models.ViewModels
 
             if (CarFixesViewModelList != null)
             { 
-                foreach(var fix in CarFixesViewModelList)
-                {
-                    var context = new ValidationContext(fix);
-                    var results = new List<ValidationResult>();
-                    //if(fix.ValidateFix)
-                    //{ 
-                        if (fix.FixDate <= CarAddAvailabilityDate)
-                        {
-                            yield return new ValidationResult("La date de la réparation doit être antérieure à la date de disponibilité de la voiture", new[] { nameof(fix.FixDate) });
-                        }
-                        if (fix.FixDate <= CarDateSold)
-                        {
-                            yield return new ValidationResult("La date de la réparation doit être antérieure à la date de vente de la voiture", new[] { nameof(fix.FixDate) });
-                        }
-                    //}
+                //foreach(var fix in CarFixesViewModelList)
+                //{
+                //    var context = new ValidationContext(fix);
+                //    var results = new List<ValidationResult>();
+                //    if (fix.ValidateFix)
+                //    {
 
+                //    }
+                //}
+                    for (int i = 0; i < CarFixesViewModelList.Count; i++)
+                    {
+                        var fix = CarFixesViewModelList[i];
+                        if (fix.ValidateFix)
+                        {
+                            if (fix.FixDate >= dateToday)
+                            {
+                                yield return new ValidationResult("la date de réparation ne peut être ultérieure à la date du jour", new[] { $"CarFixesViewModelList[{i}].FixDate" });
+                            }
+                            if (fix.FixDate <= CarBuyDate)
+                            {
+                                yield return new ValidationResult("La date de la réparation doit être antérieure à la date d'achat de la voiture", new[] { $"CarFixesViewModelList[{i}].FixDate" });
+                            }
+                            if (fix.FixDate <= CarAddAvailabilityDate)
+                            {
+                                yield return new ValidationResult("La date de la réparation doit être antérieure à la date de disponibilité de la voiture", new[] { $"CarFixesViewModelList[{i}].FixDate" });
+                            }
+                            if (fix.FixDate <= CarDateSold)
+                            {
+                                yield return new ValidationResult("La date de la réparation doit être antérieure à la date de vente de la voiture", new[] { $"CarFixesViewModelList[{i}].FixDate" });
+                            }
+                            if (fix.FixDate >= dateToday)
+                            {
+                                yield return new ValidationResult("La date de la réparation ne peut être ultérieure à la date du jour", new[] { $"CarFixesViewModelList[{i}].FixDate" });
+                            }
+
+                    }
                 }
+
+
+                
             }
         }
 
@@ -155,6 +183,8 @@ namespace P5WebApp.Models.ViewModels
 
 
         public double CarSellingPrice { get; set; }
+
+
     }
 }
 
