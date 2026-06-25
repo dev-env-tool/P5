@@ -37,7 +37,7 @@ namespace P5WebApp.Controllers
         public IActionResult Index()
         {
             
-            var cars = _carService.GetAllCars().ToList();
+            var cars = _carService.GetAllCars().Where(c => c.CarPublished == true).ToList();
             var brands = _brandService.GetAllBrands().ToList();
             var carModels = _carModelService.GetAllCarModels().ToList();
             var finishTypes = _finishTypeService.GetAllFinishTypes().ToList();

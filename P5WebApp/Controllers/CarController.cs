@@ -235,7 +235,7 @@ namespace P5WebApp.Controllers
 
                     if (Car.Photo != null)
                     {
-                        string folder = "P5WebApp/P5WebApp/wwwroot/Cars/Images";
+                        string folder = "Cars/Images";
                         // Check if the folder exists or not
                         bool isDirExisting = Directory.Exists(folder);
                         // Create the directory in case it doesn't exist
