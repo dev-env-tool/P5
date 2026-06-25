@@ -43,13 +43,13 @@
                 <h1></h1>
             </div>
 
-            @foreach (var p in ViewBag.PhotoPaths)
+@*             @foreach (var p in ViewBag.PhotoPaths)
             {
                     string absPath = "~/" + "@ViewBag.photo";
                     <img src="@Url.Content(@absPath)" height="280" width="400" />
-                @* <img src="@Url.Content("~/images/photo.jpg")" alt="Photo" /> *@
+                <img src="@Url.Content("~/images/photo.jpg")" alt="Photo" />
 
-            }
+            } *@
 
 
             <div class="mb-3 col-8">
@@ -309,6 +309,98 @@
             $("#CarSellingPriceHidden").val(CarSellingPriceForFunction);
             }
             });
+        </script>
+
+        <script type="text/javascript">
+            $(document).ready
+            (
+            function()
+            {
+            $('#CarBrandId').change(function() {
+            var selectedIds = $(this).val();
+            var url = '@Url.Action("GetCarModelList", "Car")';
+
+            if (!selectedIds || selectedIds.length === 0) {
+            console.log('Selected Ids :', selectedIds);
+            $('#CarModelId').empty().prop('disabled', true);
+            return;
+            }
+
+            $('#CarModelId').prop('disabled', false);
+
+            $.ajax({
+            url: url,
+            data: { id: selectedIds },
+            traditional: true,
+            dataType: 'json',
+            
+            success: function(data) {
+            console.log('data : ', data);
+            $('#CarModelId').empty();
+            $.each(data, function(index, model) {
+            $('#CarModelId').append($('<option>', {
+            // here Write id and name (instead of Id and Name as in the Controller) as here values are new anonymous values.
+            value: model.id,
+            text: model.name
+            }));
+            });
+            },
+            error: function()
+            {
+            alert('Erreur : les modèles ne sont pas récupérés.');
+            $('#CarModelId').empty().prop('disabled', true);
+            }
+            });
+            });
+            }
+            );
+        </script>
+
+
+
+        <script type="text/javascript">
+            $(document).ready
+            (
+            function()
+            {
+            $('#CarModelId').change(function() {
+            var selectedIds = $(this).val();
+            var url = '@Url.Action("GetFinishTypeList", "Car")';
+
+            if (!selectedIds || selectedIds.length === 0) {
+            console.log('Selected Ids :', selectedIds);
+            $('#CarFinishTypeId').empty().prop('disabled', true);
+            return;
+            }
+
+            $('#CarFinishTypeId').prop('disabled', false);
+
+            $.ajax({
+            url: url,
+            data: { id: selectedIds },
+            traditional: true,
+            dataType: 'json',
+            
+            success: function(data) {
+            console.log('data : ', data);
+            $('#CarFinishTypeId').empty();
+            $.each(data, function(index, model) {
+            $('#CarFinishTypeId').append($('<option>', {
+            // here Write finishTypeId and finishTypeName (instead of FinishTypeId and FinishTypeName as in the Controller) as here values are new anonymous values.
+            value: model.finishTypeId,
+            text: model.finishTypeName
+            }));
+            });
+            },
+            error: function()
+            {
+            alert('Erreur : les finitions ne sont pas récupérées.');
+            $('#CarFinishTypeId').empty().prop('disabled', true);
+            }
+            });
+            });
+            }
+            );
         </script>
 
         <script type="text/javascript">

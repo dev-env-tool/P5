@@ -50,11 +50,11 @@
                     <td>@f.FinishTypeName</td>
 
                     <td>
-                        @string.Join(",", brands.Where(b => f.AssociatedBrandsIds.Contains(b.BrandId)).Select(b => b.BrandName));
+                        @string.Join(",", brands.Where(b => f.AssociatedBrandsIds.Contains(b.BrandId)).Select(b => b.BrandName))
                     </td>
                         
                     <td>
-                        @string.Join(",", carmodels.Where(c => f.AssociatedCarModelIds.Contains(c.Id)).Select(c => c.Name));
+                        @string.Join(",", carmodels.Where(c => f.AssociatedCarModelIds.Contains(c.Id)).Select(c => c.Name))
 
                     <td>
                         

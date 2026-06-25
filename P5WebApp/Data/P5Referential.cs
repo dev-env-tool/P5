@@ -76,6 +76,7 @@ namespace P5WebApp.Data
             }
 
 
+
             modelBuilder.Entity<Car>()
                 .ToTable("Cars")
                 .HasKey(c => c.CarId);
@@ -117,7 +118,7 @@ namespace P5WebApp.Data
             modelBuilder.Entity<FinishType>()
                 .HasMany(c => c.CarModels)
                 .WithMany(f => f.FinishTypes);
-
+                
 
                 
 

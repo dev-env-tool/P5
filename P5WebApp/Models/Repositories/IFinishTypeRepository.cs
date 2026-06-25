@@ -10,6 +10,7 @@ namespace P5WebApp.Models.Repositories
     {
         IEnumerable<FinishType> GetAllFinishTypes();
 
+        IEnumerable<FinishType> GetFinishTypesByCarModelIds(int id);
         int GetMaxFinishTypeId();
 
         void UpdateFinishType(FinishType FinishType);
