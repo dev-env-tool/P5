@@ -5,10 +5,10 @@
     Layout = "_Layout";
 }
 
-<p>ID : @Model.FinishTypeId</p>
+
 <div class="row">
     <h1 class="mb-3 col-4 offset-md-4">
-        Création d'un modèle
+        Modification d'une finition
     </h1>
     <div style="white-space:pre-line">
         <h1></h1>
@@ -58,7 +58,50 @@
 
     <script>
         $(document).ready(function(){g})
+    </script>
 
+    <script type="text/javascript">
+        $(document).ready
+        (
+        function()
+        {
+            $('#AssociatedBrandsIds').change(function() {
+            var selectedIds = $(this).val();
+            var url = '@Url.Action("GetCarModelList", "FinishType")';
+
+            if (!selectedIds || selectedIds.length === 0) {
+            console.log('Selected Ids :', selectedIds);
+            $('#AssociatedCarModelIds').empty().prop('disabled', true);
+            return;
+            }
+
+            $('#AssociatedCarModelIds').prop('disabled', false);
+
+            $.ajax({
+            url: url,
+            data: { id: selectedIds },
+            traditional: true,
+            dataType: 'json',
+            
+            success: function(data) {
+            console.log('data : ', data);
+            $('#AssociatedCarModelIds').empty();
+            $.each(data, function(index, model) {
+            $('#AssociatedCarModelIds').append($('<option>', {
+            value: model.id,
+            text: model.name
+            }));
+            });
+            },
+            error: function()
+            {
+            alert('Erreur : les modèles ne sont pas récupérés.');
+            $('#AssociatedCarModelIds').empty().prop('disabled', true);
+            }
+            });
+            });
+            }
+        );
     </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
