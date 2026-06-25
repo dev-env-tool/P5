@@ -20,15 +20,17 @@ namespace P5WebApp.Controllers
         private readonly IBrandService _brandService;
         private readonly ICarModelService _carModelService;
         private readonly ICarModelRepository _carModelRepository;
+        private readonly ICarService _carService;
 
         public FinishTypeController(IFinishTypeService finishTypeService, IFinishTypeRepository finishTypeRepository,
-            IBrandService brandService, ICarModelService carModelService, ICarModelRepository carModelRepository)
+            IBrandService brandService, ICarModelService carModelService, ICarModelRepository carModelRepository, ICarService carService)
         {
             _finishTypeService = finishTypeService;
             _finishTypeRepository = finishTypeRepository;
             _brandService = brandService;
             _carModelService = carModelService;
             _carModelRepository = carModelRepository;
+            _carService = carService;
         }
 
 
@@ -199,6 +201,14 @@ namespace P5WebApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id, IFormCollection collection)
         {
+
+            int numberofTimesFinishTypeUsed = _carService.GetAllCarsViewModel().Where(c => c.CarFinishTypeId.Equals(id)).Count();
+
+            if (numberofTimesFinishTypeUsed > 0)
+            {
+                return RedirectToAction("Admin");
+            }
+            else
             {
                 _finishTypeService.DeleteFinishType(id);
                 return RedirectToAction("Admin");

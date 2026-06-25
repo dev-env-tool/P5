@@ -6,6 +6,7 @@ using P5WebApp.Models.Repositories;
 using P5WebApp.Models.Entities;
 using P5WebApp.Models.Services;
 using P5WebApp.Models.ViewModels;
+using System.Linq;
 
 namespace P5WebApp.Models.Repositories
 {
@@ -39,6 +40,24 @@ namespace P5WebApp.Models.Repositories
             }
         }
 
+        public IEnumerable<FinishType> GetFinishTypesByCarModelIds(int id)
+        {
+            if (id == null)
+                return Enumerable.Empty<FinishType>();
+
+
+            var selectedFinishTypes = GetAllFinishTypesWithoutFilter()
+                .Where(f => f.AssociatedCarModelIds.Contains(id))
+                .ToList();
+
+            return (selectedFinishTypes);
+        }
+
+        public IEnumerable<FinishType> GetAllFinishTypesWithoutFilter()
+        {
+            IEnumerable<FinishType> FinishTypes = _context.FinishTypes;
+            return FinishTypes.ToList();
+        }
 
         public void UpdateFinishType(FinishType FinishType)
         {

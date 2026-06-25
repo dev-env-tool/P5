@@ -15,12 +15,23 @@
 }
 
 <h1>Gestion des voitures</h1>
+<div style="white-space:pre-line">
+    <h1></h1>
+</div>
+<a class="btn btn-primary btn-custom" asp-controller="Car" asp-action="Create">Créer une nouvelle voiture</a>
+<div style="white-space:pre-line">
+    <h1></h1>
+</div>
 
 <br />
 <div id="panel-body">
+
     <table class="table table-bordered table-striped table-sm">
         <thead>
             <tr>
+                <th>
+                <label>Référence</label>
+                </th>
                 <th>
                 <label>Modèle</label>
                 </th>
@@ -47,13 +58,16 @@
                 <tr>
                     
                     <td>
-                        @string.Join(",", carModels.Where(cm => c.CarModelId.Equals(cm.Id)).Select(cm => cm.Name));
+                        @c.CarId
                     </td>
                     <td>
-                        @string.Join(",", brands.Where(b => c.CarBrandId.Equals(b.BrandId)).Select(b => b.BrandName));
+                        @string.Join(",", carModels.Where(cm => c.CarModelId.Equals(cm.Id)).Select(cm => cm.Name))
                     </td>
                     <td>
-                        @string.Join(",", finishTypes.Where(f => c.CarFinishTypeId.Equals(f.FinishTypeId)).Select(f => f.FinishTypeName));
+                        @string.Join(",", brands.Where(b => c.CarBrandId.Equals(b.BrandId)).Select(b => b.BrandName))
+                    </td>
+                    <td>
+                        @string.Join(",", finishTypes.Where(f => c.CarFinishTypeId.Equals(f.FinishTypeId)).Select(f => f.FinishTypeName))
                     </td>
                     <td>
                         <form id="@c.CarId" asp-action="Read" asp-controller="Car" method="get">
@@ -88,7 +102,7 @@
         <h1></h1>
     </div>
 
-    <a class="btn btn-primary btn-custom" asp-controller="Car" asp-action="Create">Créer</a>
+
 </div>
 @section Scripts {
     <script src="@Url.Content("~/js/test.js")"></script>

@@ -78,6 +78,17 @@ namespace P5WebApp.Controllers
         }
 
 
+        [HttpGet]
+        public JsonResult GetFinishTypeList(int id)
+        {
+            var selectedFinishTypes = _finishTypeRepository.GetFinishTypesByCarModelIds(id)
+                .Select(x => new { x.FinishTypeId, x.FinishTypeName })
+                .ToList();
+
+            return Json(selectedFinishTypes);
+
+        }
+
 
         // GET: View only for every user. Car list to see one Car.
         public IActionResult Read(int id)
@@ -155,7 +166,13 @@ namespace P5WebApp.Controllers
             return View();
         }
 
+        // GET: CarController/Create
+        [Authorize]
 
+        public ViewResult ConfirmModified()
+        {
+            return View();
+        }
 
         //// POST: CarController/Create
         //[Authorize]
@@ -246,7 +263,7 @@ namespace P5WebApp.Controllers
 
                     if (Car.Photo != null)
                     {
-                        string folder = "Cars/Images";
+                        string folder = "Cars/Images/";
                         // Check if the folder exists or not
                         bool isDirExisting = Directory.Exists(folder);
                         // Create the directory in case it doesn't exist
@@ -305,63 +322,7 @@ namespace P5WebApp.Controllers
 
 
         }
-        //// GET: CarController/Create after newly a created fix
-        //[Authorize]
 
-
-        //public ViewResult CreateAfterFixCreated(int id)
-        //{
-
-        //    ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedCarId == id);
-        //    //ViewBag.Fixes = _fixService.GetAllFixes();
-
-
-        //    CarViewModel CarViewModel = new CarViewModel();
-
-        //    CarViewModel.CarId = _carRepository.GetMaxCarId() + 1;
-
-        //    CarViewModel.CarBrands = new List<Brand>();
-        //    CarViewModel.CarBrands = _brandService.GetAllBrands();
-
-        //    CarViewModel.CarModels = new List<CarModel>();
-        //    CarViewModel.CarModels = _carModelService.GetAllCarModels();
-
-        //    CarViewModel.FinishTypes = new List<FinishType>();
-        //    CarViewModel.FinishTypes = _finishTypeService.GetAllFinishTypes();
-
-
-
-        //    return View(CarViewModel);
-        //}
-
-        //// POST: CarController/Create
-        //[Authorize]
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult CreateAfterFixCreated(CarViewModel Car)
-        //{
-
-        //    Dictionary<string, string> modelErrors = _carService.CheckCarModelErrors(Car);
-
-
-        //    foreach (var key in modelErrors)
-        //    {
-        //        string field = key.Key;
-        //        string error = key.Value;
-
-        //        ModelState.AddModelError(field, error);
-        //    }
-        //    if (ModelState.IsValid)
-        //    {
-        //        _carService.SaveCar(Car);
-        //        return RedirectToAction("Admin");
-        //    }
-        //    else
-        //    {
-        //        return View(Car);
-        //    }
-
-        //}
 
         // GET: CarController/Edit/5
         public ActionResult Edit(int id)
@@ -381,19 +342,15 @@ namespace P5WebApp.Controllers
 
             CarViewModel.CarModels = new List<CarModel>();
             CarViewModel.CarModels = _carModelService.GetAllCarModels();
-            CarViewModel.CarModelId = CarViewModel.CarModelId;
 
             CarViewModel.FinishTypes = new List<FinishType>();
             CarViewModel.FinishTypes = _finishTypeService.GetAllFinishTypes();
 
 
-
-            //CarViewModel.CarFixesList = new List<Fix>();
+            CarViewModel.CarFixesViewModelList = new List<FixViewModel>();
+            //CarViewModel.AssociatedFixIds = new List<Fix>();
             //CarViewModel.CarFixesList = _fixService.GetAllFixes();
             //CarViewModel.AssociatedFixIds = CarViewModel.AssociatedFixIds;
-
-
-
 
             return View(CarViewModel);
         }
@@ -402,29 +359,157 @@ namespace P5WebApp.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(CarViewModel CarViewModel)
+        public async Task<IActionResult> Edit(CarViewModel Car)
         {
-            
-            Dictionary<string, string> modelErrors = _carService.CheckCarModelErrors(CarViewModel);
+
+            var transaction = _carService.BeginTransaction();
+
+            // Here, transaction will help data recording into distinct tables.
+            // If one object is not valid or complete, then transaction stops and rollbacks the tables in the databse.
+            // Rollback means it manages to let the whole database as it was before transaction started.
+            try
+            {
+                if (!TryValidateModel(Car))
+                {
+
+                }
+                //if (Car.CarFixesViewModelList != null)
+                //{ 
+                //    foreach (var fix  in Car.CarFixesViewModelList) 
+                //    {
+                //        Dictionary<string, string> modelErrorsForFixes = _fixService.CheckFixModelErrors(fix);
+
+                //        foreach (var key in modelErrorsForFixes)
+                //        {
+                //            string field = key.Key;
+                //            string error = key.Value;
+
+                //            ModelState.AddModelError(field, error);
+                //        }
+                //    }
+                //}
+
+                //var validationContext = new ValidationContext(Car, null, null);
+                //var validationResults = Car.Validate(validationContext);
 
 
-            foreach (var key in modelErrors)
-            {
-                string field = key.Key;
-                string error = key.Value;
+                //for (int i = 0; i < Car.CarFixesViewModelList.Count; i++)
+                //{
+                //    var fix = Car.CarFixesViewModelList[i];
 
-                ModelState.AddModelError(field, error);
+                //    var errors = validationResults;
+
+
+                //    foreach (var error in errors)
+                //    {
+                //        ModelState.AddModelError($"CarFixesViewModelList[{i}].{error.MemberNames}", error.ErrorMessage);
+                //    }
+                //}
+
+                Dictionary<string, string> modelErrorsForCar = _carService.CheckCarModelErrors(Car);
+
+                foreach (var key in modelErrorsForCar)
+                {
+                    string field = key.Key;
+                    string error = key.Value;
+
+                    ModelState.AddModelError(field, error);
+                }
+
+                if (ModelState.IsValid)
+                {
+
+
+                    // var to retrieve Car.Id generated automatically via SQL
+                    // fixes are created via var createdCar = _carService.SaveCar(Car);
+                    var createdCar = _carService.SaveCar(Car);
+
+
+                    if (Car.Photo != null)
+                    {
+                        string folder = "Cars/Images/";
+                        // Check if the folder exists or not
+                        bool isDirExisting = Directory.Exists(folder);
+                        // Create the directory in case it doesn't exist
+                        if (!isDirExisting)
+                        {
+                            Directory.CreateDirectory(folder);
+                        }
+                        // Use a new Guid to create a unique photo Id
+                        folder += Guid.NewGuid().ToString() + "_" + Car.Photo.FileName;
+                        string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+
+                        // Copy the uploaded photo and paste it into our new web folder
+                        await Car.Photo.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+
+                        Car.PhotoForDb.PhotoName = Car.Photo.FileName;
+                        Car.PhotoForDb.PhotoPath = folder;
+                        Car.PhotoForDb.AssociatedCarId = createdCar.CarId;
+
+                        _photoService.SavePhoto(Car.PhotoForDb);
+                    }
+
+                    return RedirectToAction("ConfirmModified");
+                    //ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedCarId == Car.CarId);
+
+                    //return View(Car);
+
+                }
+                else
+                {
+                    //ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedCarId == Car.CarId);
+                    //reload menus for brands car models finishtypes
+
+                    Car.CarBrands = new List<Brand>();
+                    Car.CarBrands = _brandService.GetAllBrands();
+
+                    Car.CarModels = new List<CarModel>();
+                    Car.CarModels = _carModelService.GetAllCarModels();
+
+                    Car.FinishTypes = new List<FinishType>();
+                    Car.FinishTypes = _finishTypeService.GetAllFinishTypes();
+                    //ModelState.Remove("CarBuyDate");
+                    //foreach (var error in ModelState["CarBuyDate"]?.Errors ?? Enumerable.Empty<ModelError>())
+                    //{
+                    //    Console.WriteLine(error.ErrorMessage);
+                    //    ViewBag.CarBuyDateErrors = ModelState["CarBuyDate"]?.Errors.Select(e => e.ErrorMessage).ToList();
+                    //}
+                    //ModelState.AddModelError("CarBuyDate", "Test message d'erreur manuel");
+                    return View(Car);
+                }
             }
-            if (ModelState.IsValid)
+            catch (Exception)
             {
-                _carService.UpdateCarInfos(CarViewModel);
-                return RedirectToAction("Admin");
+                await transaction.Result.RollbackAsync();
+                throw;
             }
-            else
-            {
-                return View(CarViewModel);
-            }
+
+
+
+            //Dictionary<string, string> modelErrors = _carService.CheckCarModelErrors(CarViewModel);
+
+
+            //foreach (var key in modelErrors)
+            //{
+            //    string field = key.Key;
+            //    string error = key.Value;
+
+            //    ModelState.AddModelError(field, error);
+            //}
+            //if (ModelState.IsValid)
+            //{
+            //    _carService.UpdateCarInfos(CarViewModel);
+            //    return RedirectToAction("Admin");
+            //}
+            //else
+            //{
+            //    return View(CarViewModel);
+            //}
         }
+
+
+
+
 
         public JsonResult GetModelByBrandId(int brandId)
         {
