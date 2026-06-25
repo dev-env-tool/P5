@@ -44,7 +44,9 @@
             <div class="mb-3 col-8">
                 <label>Marque*':</label>
             </div>
-            <select asp-for="CarBrandId" class="form-select col-12" asp-items="@(new SelectList(Model.CarBrands, "BrandId", "BrandName"))"></select>
+            <select asp-for="CarBrandId" class="form-select col-12" asp-items="@(new SelectList(Model.CarBrands, "BrandId", "BrandName"))">
+            <option disabled selected>--Choisissez une marque--</option>
+            </select>
             <span asp-validation-for="CarBrandId"></span>
             <div style="white-space:pre-line">
                 <h1></h1>
@@ -52,7 +54,7 @@
             <div class="mb-3 col-8">
                 <label>Modèle*':</label>
             </div>
-            <select asp-for="CarModelId" class="form-select col-12" asp-items="@(new SelectList(Model.CarModels, "Id", "Name"))"></select>
+            <select asp-for="CarModelId" class="form-select col-12" ></select>
             <span asp-validation-for="CarModelId"></span>
             <div style="white-space:pre-line">
                 <h1></h1>
@@ -315,7 +317,52 @@
         }
 
         @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
 
+
+        <script type="text/javascript">
+            $(document).ready
+            (
+                function()
+                {
+                $('#CarBrandId').change(function() {
+                var selectedIds = $(this).val();
+                var url = '@Url.Action("GetCarModelList", "Car")';
+
+                if (!selectedIds || selectedIds.length === 0) {
+                console.log('Selected Ids :', selectedIds);
+                $('#CarModelId').empty().prop('disabled', true);
+                return;
+                }
+
+                $('#CarModelId').prop('disabled', false);
+
+                $.ajax({
+                url: url,
+                data: { id: selectedIds },
+                traditional: true,
+                dataType: 'json',
+            
+                success: function(data) {
+                console.log('data : ', data);
+                $('#CarModelId').empty();
+                $.each(data, function(index, model) {
+                $('#CarModelId').append($('<option>', {
+                value: model.id,
+                text: model.name
+                }));
+                });
+                },
+                error: function()
+                {
+                alert('Erreur : les modèles ne sont pas récupérés.');
+                $('#CarModelId').empty().prop('disabled', true);
+                }
+                });
+                });
+                }
+            );
+        </script>
             
             <script type="text/javascript">
                 $(document).ready(function()

@@ -19,6 +19,7 @@ namespace P5WebApp.Controllers
         private readonly ICarService _carService;
         private readonly ICarRepository _carRepository;
         private readonly IBrandService _brandService;
+        private readonly ICarModelRepository _carModelRepository;
         private readonly ICarModelService _carModelService;
         private readonly IFinishTypeService _finishTypeService;
         private readonly IFinishTypeRepository _finishTypeRepository;
@@ -29,12 +30,13 @@ namespace P5WebApp.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public CarController(ICarService carService, ICarRepository carRepository,
-            IBrandService brandService, ICarModelService carModelService, IFinishTypeService finishTypeService, IFinishTypeRepository finishTypeRepository,
+            IBrandService brandService, ICarModelRepository carModelRepository, ICarModelService carModelService, IFinishTypeService finishTypeService, IFinishTypeRepository finishTypeRepository,
             IFixService fixService, IFixRepository fixRepository, IWebHostEnvironment webHostEnvironment, IPhotoService photoService, IPhotoRepository photoRepository)
         {
             _carService = carService;
             _carRepository = carRepository;
             _brandService = brandService;
+            _carModelRepository = carModelRepository;
             _carModelService = carModelService;
             _finishTypeService = finishTypeService;
             _finishTypeRepository = finishTypeRepository;
@@ -64,7 +66,16 @@ namespace P5WebApp.Controllers
             return View(_carService.GetAllCarsViewModel().OrderByDescending(f => f.CarId));
         }
 
+        [HttpGet]
+        public JsonResult GetCarModelList(int[] id)
+        {
+            var selectedCarModels = _carModelRepository.GetCarModelsByBrandIds(id)
+                .Select(x => new { x.Id, x.Name })
+                .ToList();
 
+            return Json(selectedCarModels);
+
+        }
 
 
 
