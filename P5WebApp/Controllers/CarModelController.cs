@@ -16,14 +16,14 @@ namespace P5WebApp.Controllers
         private readonly ICarModelService _carModelService;
         private readonly ICarModelRepository _carModelRepository;
         private readonly IBrandService _brandService;
-        private readonly IFinishTypeService _finishTypelService;
+        private readonly IFinishTypeService _finishTypeService;
 
         public CarModelController(ICarModelService CarModelService, ICarModelRepository CarModelRepository, IBrandService brandService, IFinishTypeService finishTypeService)
         {
             _carModelService = CarModelService;
             _carModelRepository = CarModelRepository;
             _brandService = brandService;
-            _finishTypelService = finishTypeService;
+            _finishTypeService = finishTypeService;
         }
 
 
@@ -141,7 +141,7 @@ namespace P5WebApp.Controllers
         public IActionResult Delete(int id, IFormCollection collection)
         {
 
-            int numberofTimesCarModelUsed = _finishTypelService.GetAllFinishTypes().Where(f => f.AssociatedCarModelIds.Contains(id)).Count();
+            int numberofTimesCarModelUsed = _finishTypeService.GetAllFinishTypes().Where(f => f.AssociatedCarModelIds.Contains(id)).Count();
 
             if (numberofTimesCarModelUsed > 0)
             {
