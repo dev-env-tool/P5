@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using P3AddNewFunctionalityDotNetCore.Data;
 using P5WebApp.Data;
@@ -43,20 +44,38 @@ namespace P5WebApp
             builder.Services.AddScoped<IPhotoRepository, PhotoRepository>();
 
             // Add DB contexts to the app.
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString));
-            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+            var identityConnectionString = builder.Configuration.GetConnectionString("P5Identity") ?? throw new InvalidOperationException("Connection string 'P5Identity' not found.");
+            var referentialConnectionString = builder.Configuration.GetConnectionString("P5Referential") ?? throw new InvalidOperationException("Connection string 'P5Referential' not found.");
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<AppIdentityDbContext>(options =>
+            options.UseSqlServer(identityConnectionString));
 
-            var connectionStringP5Referential = builder.Configuration.GetConnectionString("P5Referential") ?? throw new InvalidOperationException("Connection string 'P5Referential' not found.");
+
+
             builder.Services.AddDbContext<P5Referential>(options =>
-                options.UseSqlServer(connectionStringP5Referential));
-            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+            options.UseSqlServer(referentialConnectionString));
 
+
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+            .AddEntityFrameworkStores<AppIdentityDbContext>();
+
+
+
+            //builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseSqlServer(connectionString));
+            //builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+            //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+            //var connectionStringP5Referential = builder.Configuration.GetConnectionString("P5Referential") ?? throw new InvalidOperationException("Connection string 'P5Referential' not found.");
+            //builder.Services.AddDbContext<P5Referential>(options =>
+            //    options.UseSqlServer(connectionStringP5Referential));
+
+            builder.Services.AddControllersWithViews();
+            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+            builder.Services.AddRazorPages();
 
 
 
@@ -89,7 +108,7 @@ namespace P5WebApp
                 //    var contextToUse = services.GetRequiredService<AppIdentityDbContext>();
                 //}
 
-                //app.SeedDatabase();
+                app.SeedDatabase();
             }
             else
             {

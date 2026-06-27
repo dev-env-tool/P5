@@ -11,9 +11,9 @@ namespace P5WebApp.Models.Services
     public class CarModelService : ICarModelService
     {
         private readonly ICarModelRepository ?_carModelRepository;
-        private readonly ApplicationDbContext _context;
+        private readonly P5Referential _context;
 
-        public CarModelService(ICarModelRepository carModelRepository, ICarRepository carRepository, ApplicationDbContext context) 
+        public CarModelService(ICarModelRepository carModelRepository, ICarRepository carRepository, P5Referential context) 
         {
             _carModelRepository = carModelRepository;
             _context = context;
