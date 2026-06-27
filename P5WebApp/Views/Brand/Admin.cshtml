@@ -10,7 +10,13 @@
 }
 
 <h1>Gestion des marques</h1>
-
+<div style="white-space:pre-line">
+    <h1></h1>
+</div>
+<a class="btn btn-primary btn-custom" asp-controller="Brand" asp-action="Create">Créer</a>
+<div style="white-space:pre-line">
+    <h1></h1>
+</div>
 <br />
 <div id="panel-body">
     <table class="table table-bordered table-striped table-sm">
@@ -43,7 +49,7 @@
                         
                         <form id="@b.BrandName" asp-action="Delete" asp-controller="Brand" method="post">
                             <input type="hidden" name="id" value="@b.BrandId" />
-                            <button type="submit" class="btn-custom btn btn-danger">Supprimer
+                            <button type="submit" class="btn btn-danger">Supprimer
                             </button>
                         </form>
                     </td>
@@ -54,7 +60,6 @@
     <div style="white-space:pre-line">
         <h1></h1>
     </div>
-    <a class="btn btn-primary btn-custom" asp-controller="Brand" asp-action="Create">Créer</a>
 </div>
 @section Scripts {
     <script src="@Url.Content("~/js/test.js")"></script>

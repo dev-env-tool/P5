@@ -27,30 +27,58 @@
             {
                 @foreach (var homeViewModel in Model)
                 {
+
                     if (homeViewModel.isIdPair == false)
                     {
-                        <div class="card ">
-                            <h5 class="card-header fw-bold">Référence de l'annonce : @homeViewModel.Id</h5>
-                            <div class="card-body">
-                                <h1 class="card-title">@homeViewModel.CarSellingPrice euro</h1>
-                                <h5 class="card-title">@homeViewModel.CarYear</h5>
-                                <h5 class="card-title">@homeViewModel.BrandName</h5>
-                                <h5 class="card-title">@homeViewModel.CarModelName</h5>
-                                <h5 class="card-title">@homeViewModel.FinishTypeName</h5>
-                                <h5 class="card-title">@homeViewModel.FinishTypeName</h5>
-                                <img src="@homeViewModel.PhotoPath" height="280" width="400" />
-                                <p class="card-text"></p>
-                                <form id="@homeViewModel.Id" asp-action="Read" asp-controller="Car" method="get">
-                                    <input type="hidden" name="id" value="@homeViewModel.Id" />
-                                    <button type="submit" class="btn-custom btn btn-danger">
-                                        Consulter
-                                    </button>
-                                </form>
+
+                        if (@homeViewModel.CarDateSold != null)
+                        {
+                            <div class="card ">
+                                <h5 class="card-header bg-danger fw-bold">Référence de l'annonce : @homeViewModel.Id Vendue le : @homeViewModel.CarDateSold </h5>
+                                <div class="card-body">
+                                    <h1 class="card-title">Prix : @homeViewModel.CarSellingPrice euro</h1>
+                                    <h5 class="card-title">Année :@homeViewModel.CarYear</h5>
+                                    <h5 class="card-title">Marque :@homeViewModel.BrandName</h5>
+                                    <h5 class="card-title">Modèle : @homeViewModel.CarModelName</h5>
+                                    <h5 class="card-title">Finition : @homeViewModel.FinishTypeName</h5>
+                                    <img src="@homeViewModel.PhotoPath" height="280" width="400" />
+                                    <p class="card-text"></p>
+                                    <form id="@homeViewModel.Id" asp-action="Read" asp-controller="Car" method="get">
+                                        <input type="hidden" name="id" value="@homeViewModel.Id" />
+                                        <button type="submit" class="btn-custom btn btn-danger">
+                                            Consulter
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
-                        <div style="white-space:pre-line">
-                            <h1></h1>
-                        </div>
+                            <div style="white-space:pre-line">
+                                <h1></h1>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="card ">
+                                <h5 class="card-header btn-custom fw-bold">Référence de l'annonce : @homeViewModel.Id</h5>
+                                <div class="card-body">
+                                    <h1 class="card-title">Prix : @homeViewModel.CarSellingPrice euro</h1>
+                                    <h5 class="card-title">Année : @homeViewModel.CarYear</h5>
+                                    <h5 class="card-title">Marque : @homeViewModel.BrandName</h5>
+                                    <h5 class="card-title">Modèle : @homeViewModel.CarModelName</h5>
+                                    <h5 class="card-title">Finition : @homeViewModel.FinishTypeName</h5>
+                                    <img src="@homeViewModel.PhotoPath" height="280" width="400" />
+                                    <p class="card-text"></p>
+                                    <form id="@homeViewModel.Id" asp-action="Read" asp-controller="Car" method="get">
+                                        <input type="hidden" name="id" value="@homeViewModel.Id" />
+                                        <button type="submit" class="btn-custom btn btn-danger">
+                                            Consulter
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div style="white-space:pre-line">
+                                <h1></h1>
+                            </div>
+                        }
                     }
                 }
             } 
@@ -68,27 +96,54 @@
                 {
                     if (homeViewModel.isIdPair == true)
                     {
-                        <div class="card ">
-                            <h5 class="card-header fw-bold">Référence de l'annonce : @homeViewModel.Id</h5>
-                            <div class="card-body">
-                                <h1 class="card-title">@homeViewModel.CarSellingPrice euro</h1>
-                                <h5 class="card-title">@homeViewModel.CarYear</h5>
-                                <h5 class="card-title">@homeViewModel.BrandName</h5>
-                                <h5 class="card-title">@homeViewModel.CarModelName</h5>
-                                <h5 class="card-title">@homeViewModel.FinishTypeName</h5>
-                                <img src="@homeViewModel.PhotoPath" height="280" width="400" />
-                                <p class="card-text"></p>
-                                <form id="@homeViewModel.Id" asp-action="Read" asp-controller="Car" method="get">
-                                    <input type="hidden" name="id" value="@homeViewModel.Id" />
-                                    <button type="submit" class="btn-custom btn btn-danger">
-                                        Consulter
-                                    </button>
-                                </form>
+                        if (@homeViewModel.CarDateSold != null)
+                        {
+                            <div class="card ">
+                                <h5 class="card-header bg-danger fw-bold">Référence de l'annonce : @homeViewModel.Id Vendue le : @homeViewModel.CarDateSold </h5>
+                                <div class="card-body">
+                                    <h1 class="card-title">Prix : @homeViewModel.CarSellingPrice euro</h1>
+                                    <h5 class="card-title">Année : @homeViewModel.CarYear</h5>
+                                    <h5 class="card-title">Marque :@homeViewModel.BrandName</h5>
+                                    <h5 class="card-title">Modèle : @homeViewModel.CarModelName</h5>
+                                    <h5 class="card-title">Finition : @homeViewModel.FinishTypeName</h5>
+                                    <img src="@homeViewModel.PhotoPath" height="280" width="400" />
+                                    <p class="card-text"></p>
+                                    <form id="@homeViewModel.Id" asp-action="Read" asp-controller="Car" method="get">
+                                        <input type="hidden" name="id" value="@homeViewModel.Id" />
+                                        <button type="submit" class="btn-custom btn btn-danger">
+                                            Consulter
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
-                        <div style="white-space:pre-line">
-                            <h1></h1>
-                        </div>
+                            <div style="white-space:pre-line">
+                                <h1></h1>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="card ">
+                                <h5 class="card-header btn-custom fw-bold">Référence de l'annonce : @homeViewModel.Id</h5>
+                                <div class="card-body">
+                                    <h1 class="card-title">Prix : @homeViewModel.CarSellingPrice euro</h1>
+                                    <h5 class="card-title">Année : @homeViewModel.CarYear</h5>
+                                    <h5 class="card-title">Marque :@homeViewModel.BrandName</h5>
+                                    <h5 class="card-title">Modèle : @homeViewModel.CarModelName</h5>
+                                    <h5 class="card-title">Finition : @homeViewModel.FinishTypeName</h5>
+                                    <img src="@homeViewModel.PhotoPath" height="280" width="400" />
+                                    <p class="card-text"></p>
+                                    <form id="@homeViewModel.Id" asp-action="Read" asp-controller="Car" method="get">
+                                        <input type="hidden" name="id" value="@homeViewModel.Id" />
+                                        <button type="submit" class="btn-custom btn btn-danger">
+                                            Consulter
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div style="white-space:pre-line">
+                                <h1></h1>
+                            </div>
+                        }
                     }
                 }
             }

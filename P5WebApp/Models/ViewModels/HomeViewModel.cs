@@ -19,6 +19,7 @@ namespace P5WebApp.Models.ViewModels
         public string PhotoPath { get; set; }
 
         public bool isIdPair { get; set; }
+        public DateOnly? CarDateSold { get; set; }
 
     }
 }

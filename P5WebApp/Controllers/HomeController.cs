@@ -89,6 +89,7 @@ namespace P5WebApp.Controllers
                     FinishTypeName = finishType?.FinishTypeName,
                     PhotoPath = firstPhoto?.PhotoPath,
                     isIdPair = carId % 2 == 0,
+                    CarDateSold = car.CarDateSold,
                 };
             }).ToList();
 

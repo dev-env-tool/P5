@@ -354,7 +354,7 @@
             console.log('data : ', data);
             $('#CarModelId').empty();
             $.each(data, function(index, model) {
-            $('#CarModelId').append($('<option>', {
+            $('#CarModelId').append($('<option>',{
             // here Write id and name (instead of Id and Name as in the Controller) as here values are new anonymous values.
             value: model.id,
             text: model.name
