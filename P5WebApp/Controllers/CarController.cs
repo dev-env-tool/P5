@@ -541,6 +541,13 @@ namespace P5WebApp.Controllers
                 { 
                     _photoService.DeletePhoto(photoId);
                 }
+                
+                var fixes = _fixService.GetAllFixesViewModel().Where(f => f.AssociatedCarId == id);
+                foreach (var fix in fixes)
+                { 
+                    _fixService.DeleteFix(fix.FixId);
+                }
+
                 _carService.DeleteCar(id);
                 return RedirectToAction("Admin");
             }

@@ -422,13 +422,13 @@
             <script type="text/javascript">
                 $(document).ready(function()
                 {
-                var lastFix = container.children(".fix").last();
-                var lastlastFixCost = parseFloat($(lastFix.find("FixCost").val())) || 0;
+                // var lastFix = container.children(".fix").last();
+                // var lastlastFixCost = parseFloat($(lastFix.find("FixCost").val())) || 0;
 
 
                 setTimeout(updateCarSellingPrice, 100);
                 $("#CarBuyPrice").on("blur", updateCarSellingPrice);
-                $("#FixCost").on("blur", updateCarSellingPrice);
+                // $("#FixCost").on("blur", updateCarSellingPrice);
                     
                 function updateCarSellingPrice()
                 {
@@ -438,7 +438,7 @@
                     console.log("Valeur entrée:", CarBuyPriceForFunction);
                     var CarSellingPriceForFunction = CarBuyPriceForFunction + 500;
 
-                    var CarFixCostForFunction = 
+                    // var CarFixCostForFunction = 
 
                     console.log("Valeur entrée:", CarSellingPriceForFunction);
                     $("#CarSellingPrice").text(CarSellingPriceForFunction);

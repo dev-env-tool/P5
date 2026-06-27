@@ -157,9 +157,57 @@ namespace P5WebApp.Data
             context.Cars.AddRange(car1, car2, car3, car4);
             context.SaveChanges();
 
+            if (context.Fixes.Any())
+            {
+                return;
+            }
 
+            var fix1 = new Fix
+            {
+                FixDate = new DateOnly(),
+                FixDescription = "Changement des pneus / Géométrie",
+                FixCost = 200,
+                AssociatedCarId = p205.Id,
+            };
+            var fix2 = new Fix
+            {
+                FixDate = new DateOnly(),
+                FixDescription = "Vidange",
+                FixCost = 40,
+                AssociatedCarId = p205.Id,
+            };
+            var fix3 = new Fix
+            {
+                FixDate = new DateOnly(),
+                FixDescription = "Distribution",
+                FixCost = 150,
+                AssociatedCarId = p206.Id,
+            };
+            var fix4 = new Fix
+            {
+                FixDate = new DateOnly(),
+                FixDescription = "Suspensions",
+                FixCost = 200,
+                AssociatedCarId = p205.Id,
+            };
+            var fix5 = new Fix
+            {
+                FixDate = new DateOnly(),
+                FixDescription = "Carrosserie aile avant droite",
+                FixCost = 40,
+                AssociatedCarId = xantia.Id,
+            };
+            var fix6 = new Fix
+            {
+                FixDate = new DateOnly(),
+                FixDescription = "Batterie",
+                FixCost = 60,
+                AssociatedCarId = xsara.Id,
+                
+            };
 
+            context.Fixes.AddRange(fix1, fix2, fix3, fix4, fix5, fix6);
+            context.SaveChanges();
         }
-    }
 
-}
+}}

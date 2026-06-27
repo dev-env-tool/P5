@@ -17,5 +17,6 @@ namespace P5WebApp.Models.Entities
         // Foreign Key
         public int AssociatedCarId { get; set; }
 
+
     }
 }
