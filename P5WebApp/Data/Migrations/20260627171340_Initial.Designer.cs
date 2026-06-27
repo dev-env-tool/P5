@@ -9,11 +9,11 @@ using P5WebApp.Data;
 
 #nullable disable
 
-namespace P5WebApp.Migrations
+namespace P5WebApp.Data.Migrations
 {
     [DbContext(typeof(P5Referential))]
-    [Migration("20260627121152_InitialReferentialMigration")]
-    partial class InitialReferentialMigration
+    [Migration("20260627171340_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -232,13 +232,13 @@ namespace P5WebApp.Migrations
                     b.HasOne("P5WebApp.Models.Entities.Brand", null)
                         .WithMany()
                         .HasForeignKey("BrandsBrandId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("P5WebApp.Models.Entities.FinishType", null)
                         .WithMany()
                         .HasForeignKey("FinishTypesFinishTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -247,13 +247,13 @@ namespace P5WebApp.Migrations
                     b.HasOne("P5WebApp.Models.Entities.CarModel", null)
                         .WithMany()
                         .HasForeignKey("CarModelsId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("P5WebApp.Models.Entities.FinishType", null)
                         .WithMany()
                         .HasForeignKey("FinishTypesFinishTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -272,8 +272,7 @@ namespace P5WebApp.Migrations
                 {
                     b.HasOne("P5WebApp.Models.Entities.Car", null)
                         .WithMany("CarFixesList")
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("CarId");
                 });
 
             modelBuilder.Entity("P5WebApp.Models.Entities.Brand", b =>

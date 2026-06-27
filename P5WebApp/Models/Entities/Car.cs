@@ -22,11 +22,11 @@ namespace P5WebApp.Models.Entities
 
         public int CarFinishTypeId { get; set; }
 
-        public List<int>? AssociatedFixIds { get; set; } = new List<int>();
+        //public List<int>? AssociatedFixIds { get; set; } = new List<int>();
 
         //public virtual List<FixViewModel> CarFixesViewModel { get; set; } = new List<FixViewModel>();
 
-        public virtual ICollection<Fix> CarFixesList { get; set; } = new List<Fix>();
+        //public virtual ICollection<Fix> CarFixesList { get; set; } = new List<Fix>();
 
 
         public string? CarDescription { get; set; }

@@ -9,11 +9,11 @@ using P5WebApp.Data;
 
 #nullable disable
 
-namespace P5WebApp.Migrations
+namespace P5WebApp.Data.Migrations
 {
     [DbContext(typeof(P5Referential))]
-    [Migration("20260620091551_migration062026")]
-    partial class migration062026
+    [Migration("20260627172252_20260627")]
+    partial class _20260627
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -79,9 +79,6 @@ namespace P5WebApp.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CarId"));
-
-                    b.PrimitiveCollection<string>("AssociatedFixIds")
-                        .HasColumnType("nvarchar(max)");
 
                     b.PrimitiveCollection<string>("AssociatedPhotoIds")
                         .IsRequired()
@@ -184,9 +181,6 @@ namespace P5WebApp.Migrations
                     b.Property<int>("AssociatedCarId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CarId")
-                        .HasColumnType("int");
-
                     b.Property<double>("FixCost")
                         .HasColumnType("float");
 
@@ -197,8 +191,6 @@ namespace P5WebApp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("FixId");
-
-                    b.HasIndex("CarId");
 
                     b.ToTable("Fixes", (string)null);
                 });
@@ -232,13 +224,13 @@ namespace P5WebApp.Migrations
                     b.HasOne("P5WebApp.Models.Entities.Brand", null)
                         .WithMany()
                         .HasForeignKey("BrandsBrandId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("P5WebApp.Models.Entities.FinishType", null)
                         .WithMany()
                         .HasForeignKey("FinishTypesFinishTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -247,13 +239,13 @@ namespace P5WebApp.Migrations
                     b.HasOne("P5WebApp.Models.Entities.CarModel", null)
                         .WithMany()
                         .HasForeignKey("CarModelsId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("P5WebApp.Models.Entities.FinishType", null)
                         .WithMany()
                         .HasForeignKey("FinishTypesFinishTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -268,22 +260,9 @@ namespace P5WebApp.Migrations
                     b.Navigation("AssociatedBrand");
                 });
 
-            modelBuilder.Entity("P5WebApp.Models.Entities.Fix", b =>
-                {
-                    b.HasOne("P5WebApp.Models.Entities.Car", null)
-                        .WithMany("CarFixesList")
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
             modelBuilder.Entity("P5WebApp.Models.Entities.Brand", b =>
                 {
                     b.Navigation("CarModels");
-                });
-
-            modelBuilder.Entity("P5WebApp.Models.Entities.Car", b =>
-                {
-                    b.Navigation("CarFixesList");
                 });
 #pragma warning restore 612, 618
         }

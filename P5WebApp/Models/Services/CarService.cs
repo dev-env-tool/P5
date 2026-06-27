@@ -120,7 +120,7 @@ namespace P5WebApp.Models.Services
                     CarBrandId = Car.CarBrandId,
                     CarModelId = Car.CarModelId,
                     CarFinishTypeId = Car.CarFinishTypeId,
-                    CarFixesViewModelList = MapFixesToViewModel(Car.CarFixesList),
+                    //CarFixesViewModelList = MapFixesToViewModel(Car.CarFixesList),
                     CarDescription = Car.CarDescription,
                     CarAddAvailabilityDate = Car.CarAddAvailabilityDate,
                     CarDateSold = Car.CarDateSold,
@@ -240,8 +240,8 @@ namespace P5WebApp.Models.Services
             CarToEdit.CarBrandId = Car.CarBrandId;
             CarToEdit.CarModelId = Car.CarModelId;
             CarToEdit.CarFinishTypeId = Car.CarFinishTypeId;
-            CarToEdit.CarFixesList = MapFixesViewModelToFixEntities(Car.CarFixesViewModelList);
-            CarToEdit.AssociatedFixIds = PopulateAssociatedFixIds(Car.CarFixesViewModelList);
+            //CarToEdit.CarFixesList = MapFixesViewModelToFixEntities(Car.CarFixesViewModelList);
+            //CarToEdit.AssociatedFixIds = PopulateAssociatedFixIds(Car.CarFixesViewModelList);
             CarToEdit.CarDescription = Car.CarDescription;
             CarToEdit.CarAddAvailabilityDate = Car.CarAddAvailabilityDate;
             CarToEdit.CarDateSold = Car.CarDateSold;
@@ -306,8 +306,8 @@ namespace P5WebApp.Models.Services
                 CarModelId = Car.CarModelId,
                 CarFinishTypeId = Car.CarFinishTypeId,
                 //AssociatedShortAddId = Car.AssociatedShortAddId,
-                CarFixesList = MapFixesViewModelToFixEntities(Car.CarFixesViewModelList),
-                AssociatedFixIds = PopulateAssociatedFixIds(Car.CarFixesViewModelList),
+                //CarFixesList = MapFixesViewModelToFixEntities(Car.CarFixesViewModelList),
+                //AssociatedFixIds = PopulateAssociatedFixIds(Car.CarFixesViewModelList),
                 CarDescription = Car.CarDescription,
                 CarAddAvailabilityDate = Car.CarAddAvailabilityDate,
                 CarDateSold = Car.CarDateSold,
