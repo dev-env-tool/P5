@@ -152,6 +152,7 @@ namespace P5WebApp.Data
                 CarBuyPrice = 4500,
                 CarPublished = true,
                 CarSellingPrice = 5000,
+                CarDateSold = new DateOnly(2026, 06, 20),
             };
 
             context.Cars.AddRange(car1, car2, car3, car4);
@@ -208,6 +209,41 @@ namespace P5WebApp.Data
 
             context.Fixes.AddRange(fix1, fix2, fix3, fix4, fix5, fix6);
             context.SaveChanges();
+
+            if (context.Photos.Any())
+            {
+                return;
+            }
+
+            var photo1 = new Photo
+            {
+                PhotoName = "205_white",
+                PhotoPath = "Cars/Images/03f4cf14-c641-48b3-93d0-8c4b9429815e_205_white.jpg",
+                AssociatedCarId = car1.CarId,
+            };
+            var photo2 = new Photo
+            {
+                PhotoName = "206_grey",
+                PhotoPath = "Cars/Images/8ac2d467-cd73-442e-a0a6-019b26fab0cf_206_grey_2.jpg",
+                AssociatedCarId = car2.CarId,
+            };
+            var photo3 = new Photo
+            {
+                PhotoName = "205_white",
+                PhotoPath = "Cars/Images/fg52d524-5f56-5256-a125-a85564fd4546f_Xantia_red4.jpg",
+                AssociatedCarId = car3.CarId,
+            };
+            var photo4 = new Photo
+            {
+                PhotoName = "205_white",
+                PhotoPath = "Cars/Images/a169d321-104d-4c61-97d1-78932ab3a691_Xsara_grey_2.jpg",
+                AssociatedCarId = car4.CarId,
+            };
+
+
+            context.Photos.AddRange(photo1, photo2, photo3, photo4);
+            context.SaveChanges();
+
         }
 
 }}

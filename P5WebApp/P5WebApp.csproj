@@ -31,7 +31,6 @@
   <ItemGroup>
     <Folder Include="Interfaces\" />
     <Folder Include="Models\Classes\" />
-    <Folder Include="wwwroot\Cars\Images\" />
   </ItemGroup>
 
 	
