@@ -149,7 +149,7 @@ namespace P5WebApp.Controllers
             }
             else
             {
-                _brandService.DeleteBrand(id);
+                _carModelService.DeleteCarModel(id);
                 return RedirectToAction("Admin");
             }
         }

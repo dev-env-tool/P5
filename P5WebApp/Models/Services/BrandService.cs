@@ -10,14 +10,12 @@ namespace P5WebApp.Models.Services
     public class BrandService : IBrandService
     {
         private readonly IBrandRepository ?_brandRepository;
-        private readonly ICarModelService? _carModelService;
         private readonly ICarModelRepository ?_carModelRepository;
         
 
-        public BrandService(IBrandRepository brandRepository, ICarModelService? carModelService, ICarModelRepository carModelRepository) 
+        public BrandService(IBrandRepository brandRepository, ICarModelRepository carModelRepository) 
         {
             _brandRepository = brandRepository;
-            _carModelService = carModelService;
             _carModelRepository = carModelRepository;
         }
 

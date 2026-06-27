@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Microsoft.EntityFrameworkCore;
 using P3AddNewFunctionalityDotNetCore.Data;
 using P5WebApp.Data;
+using P5WebApp.Models;
 using P5WebApp.Models.Repositories;
 using P5WebApp.Models.Services;
 using System.Runtime.CompilerServices;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 
 
 namespace P5WebApp
@@ -78,9 +79,17 @@ namespace P5WebApp
             app.UseRequestLocalization(localizationOptions);
 
             // Configure the HTTP request pipeline.
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
+                //using (var scope = app.Services.CreateScope())
+                //{
+                //    var services = scope.ServiceProvider;
+                //    var contextToUse = services.GetRequiredService<AppIdentityDbContext>();
+                //}
+
+                //app.SeedDatabase();
             }
             else
             {

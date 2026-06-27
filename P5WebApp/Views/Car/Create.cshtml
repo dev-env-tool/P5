@@ -54,7 +54,9 @@
             <div class="mb-3 col-8">
                 <label>Modèle*':</label>
             </div>
-            <select asp-for="CarModelId" class="form-select col-12"></select>
+            <select asp-for="CarModelId" class="form-select col-12">
+            <option disabled selected>--Choisissez un modèle--</option>
+            </select>
             <span asp-validation-for="CarModelId"></span>
             <div style="white-space:pre-line">
                 <h1></h1>
@@ -62,7 +64,9 @@
             <div class="mb-3 col-8">
                 <label>Finition*':</label>
             </div>
-            <select asp-for="CarFinishTypeId" class="form-select col-12"></select>
+            <select asp-for="CarFinishTypeId" class="form-select col-12">
+            <option disabled selected>--Choisissez une finition--</option>
+            </select>
             <span asp-validation-for="CarFinishTypeId"></span>
             <div style="white-space:pre-line">
                 <h1></h1>
@@ -418,14 +422,24 @@
             <script type="text/javascript">
                 $(document).ready(function()
                 {
+                var lastFix = container.children(".fix").last();
+                var lastlastFixCost = parseFloat($(lastFix.find("FixCost").val())) || 0;
+
+
                 setTimeout(updateCarSellingPrice, 100);
                 $("#CarBuyPrice").on("blur", updateCarSellingPrice);
+                $("#FixCost").on("blur", updateCarSellingPrice);
                     
                 function updateCarSellingPrice()
                 {
-                    var CarBuyPriceForFunction = parseFloat($("#CarBuyPrice").val())|| 0;
+                    var CarBuyPriceForFunction = parseFloat($("#CarBuyPrice").val()) || 0;
+
+
                     console.log("Valeur entrée:", CarBuyPriceForFunction);
                     var CarSellingPriceForFunction = CarBuyPriceForFunction + 500;
+
+                    var CarFixCostForFunction = 
+
                     console.log("Valeur entrée:", CarSellingPriceForFunction);
                     $("#CarSellingPrice").text(CarSellingPriceForFunction);
                     $("#CarSellingPriceHidden").val(CarSellingPriceForFunction);
@@ -519,8 +533,6 @@
 
                     var lastFix = container.children(".fix").last();
                     lastFix.find("input[type='date']").datepicker({ format: "dd/mm/yyyy" });
-                    
-                    
                 }
 
 
@@ -565,12 +577,11 @@
                         }
                         else
                         {
-                        count--;
-                        console.log(count, "ici");
-                        container2.removeData("validator");
-                        container2.removeData("unobtrusiveValidation");
-                        $.validator.unobtrusive.parse(container2);
-
+                            count--;
+                            console.log(count, "ici");
+                            container2.removeData("validator");
+                            container2.removeData("unobtrusiveValidation");
+                            $.validator.unobtrusive.parse(container2);
                         }
                 }
                 deleteButton.click(function(e)

@@ -13,7 +13,7 @@ namespace P3AddNewFunctionalityDotNetCore.Data
         public static async Task EnsurePopulated(WebApplication app)
         {
             using var scope = app.Services.CreateScope();
-            var userManager = (UserManager<IdentityUser>)scope.ServiceProvider.GetService(typeof(UserManager<IdentityUser>));
+            var userManager = (UserManager<IdentityUser>)scope.ServiceProvider.GetRequiredService(typeof(UserManager<IdentityUser>));
 
             IdentityUser user = await userManager.FindByIdAsync(AdminEmail);
 
