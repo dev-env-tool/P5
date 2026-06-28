@@ -55,7 +55,9 @@
             <div class="mb-3 col-8">
                 <label>Marque*':</label>
             </div>
-            <select asp-for="CarBrandId" class="form-select col-12" asp-items="@(new SelectList(Model.CarBrands, "BrandId", "BrandName"))"></select>
+            <select asp-for="CarBrandId" class="form-select col-12" asp-items="@(new SelectList(Model.CarBrands, "BrandId", "BrandName"))">
+                <option disabled selected>--Choisissez une marque--</option>
+            </select>
             <span asp-validation-for="CarBrandId"></span>
             <div style="white-space:pre-line">
                 <h1></h1>
@@ -63,7 +65,9 @@
             <div class="mb-3 col-8">
                 <label>Modèle*':</label>
             </div>
-            <select asp-for="CarModelId" class="form-select col-12" asp-items="@(new SelectList(Model.CarModels, "Id", "Name"))"></select>
+            <select asp-for="CarModelId" class="form-select col-12" asp-items="@(new SelectList(Model.CarModels, "Id", "Name"))">
+                <option disabled selected>--Choisissez un modèle--</option>
+            </select>
             <span asp-validation-for="CarModelId"></span>
             <div style="white-space:pre-line">
                 <h1></h1>
@@ -71,7 +75,9 @@
             <div class="mb-3 col-8">
                 <label>Finition*':</label>
             </div>
-            <select asp-for="CarFinishTypeId" class="form-select col-12" asp-items="@(new SelectList(Model.FinishTypes, "FinishTypeId", "FinishTypeName"))"></select>
+            <select asp-for="CarFinishTypeId" class="form-select col-12" asp-items="@(new SelectList(Model.FinishTypes, "FinishTypeId", "FinishTypeName"))">
+                <option disabled selected>--Choisissez une finition--</option>
+            </select>
             <span asp-validation-for="CarFinishTypeId"></span>
             <div style="white-space:pre-line">
                 <h1></h1>
@@ -340,6 +346,10 @@
             success: function(data) {
             console.log('data : ', data);
             $('#CarModelId').empty();
+            $('#CarModelId').append($('<option>', {
+            value: '',
+            text: '-- Choisissez un modèle --'
+            }));
             $.each(data, function(index, model) {
             $('#CarModelId').append($('<option>', {
             // here Write id and name (instead of Id and Name as in the Controller) as here values are new anonymous values.
@@ -366,7 +376,8 @@
             (
             function()
             {
-            $('#CarModelId').change(function() {
+            // $('#CarBrandId', '#CarModelId').change(function()
+            $(document).on('change', '#CarBrandId, #CarModelId', function(){
             var selectedIds = $(this).val();
             var url = '@Url.Action("GetFinishTypeList", "Car")';
 
@@ -387,6 +398,10 @@
             success: function(data) {
             console.log('data : ', data);
             $('#CarFinishTypeId').empty();
+            $('#CarFinishTypeId').append($('<option>', {
+            value: '',      
+            text: '-- Choisissez une finition --'
+            }));
             $.each(data, function(index, model) {
             $('#CarFinishTypeId').append($('<option>', {
             // here Write finishTypeId and finishTypeName (instead of FinishTypeId and FinishTypeName as in the Controller) as here values are new anonymous values.

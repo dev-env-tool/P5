@@ -244,6 +244,11 @@ namespace P5WebApp.Data
             context.Photos.AddRange(photo1, photo2, photo3, photo4);
             context.SaveChanges();
 
+            car1.CarSellingPrice += fix1.FixCost + fix2.FixCost;
+            car2.CarSellingPrice += fix3.FixCost + fix4.FixCost;
+            car3.CarSellingPrice += fix5.FixCost;
+            car4.CarSellingPrice += fix6.FixCost;
+            context.SaveChanges();
         }
 
 }}
