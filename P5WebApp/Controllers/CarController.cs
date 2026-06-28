@@ -93,18 +93,6 @@ namespace P5WebApp.Controllers
         // GET: View only for every user. Car list to see one Car.
         public IActionResult Read(int id)
         {
-            //ViewBag.Brands = _brandService.GetAllBrands();
-            //ViewBag.CarModels = _carModelService.GetAllCarModels();
-            //ViewBag.FinishTypes = _finishTypeService.GetAllFinishTypes();
-            //ViewBag.Photos = _photoService.GetAllPhotos().Where(p => p.AssociatedCarId == id);
-
-
-
-
-
-
-
-
             var car = _carService.GetCarById(id);
             var brands = _brandService.GetAllBrands().ToList();
             var carModels = _carModelService.GetAllCarModels().ToList();
@@ -143,27 +131,6 @@ namespace P5WebApp.Controllers
                 CarVinCode = car.CarVinCode,
                 CarFixesViewModelList = carFixesList,
             };
-
-            //CarViewModel CarViewModel = _carService.GetCarByIdViewModel(id);
-
-            //CarViewModel.CarBrands = new List<Brand>();
-            //CarViewModel.CarBrands = _brandService.GetAllBrands();
-
-            //CarViewModel.CarModels = new List<CarModel>();
-            //CarViewModel.CarModels = _carModelService.GetAllCarModels();
-
-            //CarViewModel.FinishTypes = new List<FinishType>();
-            //CarViewModel.FinishTypes = _finishTypeService.GetAllFinishTypes();
-
-
-            //CarViewModel.CarFixesList = new List<FinishType>();
-            //CarViewModel.CarFixesList = _fixService.GetAllFixes();
-            //CarViewModel.AssociatedFixIds = CarViewModel.AssociatedFixIds;
-
-            //CarViewModel.CarModels = new List<CarModel>();
-            //CarViewModel.CarModels = _carModelService.GetAllCarModels();
-
-
             return View(carViewModel);
         }
         
@@ -183,10 +150,7 @@ namespace P5WebApp.Controllers
 
         public ViewResult Create(int id)
         {
-            //ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedCarId == id);
-
             CarViewModel CarViewModel = new CarViewModel();
-            //CarViewModel.Car = new Car();
 
             CarViewModel.CarBrands = new List<Brand>();
             CarViewModel.CarBrands = _brandService.GetAllBrands();
@@ -230,23 +194,7 @@ namespace P5WebApp.Controllers
 
             var transaction = _carService.BeginTransaction();
 
-            // Remove from memory "dummyfix1980" from CarFixesViewModelList. Avoiding any dummy fix to be recorded in Db
-            // "dummyfix1980" comes from the front-end as hidden entry to enable form validation without any fix
-            // Hence required and other fix validation attribute work on manual fix entries.
-
-            //FixViewModel dummyfix1980 = new FixViewModel();
-                
-            //dummyfix1980 = Car.CarFixesViewModelList.SingleOrDefault(f => f.FixDescription == "dummyfix1900");
-
-            //if (dummyfix1980 != null)
-            //{
-            //    Car.CarFixesViewModelList.Remove(dummyfix1980);
-            //}
-
-
-
-
-
+            
             // Here, transaction will help data recording into distinct tables.
             // If one object is not valid or complete, then transaction stops and rollbacks the tables in the databse.
             // Rollback means it manages to let the whole database as it was before transaction started.
@@ -256,39 +204,6 @@ namespace P5WebApp.Controllers
                 {
                     
                 }
-                //if (Car.CarFixesViewModelList != null)
-                //{ 
-                //    foreach (var fix  in Car.CarFixesViewModelList) 
-                //    {
-                //        Dictionary<string, string> modelErrorsForFixes = _fixService.CheckFixModelErrors(fix);
-
-                //        foreach (var key in modelErrorsForFixes)
-                //        {
-                //            string field = key.Key;
-                //            string error = key.Value;
-
-                //            ModelState.AddModelError(field, error);
-                //        }
-                //    }
-                //}
-
-                //var validationContext = new ValidationContext(Car, null, null);
-                //var validationResults = Car.Validate(validationContext);
-
-
-                //for (int i = 0; i < Car.CarFixesViewModelList.Count; i++)
-                //{
-                //    var fix = Car.CarFixesViewModelList[i];
-
-                //    var errors = validationResults;
-
-
-                //    foreach (var error in errors)
-                //    {
-                //        ModelState.AddModelError($"CarFixesViewModelList[{i}].{error.MemberNames}", error.ErrorMessage);
-                //    }
-                //}
-
                 Dictionary<string, string> modelErrorsForCar = _carService.CheckCarModelErrors(Car);
 
                 foreach (var key in modelErrorsForCar)
@@ -332,15 +247,19 @@ namespace P5WebApp.Controllers
                         _photoService.SavePhoto(Car.PhotoForDb);
                     }
 
+                    if (Car.CarFixesViewModelList != null)
+                    { 
+                        foreach (var fix in Car.CarFixesViewModelList)
+                        {
+                            fix.AssociatedCarId = Car.CarId;
+                            _fixService.SaveFix(fix);
+                        }
+                    }
                     return RedirectToAction("ConfirmCreated");
-                    //ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedCarId == Car.CarId);
-
-                    //return View(Car);
 
                 }
                 else
                 {
-                    //ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedCarId == Car.CarId);
                     //reload menus for brands car models finishtypes
 
                     Car.CarBrands = new List<Brand>();
@@ -351,13 +270,7 @@ namespace P5WebApp.Controllers
 
                     Car.FinishTypes = new List<FinishType>();
                     Car.FinishTypes = _finishTypeService.GetAllFinishTypes();
-                    //ModelState.Remove("CarBuyDate");
-                    //foreach (var error in ModelState["CarBuyDate"]?.Errors ?? Enumerable.Empty<ModelError>())
-                    //{
-                    //    Console.WriteLine(error.ErrorMessage);
-                    //    ViewBag.CarBuyDateErrors = ModelState["CarBuyDate"]?.Errors.Select(e => e.ErrorMessage).ToList();
-                    //}
-                    //ModelState.AddModelError("CarBuyDate", "Test message d'erreur manuel");
+
                     return View(Car);
                 }
             }
@@ -374,11 +287,15 @@ namespace P5WebApp.Controllers
         // GET: CarController/Edit/5
         public ActionResult Edit(int id)
         {
+
+
+            //ViewBag.PhotoPath = photos.FirstOrDefault(p => p.AssociatedCarId == id);
+            //ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedCarId == id);
             var photos = _photoService.GetAllPhotos().ToList();
+            var fixes = _fixService.GetAllFixesViewModel().ToList();
 
-            ViewBag.PhotoPath = photos.FirstOrDefault(p => p.AssociatedCarId == id);
-            ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedCarId == id);
-
+            var carFirstPhoto = photos.FirstOrDefault(p => p.AssociatedCarId == id);
+            var carFixesList = fixes.Where(f => f.AssociatedCarId == id).ToList();
 
             CarViewModel CarViewModel = _carService.GetCarByIdViewModel(id);
             //var editCar = _carService.GetCarById(id);
@@ -395,6 +312,7 @@ namespace P5WebApp.Controllers
 
 
             CarViewModel.CarFixesViewModelList = new List<FixViewModel>();
+            CarViewModel.CarFixesViewModelList = carFixesList;
             //CarViewModel.AssociatedFixIds = new List<Fix>();
             //CarViewModel.CarFixesList = _fixService.GetAllFixes();
             //CarViewModel.AssociatedFixIds = CarViewModel.AssociatedFixIds;
@@ -420,38 +338,7 @@ namespace P5WebApp.Controllers
                 {
 
                 }
-                //if (Car.CarFixesViewModelList != null)
-                //{ 
-                //    foreach (var fix  in Car.CarFixesViewModelList) 
-                //    {
-                //        Dictionary<string, string> modelErrorsForFixes = _fixService.CheckFixModelErrors(fix);
-
-                //        foreach (var key in modelErrorsForFixes)
-                //        {
-                //            string field = key.Key;
-                //            string error = key.Value;
-
-                //            ModelState.AddModelError(field, error);
-                //        }
-                //    }
-                //}
-
-                //var validationContext = new ValidationContext(Car, null, null);
-                //var validationResults = Car.Validate(validationContext);
-
-
-                //for (int i = 0; i < Car.CarFixesViewModelList.Count; i++)
-                //{
-                //    var fix = Car.CarFixesViewModelList[i];
-
-                //    var errors = validationResults;
-
-
-                //    foreach (var error in errors)
-                //    {
-                //        ModelState.AddModelError($"CarFixesViewModelList[{i}].{error.MemberNames}", error.ErrorMessage);
-                //    }
-                //}
+               
 
                 Dictionary<string, string> modelErrorsForCar = _carService.CheckCarModelErrors(Car);
 
@@ -469,7 +356,7 @@ namespace P5WebApp.Controllers
 
                     // var to retrieve Car.Id generated automatically via SQL
                     // fixes are created via var createdCar = _carService.SaveCar(Car);
-                    var createdCar = _carService.SaveCar(Car);
+                    _carService.UpdateCarInfos(Car);
 
 
                     if (Car.Photo != null)
@@ -491,11 +378,33 @@ namespace P5WebApp.Controllers
 
                         Car.PhotoForDb.PhotoName = Car.Photo.FileName;
                         Car.PhotoForDb.PhotoPath = folder;
-                        Car.PhotoForDb.AssociatedCarId = createdCar.CarId;
+                        Car.PhotoForDb.AssociatedCarId = Car.CarId;
+
+                        var PhotoPaths = _photoService.GetAllPhotos();
+                        var oldPhotoPaths = PhotoPaths.Where(p => p.AssociatedCarId == Car.CarId);
+
+                        foreach (var photoPath in oldPhotoPaths)
+                        {
+                            _photoService.DeletePhoto(photoPath.PhotoId);
+                        }
 
                         _photoService.SavePhoto(Car.PhotoForDb);
                     }
-
+                    if (Car.CarFixesViewModelList != null)
+                    {
+                        foreach (var fix in Car.CarFixesViewModelList)
+                        {
+                            if (fix.FixId > 0)
+                            { 
+                                _fixService.UpdateFixInfos(fix);
+                            }
+                            else
+                            {
+                                fix.AssociatedCarId = Car.CarId;
+                                _fixService.SaveFix(fix);
+                            }
+                        }
+                    }
                     return RedirectToAction("ConfirmModified");
                     //ViewBag.Fixes = _fixService.GetAllFixes().Where(f => f.AssociatedCarId == Car.CarId);
 
@@ -515,13 +424,7 @@ namespace P5WebApp.Controllers
 
                     Car.FinishTypes = new List<FinishType>();
                     Car.FinishTypes = _finishTypeService.GetAllFinishTypes();
-                    //ModelState.Remove("CarBuyDate");
-                    //foreach (var error in ModelState["CarBuyDate"]?.Errors ?? Enumerable.Empty<ModelError>())
-                    //{
-                    //    Console.WriteLine(error.ErrorMessage);
-                    //    ViewBag.CarBuyDateErrors = ModelState["CarBuyDate"]?.Errors.Select(e => e.ErrorMessage).ToList();
-                    //}
-                    //ModelState.AddModelError("CarBuyDate", "Test message d'erreur manuel");
+
                     return View(Car);
                 }
             }
@@ -532,26 +435,6 @@ namespace P5WebApp.Controllers
             }
 
 
-
-            //Dictionary<string, string> modelErrors = _carService.CheckCarModelErrors(CarViewModel);
-
-
-            //foreach (var key in modelErrors)
-            //{
-            //    string field = key.Key;
-            //    string error = key.Value;
-
-            //    ModelState.AddModelError(field, error);
-            //}
-            //if (ModelState.IsValid)
-            //{
-            //    _carService.UpdateCarInfos(CarViewModel);
-            //    return RedirectToAction("Admin");
-            //}
-            //else
-            //{
-            //    return View(CarViewModel);
-            //}
         }
 
 

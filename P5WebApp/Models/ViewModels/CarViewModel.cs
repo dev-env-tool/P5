@@ -92,13 +92,13 @@ namespace P5WebApp.Models.ViewModels
                             }
                             if (fix.FixDate <= CarBuyDate)
                             {
-                                yield return new ValidationResult("La date de la réparation doit être antérieure à la date d'achat de la voiture", new[] { $"CarFixesViewModelList[{i}].FixDate" });
+                                yield return new ValidationResult("La date de la réparation doit être ultérieure à la date d'achat de la voiture", new[] { $"CarFixesViewModelList[{i}].FixDate" });
                             }
-                            if (fix.FixDate <= CarAddAvailabilityDate)
+                            if (fix.FixDate >= CarAddAvailabilityDate)
                             {
                                 yield return new ValidationResult("La date de la réparation doit être antérieure à la date de disponibilité de la voiture", new[] { $"CarFixesViewModelList[{i}].FixDate" });
                             }
-                            if (fix.FixDate <= CarDateSold)
+                            if (fix.FixDate >= CarDateSold)
                             {
                                 yield return new ValidationResult("La date de la réparation doit être antérieure à la date de vente de la voiture", new[] { $"CarFixesViewModelList[{i}].FixDate" });
                             }

@@ -131,8 +131,8 @@ namespace P5WebApp.Models.Services
 
             var photoToEdit = GetPhotoById(photo.PhotoId);
    
-            photoToEdit.PhotoName = photo.PhotoName;
-            photoToEdit.PhotoPath = photo.PhotoPath;
+            //photoToEdit.PhotoName = photo.PhotoName;
+            //photoToEdit.PhotoPath = photo.PhotoPath;
 
             _photoRepository.UpdatePhoto(photoToEdit);
 

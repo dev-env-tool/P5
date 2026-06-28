@@ -169,9 +169,12 @@
   
 
 
-            <div id="CreateFixDiv" style="display:none">
+
+
+            <div id="CreateFixDiv">
                 @if (Model.CarFixesViewModelList != null && Model.CarFixesViewModelList.Count() > 0)
                 {
+                 <div id="fixToCount">
                     <div class="row">
                         <div>
                             @for (int i = 0; i < Model.CarFixesViewModelList.Count; i++)
@@ -179,7 +182,6 @@
                                 <div class="fix">
                                     @Html.HiddenFor(m => m.CarFixesViewModelList[i].FixId)
                                     @Html.HiddenFor(m => m.CarFixesViewModelList[i].AssociatedCarId)
-                                    @* @Html.HiddenFor(m => m.CarFixesViewModelList[i].ValidateFix) *@
                                     @Html.Hidden("CarFixesViewModelList[" + i + "].ValidateFix", true)
                                     <div class="mb-3 col-8">
                                         <label>Description de la réparation*:</label>
@@ -192,7 +194,7 @@
                                     <div class="mb-3 col-8">
                                         <label>Date de la réparation*:</label>
                                     </div>
-                                    @Html.TextBoxFor(m => m.CarFixesViewModelList[i].FixDate, new { @type = "date", @class = "form-control col-12" })
+                                    @Html.TextBoxFor(m => m.CarFixesViewModelList[i].FixDate, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control col-12" })
                                     <span> @Html.ValidationMessageFor(m => m.CarFixesViewModelList[i].FixDate)</span>
                                     <label class="date"></label>
                                     <div style="white-space:pre-line">
@@ -211,6 +213,7 @@
                             }
                         </div>
                     </div>   
+                 </div>
                 }
             </div>
 
@@ -464,6 +467,18 @@
             var deleteButton = $("#DeleteLastFixButton")
             var count = 0;
 
+
+            var countFixesAtPageLoad = $(".fix").length - 1;
+            console.log(countFixesAtPageLoad);
+
+            if (countFixesAtPageLoad == 0)
+            {
+                count = 0
+            }
+            if (countFixesAtPageLoad > 0)
+            {
+                count = countFixesAtPageLoad
+            }
             // if(count == 0)
             // {
             // var fakeFix = $('#fix-fake-template').html();
