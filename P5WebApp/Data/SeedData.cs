@@ -101,7 +101,7 @@ namespace P5WebApp.Data
                 CarVinCode = "AF-852-89",
                 CarYear = new DateOnly(1999, 01, 01),
                 CarBuyDate = new DateOnly(2026, 05, 05),
-                CarAddAvailabilityDate = new DateOnly(2026, 05, 06),
+                CarAddAvailabilityDate = new DateOnly(2026, 05, 10),
                 CarDescription = "Voiture à vendre, bon état",
                 CarBuyPrice = 5000,
                 CarPublished = true,
@@ -165,42 +165,42 @@ namespace P5WebApp.Data
 
             var fix1 = new Fix
             {
-                FixDate = new DateOnly(),
+                FixDate = new DateOnly(2026, 05, 06),
                 FixDescription = "Changement des pneus / Géométrie",
                 FixCost = 200,
                 AssociatedCarId = p205.Id,
             };
             var fix2 = new Fix
             {
-                FixDate = new DateOnly(),
+                FixDate = new DateOnly(2026, 05, 06),
                 FixDescription = "Vidange",
                 FixCost = 40,
                 AssociatedCarId = p205.Id,
             };
             var fix3 = new Fix
             {
-                FixDate = new DateOnly(),
+                FixDate = new DateOnly(2026, 06, 06),
                 FixDescription = "Distribution",
                 FixCost = 150,
                 AssociatedCarId = p206.Id,
             };
             var fix4 = new Fix
             {
-                FixDate = new DateOnly(),
+                FixDate = new DateOnly(2026, 06, 06),
                 FixDescription = "Suspensions",
                 FixCost = 200,
                 AssociatedCarId = p205.Id,
             };
             var fix5 = new Fix
             {
-                FixDate = new DateOnly(),
+                FixDate = new DateOnly(2026, 06, 10),
                 FixDescription = "Carrosserie aile avant droite",
                 FixCost = 40,
                 AssociatedCarId = xantia.Id,
             };
             var fix6 = new Fix
             {
-                FixDate = new DateOnly(),
+                FixDate = new DateOnly(2026, 06, 07),
                 FixDescription = "Batterie",
                 FixCost = 60,
                 AssociatedCarId = xsara.Id,

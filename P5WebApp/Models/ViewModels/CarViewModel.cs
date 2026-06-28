@@ -126,29 +126,21 @@ namespace P5WebApp.Models.ViewModels
         public int CarBrandId { get; set; }
 
 
-
         [Required(ErrorMessage = "Veuillez renseigner un modèle")]
         public int CarModelId { get; set; }
-
 
 
         [Required(ErrorMessage = "Veuillez renseigner une finition")]
         public int CarFinishTypeId { get; set; }
 
 
-
-        // Foreign Key
         [Required(ErrorMessage = "Veuillez choisir une voiture associée")]
         public int AssociatedCarId { get; set; }
 
-        public List<int>? AssociatedFixIds { get; set; } = new List<int>();
+        //public List<int>? AssociatedFixIds { get; set; } = new List<int>();
 
-        public int AssociatedShortAddId { get; set; }
+        //public int AssociatedShortAddId { get; set; }
 
-
-        //public virtual ICollection<Fix> CarFixesList { get; set; } = new List<Fix>();
-
-        //public virtual List<FixViewModel> CarFixesViewModelList { get; set; } = new List<FixViewModel> { new FixViewModel() };
         public virtual List<FixViewModel> ?CarFixesViewModelList { get; set; }
 
 
@@ -175,15 +167,15 @@ namespace P5WebApp.Models.ViewModels
 
         public bool CarPublished { get; set; }
 
-        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateOnly? CarDateSold { get; set; }
 
 
-        public const double CarMargin = 500;
-
 
         public double CarSellingPrice { get; set; }
-
+        public string ?CarBrandName { get; set; }
+        public string? CarModelName { get; set; }
+        public string ?CarFinishTypeName { get; set; }
+        public string? PhotoPath { get; set; }
 
     }
 }

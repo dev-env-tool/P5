@@ -93,33 +93,80 @@ namespace P5WebApp.Controllers
         // GET: View only for every user. Car list to see one Car.
         public IActionResult Read(int id)
         {
-            ViewBag.Brands = _brandService.GetAllBrands();
-            ViewBag.CarModels = _carModelService.GetAllCarModels();
-            ViewBag.FinishTypes = _finishTypeService.GetAllFinishTypes();
+            //ViewBag.Brands = _brandService.GetAllBrands();
+            //ViewBag.CarModels = _carModelService.GetAllCarModels();
+            //ViewBag.FinishTypes = _finishTypeService.GetAllFinishTypes();
+            //ViewBag.Photos = _photoService.GetAllPhotos().Where(p => p.AssociatedCarId == id);
 
-            CarViewModel CarViewModel = _carService.GetCarByIdViewModel(id);
 
-            CarViewModel.CarBrands = new List<Brand>();
-            CarViewModel.CarBrands = _brandService.GetAllBrands();
 
-            CarViewModel.CarModels = new List<CarModel>();
-            CarViewModel.CarModels = _carModelService.GetAllCarModels();
 
-            CarViewModel.FinishTypes = new List<FinishType>();
-            CarViewModel.FinishTypes = _finishTypeService.GetAllFinishTypes();
+
+
+
+
+            var car = _carService.GetCarById(id);
+            var brands = _brandService.GetAllBrands().ToList();
+            var carModels = _carModelService.GetAllCarModels().ToList();
+            var finishTypes = _finishTypeService.GetAllFinishTypes().ToList();
+            var photos = _photoService.GetAllPhotos().ToList();
+            var fixes = _fixService.GetAllFixesViewModel().ToList();
+
+            var carBrandName = brands.Where(b => b.BrandId == car.CarBrandId).Select(b => b.BrandName).FirstOrDefault();
+            var carModelName = carModels.Where(cm => cm.Id == car.CarModelId).Select(c => c.Name).FirstOrDefault();
+            var carFinishTypeName = finishTypes.Where(ft => ft.FinishTypeId == car.CarFinishTypeId).Select(f => f.FinishTypeName).FirstOrDefault();
+            var carFirstPhoto = photos.FirstOrDefault(p => p.AssociatedCarId == car.CarId);
+            var carFixesList = fixes.Where(f => f.AssociatedCarId == car.CarId).ToList();
+            var carId = car.CarId;
+
+
+
+            CarViewModel carViewModel = new CarViewModel()
+            {
+                CarId = carId,
+                CarBrandName = carBrandName,
+                CarModelName = carModelName,
+                CarFinishTypeName = carFinishTypeName,
+                PhotoPath = carFirstPhoto.PhotoPath,
+                CarYear = car.CarYear,
+                CarBuyDate = car.CarBuyDate,
+                CarAddAvailabilityDate = car.CarAddAvailabilityDate,
+                CarDateSold = car.CarDateSold,
+                CarDescription = car.CarDescription,
+                CarBrandId = car.CarBrandId,
+                CarBuyPrice = car.CarBuyPrice,
+                CarFinishTypeId = car.CarFinishTypeId,
+                CarModelId = car.CarModelId,
+                CarPublished = car.CarPublished,
+                AssociatedCarId = carId,
+                CarSellingPrice = car.CarSellingPrice,
+                CarVinCode = car.CarVinCode,
+                CarFixesViewModelList = carFixesList,
+            };
+
+            //CarViewModel CarViewModel = _carService.GetCarByIdViewModel(id);
+
+            //CarViewModel.CarBrands = new List<Brand>();
+            //CarViewModel.CarBrands = _brandService.GetAllBrands();
+
+            //CarViewModel.CarModels = new List<CarModel>();
+            //CarViewModel.CarModels = _carModelService.GetAllCarModels();
+
+            //CarViewModel.FinishTypes = new List<FinishType>();
+            //CarViewModel.FinishTypes = _finishTypeService.GetAllFinishTypes();
 
 
             //CarViewModel.CarFixesList = new List<FinishType>();
             //CarViewModel.CarFixesList = _fixService.GetAllFixes();
             //CarViewModel.AssociatedFixIds = CarViewModel.AssociatedFixIds;
 
-            CarViewModel.CarModels = new List<CarModel>();
-            CarViewModel.CarModels = _carModelService.GetAllCarModels();
+            //CarViewModel.CarModels = new List<CarModel>();
+            //CarViewModel.CarModels = _carModelService.GetAllCarModels();
 
 
-            return View(CarViewModel);
+            return View(carViewModel);
         }
-
+        
 
 
 

@@ -1,0 +1,203 @@
+﻿@model P5WebApp.Models.ViewModels.CarViewModel
+@using P5WebApp.Models.Entities
+
+
+@{
+    Layout = "_Layout";
+}
+
+
+
+
+<div class="row">
+    <h1 class="mb-3 col-4 offset-md-4">
+        Création d'une voiture
+    </h1>
+    <div style="white-space:pre-line">
+        <h1></h1>
+    </div>
+    @* <form id="CarForm" method="get" enctype="multipart/form-data"> *@
+@*         <input type="hidden" name="CarId" value="@Model.CarId" />
+        <input type="hidden" name="PhotoForDb.PhotoId" value="0" />
+        <input type="hidden" name="PhotoForDb.PhotoName" value="name" />
+        <input type="hidden" name="PhotoForDb.PhotoPath" value="path" />
+        <input type="hidden" name="PhotoForDb.AssociatedCarId" value="0" /> *@
+
+
+        @* <input type="hidden" name="SelectedVinCode" value="ok"/> *@
+        <div class="mb-3 col-4 offset-md-4">
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Marque* :</label>
+            </div>
+            <select asp-for="CarBrandId" class="form-select col-12" value="@Model.CarBrandName" disabled></select>
+            <span asp-validation-for="CarBrandId"></span>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Modèle*':</label>
+            </div>
+            <select asp-for="CarModelId" class="form-select col-12" asp-items="@(new SelectList(Model.CarModels, "Id", "Name"))" disabled></select>
+            <span asp-validation-for="CarModelId"></span>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Prix de vente* :</label>
+            </div>
+            <input asp-for="CarSellingPrice" class="form-control col-12" id="CarSellingPrice" disabled>
+            <input type="hidden" name="CarSellingPrice" id="CarSellingPriceHidden" value="@Model.CarSellingPrice" />
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Finition* :</label>
+            </div>
+            <select asp-for="CarFinishTypeId" class="form-select col-12" asp-items="@(new SelectList(Model.FinishTypes, "FinishTypeId", "FinishTypeName"))" disabled></select>
+            <span asp-validation-for="CarFinishTypeId"></span>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Numéro de plaque* :</label>
+            </div>
+            <input asp-for="CarVinCode" class="form-control col-12" disabled />
+            <span asp-validation-for="CarVinCode"></span>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Année de production* :</label>
+            </div>
+            <input asp-for="CarYear" class="form-control col-12" date="@Model.CarYear" disabled />
+            <span asp-validation-for="CarYear"></span>
+            <label class="date"></label>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Date d'achat* :</label>
+            </div>
+            <input asp-for="CarBuyDate" class="form-control col-12" date="@Model.CarBuyDate" disabled />
+            <span asp-validation-for="CarBuyDate"></span>
+            <label class="date"></label>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Photo* :</label>
+            </div>
+            
+
+            <img src="@Model.PhotoForDb.PhotoPath" height="280" width="400" />
+            @* <input asp-for="Photo" class="custom-file-input form-control col-12" id="customFile" disabled />
+            <label class="custom-file-label" for="customFile"></label> *@
+
+            <span asp-validation-for="Photo"></span>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Description*:</label>
+            </div>
+            <input asp-for="CarDescription" class="form-control col-12" disabled />
+            <span asp-validation-for="CarDescription"></span>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Date de disponibilité :</label>
+            </div>
+            <input asp-for="CarAddAvailabilityDate" type="date" class="form-control col-12" date="@Model.CarAddAvailabilityDate" disabled />
+            <span asp-validation-for="CarAddAvailabilityDate"></span>
+            <label class="date"></label>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+            <div class="mb-3 col-8">
+                <label>Date de vente:</label>
+            </div>
+            <input asp-for="CarDateSold" type="date" class="form-control col-12" date="@Model.CarDateSold" disabled>
+            <span asp-validation-for="CarDateSold"></span>
+            <label class="date"></label>
+            <div style="white-space:pre-line">
+                <h1></h1>
+            </div>
+
+
+
+
+
+
+
+
+
+
+@*             <div id="CreateFixDiv" style="display:none">
+                @if (Model.CarFixesViewModelList != null && Model.CarFixesViewModelList.Count() > 0)
+                {
+                    <div class="row">
+                        <div>
+                            @for (int i = 0; i < Model.CarFixesViewModelList.Count; i++)
+                            {
+                                <div class="fix">
+                                    @Html.HiddenFor(m => m.CarFixesViewModelList[i].FixId)
+                                    @Html.HiddenFor(m => m.CarFixesViewModelList[i].AssociatedCarId)
+                                    <div class="mb-3 col-8">
+                                        <label>Description de la réparation*:</label>
+                                    </div>
+                                    @Html.TextBoxFor(m => m.CarFixesViewModelList[i].FixDescription, new { @class = "form-control col-12" })
+                                    <span> @Html.ValidationMessageFor(m => m.CarFixesViewModelList[i].FixDescription)</span>
+                                    <div style="white-space:pre-line">
+                                        <h1></h1>
+                                    </div>
+                                    <div class="mb-3 col-8">
+                                        <label>Date de la réparation*:</label>
+                                    </div>
+                                    @Html.TextBoxFor(m => m.CarFixesViewModelList[i].FixDate, new { @type = "date", @class = "form-control col-12" })
+                                    <span> @Html.ValidationMessageFor(m => m.CarFixesViewModelList[i].FixDate)</span>
+                                    <label class="date"></label>
+                                    <div style="white-space:pre-line">
+                                        <h1></h1>
+                                    </div>
+
+                                    <div class="mb-3 col-8">
+                                        <label>Coût de la réparation*:</label>
+                                    </div>
+                                    @Html.TextBoxFor(m => m.CarFixesViewModelList[i].FixCost, new { @class = "form-control col-12" })
+                                    <span> @Html.ValidationMessageFor(m => m.CarFixesViewModelList[i].FixCost)</span>
+                                    <div style="white-space:pre-line">
+                                        <h1></h1>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                      
+
+                    </div>
+                    
+                }
+            </div> *@
+
+
+
+    @* </form> *@
+
+
+</div>
+<div style="white-space:pre-line">
+    <h1></h1>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+            

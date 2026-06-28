@@ -42,7 +42,7 @@ namespace P5WebApp.Models.Repositories
 
         public IEnumerable<FinishType> GetFinishTypesByCarModelIds(int id)
         {
-            if (id == null)
+            if (id !> 0)
                 return Enumerable.Empty<FinishType>();
 
 
