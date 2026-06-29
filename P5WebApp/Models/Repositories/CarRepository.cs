@@ -11,7 +11,7 @@ namespace P5WebApp.Models.Repositories
 {
     public class CarRepository : ICarRepository
     {
-        private static P5Referential? _context;
+        private readonly P5Referential? _context;
 
         public CarRepository(P5Referential context)
         {

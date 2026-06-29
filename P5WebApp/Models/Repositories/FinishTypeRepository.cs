@@ -12,7 +12,7 @@ namespace P5WebApp.Models.Repositories
 {
     public class FinishTypeRepository : IFinishTypeRepository
     {
-        private static P5Referential? _context;
+        private readonly P5Referential? _context;
 
         public FinishTypeRepository(P5Referential context)
         {

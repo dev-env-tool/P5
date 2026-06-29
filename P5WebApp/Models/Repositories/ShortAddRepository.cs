@@ -9,7 +9,7 @@ namespace P5WebApp.Models.Repositories
 {
     public class ShortAddRepository : IShortAddRepository
     {
-        //    private static P5Referential? _context;
+        //    private readonly  P5Referential? _context;
 
         //    public ShortAddRepository(P5Referential context)
         //    {
