@@ -109,7 +109,7 @@
             <div class="mb-3 col-8">
                 <label>Prix d'achat*':</label>
             </div>
-            <input asp-for="CarBuyPrice" type="text" class="form-control col-12" id="CarBuyPrice" required>
+            <input asp-for="CarBuyPrice" type="text" class="form-control col-12 CarBuyPrice" id="CarBuyPrice" required>
             <span asp-validation-for="CarBuyPrice"></span>
             <div style="white-space:pre-line">
                 <h1></h1>
@@ -155,7 +155,7 @@
             <div class="mb-3 col-8">
                 <label>Prix de vente*':</label>
             </div>
-            <label asp-for="CarSellingPrice" type="number" class="form-control col-12" id="CarSellingPrice"></label>
+            <label asp-for="CarSellingPrice" type="number" class="form-control col-12" id="CarSellingPrice">@Model.CarSellingPrice</label>
             <input type="hidden" name="CarSellingPrice" id="CarSellingPriceHidden" value="@Model.CarSellingPrice" />
             <div style="white-space:pre-line">
                 <h1></h1>
@@ -210,7 +210,7 @@
                                     <div class="mb-3 col-8">
                                         <label>Coût de la réparation*:</label>
                                     </div>
-                                    @Html.TextBoxFor(m => m.CarFixesViewModelList[i].FixCost, new { @class = "form-control col-12" })
+                                    @Html.TextBoxFor(m => m.CarFixesViewModelList[i].FixCost, new { @class = "form-control col-12 FixCost" })
                                     <span> @Html.ValidationMessageFor(m => m.CarFixesViewModelList[i].FixCost)</span>
                                     <div style="white-space:pre-line">
                                         <h1></h1>
@@ -279,7 +279,7 @@
                 <div class="mb-3 col-8">
                     <label>Coût de la réparation*:</label>
                 </div>
-                <input type="text" name="@($"{prefix}[__index__].FixCost")" id="@($"{prefix}___index___FixCost")" class="form-control col-12" value="" />
+                <input type="text" name="@($"{prefix}[__index__].FixCost")" id="@($"{prefix}___index___FixCost")" class="form-control col-12 FixCost" value="" />
                 <span data-valmsg-for="@($"{prefix}[__index__].FixCost")" data-valmsg-replace="true"></span>
                 <div style="white-space:pre-line">
                     <h1></h1>
@@ -302,23 +302,7 @@
     @{
 
             
-        <script type="text/javascript">
-            $(document).ready(function()
-            {
-            setTimeout(updateCarSellingPrice, 100);
-            $("#CarBuyPrice").on("blur", updateCarSellingPrice);
-                    
-            function updateCarSellingPrice()
-            {
-            var CarBuyPriceForFunction = parseFloat($("#CarBuyPrice").val())|| 0;
-            console.log("Valeur entrée:", CarBuyPriceForFunction);
-            var CarSellingPriceForFunction = CarBuyPriceForFunction + 500;
-            console.log("Valeur entrée:", CarSellingPriceForFunction);
-            $("#CarSellingPrice").text(CarSellingPriceForFunction);
-            $("#CarSellingPriceHidden").val(CarSellingPriceForFunction);
-            }
-            });
-        </script>
+
 
         <script type="text/javascript">
             $(document).ready
@@ -592,6 +576,104 @@
             }
             });
         </script>
+
+        <script type="text/javascript">
+
+
+
+                // $(document).on('input', '.CarBuyPrice', function()
+                // {
+                //     setTimeout(updateCarSellingPrice, 100);
+                //     // $("#CarBuyPrice").on("blur", updateCarSellingPrice);
+
+                //     function updateCarSellingPrice()
+                //     {
+                //         var CarBuyPriceForFunction = parseFloat($("#CarBuyPrice").val())|| 0;
+                //         console.log("Valeur entrée:", CarBuyPriceForFunction);
+                //         var CarSellingPriceForFunction = CarBuyPriceForFunction + 500;
+                //         console.log("Valeur entrée:", CarSellingPriceForFunction);
+                //         $("#CarSellingPrice").text(CarSellingPriceForFunction);
+                //         $("#CarSellingPriceHidden").val(CarSellingPriceForFunction);
+                //     }
+
+                // });
+                
+            
+
+
+                // $(document).on('input', '.FixCost', function()
+                // {
+                //     setTimeout(updateCarSellingPriceWithFixCosts, 100);
+                //     function updateCarSellingPriceWithFixCosts()
+                //     {
+                //         var CarSellingPriceForFunction = parseFloat($("#CarSellingPrice").val())|| 0;
+
+                //         var value = parseFloat($(this).val()) || 0;
+                //         console.log("Value:", value);
+
+                //         var total = 0;
+                //         $('.FixCost').each(function() {
+                //         total += parseFloat($(this).val()) || 0;
+                //         });
+                //         console.log("FixCost Total:", total);
+
+                //         CarSellingPriceForFunction += total;
+
+                //         // $('#CarSellingPrice').val(total.toFixed(2));
+                //         $("#CarSellingPrice").text(CarSellingPriceForFunction);
+                //         $("#CarSellingPriceHidden").val(CarSellingPriceForFunction);
+                //     }
+                // });
+
+
+                $(document).on('input', '.CarBuyPrice, .FixCost', function()
+                {
+                    setTimeout(updateCarSellingPrice, 100);
+                    // $("#CarBuyPrice").on("blur", updateCarSellingPrice);
+
+                    function updateCarSellingPrice()
+                    {
+                        var CarBuyPriceForFunction = parseFloat($("#CarBuyPrice").val())|| 0;
+                        console.log("Input:", CarBuyPriceForFunction);
+                        var CarSellingPriceForFunction = CarBuyPriceForFunction + 500;
+
+                        var total = 0;
+                        $('.FixCost').each(function() {
+                        total += parseFloat($(this).val()) || 0;
+                        });
+                        CarSellingPriceForFunction += total;
+                        $("#CarSellingPrice").text(CarSellingPriceForFunction);
+                        $("#CarSellingPriceHidden").val(CarSellingPriceForFunction);
+                        console.log("Output:", CarSellingPriceForFunction);
+                    }
+
+                    // setTimeout(updateCarSellingPriceWithFixCosts, 100);
+                    // function updateCarSellingPriceWithFixCosts()
+                    // {
+                    //     console.log("ici");
+                    //     var CarSellingPriceForFunction = parseFloat($("#CarSellingPrice").val())|| 0;
+
+                    //     var value = parseFloat($(this).val()) || 0;
+                    //     console.log("Value:", value);
+
+                    //     var total = 0;
+                    //     $('.FixCost:visible:input').each(function() {
+                    //     total += parseFloat($(this).val()) || 0;
+                    //     });
+                    //     console.log("FixCost Total:", total);
+
+                    //     CarSellingPriceForFunction += total;
+
+                    //     // $('#CarSellingPrice').val(total.toFixed(2));
+                    //     $("#CarSellingPrice").text(CarSellingPriceForFunction);
+                    //     $("#CarSellingPriceHidden").val(CarSellingPriceForFunction);
+                    // }
+
+                });
+
+        </script>
+
+
     }
 }
 

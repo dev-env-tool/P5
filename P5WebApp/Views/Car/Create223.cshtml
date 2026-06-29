@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+  <input type="text" class="FixCost" />
+
+  <script>
+    $(document).ready(function() {
+      $(document).on('input', '.FixCost', function() {
+        console.log('Input détecté dans .FixCost, valeur:', $(this).val());
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -171,6 +171,7 @@
                         <div>
                             @for (int i = 0; i < Model.CarFixesViewModelList.Count; i++)
                             {
+                                var customId = "FixCost_" + i;
                                 <div class="fix">
                                     @Html.HiddenFor(m => m.CarFixesViewModelList[i].FixId)
                                     @Html.HiddenFor(m => m.CarFixesViewModelList[i].AssociatedCarId)
@@ -197,7 +198,8 @@
                                     <div class="mb-3 col-8">
                                         <label>Coût de la réparation*:</label>
                                     </div>
-                                    @Html.TextBoxFor(m => m.CarFixesViewModelList[i].FixCost, new { @class = "form-control col-12" })
+                                    
+                                    @Html.TextBoxFor(m => m.CarFixesViewModelList[i].FixCost, new { @class = "form-control col-12", id = customId })
                                     <span> @Html.ValidationMessageFor(m => m.CarFixesViewModelList[i].FixCost)</span>
                                     <div style="white-space:pre-line">
                                         <h1></h1>
@@ -300,7 +302,7 @@
             <div class="mb-3 col-8">
                 <label>Coût de la réparation*:</label>
             </div>
-            <input type="text" name="@($"{prefix}[__index__].FixCost")" id="@($"{prefix}___index___FixCost")" class="form-control col-12" value=""  />
+                <input type="text" name="@($"{prefix}[__index__].FixCost")" id="@($"{prefix}___index___FixCost")" class="form-control col-12 FixCost" value="" />
             <span data-valmsg-for="@($"{prefix}[__index__].FixCost")" data-valmsg-replace="true"></span>
             <div style="white-space:pre-line">
                 <h1></h1>
@@ -321,10 +323,40 @@
         }
 
         @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
 
 
+
+        <script type="text/javascript">
+            $(document).ready(function()
+            {
+            // var lastFix = container.children(".fix").last();
+            // var lastlastFixCost = parseFloat($(lastFix.find("FixCost").val())) || 0;
+
+
+            setTimeout(updateCarSellingPrice, 100);
+            $("#CarBuyPrice").on("blur", updateCarSellingPrice);
+            // $("#FixCost").on("blur", updateCarSellingPrice);
+                    
+            function updateCarSellingPrice()
+            {
+            var CarBuyPriceForFunction = parseFloat($("#CarBuyPrice").val()) || 0;
+
+
+            console.log("Valeur entrée:", CarBuyPriceForFunction);
+            var CarSellingPriceForFunction = CarBuyPriceForFunction + 500;
+
+            // var CarFixCostForFunction =
+
+            console.log("Valeur entrée:", CarSellingPriceForFunction);
+            $("#CarSellingPrice").text(CarSellingPriceForFunction);
+            $("#CarSellingPriceHidden").val(CarSellingPriceForFunction);
+            }
+            });
         
+
+
+
+
 
 
         <script type="text/javascript">
@@ -427,34 +459,63 @@
             }
             );
         </script>
-            
+
+
             <script type="text/javascript">
-                $(document).ready(function()
-                {
-                // var lastFix = container.children(".fix").last();
-                // var lastlastFixCost = parseFloat($(lastFix.find("FixCost").val())) || 0;
+
+            // setTimeout(updateCarSellingPriceWithFixCost, 100);
 
 
-                setTimeout(updateCarSellingPrice, 100);
-                $("#CarBuyPrice").on("blur", updateCarSellingPrice);
-                // $("#FixCost").on("blur", updateCarSellingPrice);
+            // var index = 0;
+
+            //     $(document).on('input', '.FixCost' + index, function()
+            //     {
+            //         var carSellingPriceForFunction = parseFloat($("#CarSellingPrice").val()) || 0;
+            //         console.log("Input:", carSellingPriceForFunction);
+            //         var index = 0;
                     
-                function updateCarSellingPrice()
-                {
-                    var CarBuyPriceForFunction = parseFloat($("#CarBuyPrice").val()) || 0;
+            //         var fixCostForFunction = parseFloat($('#FixCost_' + index).val()) || 0;
+
+            //         carSellingPriceForFunction += fixCostForFunction
+            //         console.log("Output:", CarSellingPriceForFunction);
+            //         $("#CarSellingPrice").text(CarSellingPriceForFunction);
+            //         $("#CarSellingPriceHidden").val(CarSellingPriceForFunction);
 
 
-                    console.log("Valeur entrée:", CarBuyPriceForFunction);
-                    var CarSellingPriceForFunction = CarBuyPriceForFunction + 500;
+               
+            // });
 
-                    // var CarFixCostForFunction = 
 
-                    console.log("Valeur entrée:", CarSellingPriceForFunction);
-                    $("#CarSellingPrice").text(CarSellingPriceForFunction);
-                    $("#CarSellingPriceHidden").val(CarSellingPriceForFunction);
-                }
-                });
+            // $(document).on('input', '.FixCost', function() {
+            // var valeur = $(this).val();
+            // console.log("Valeur modifiée:", valeur);
+
+   
+            // var total = 0;
+            // $('.FixCost').each(function() {
+            // var v = parseFloat($(this).val()) || 0;
+            // total += v;
+            // });
+            // console.log("Total:", total);
+            // });
+
+            // $(document).ready(function() {
+            // console.log("ready"); 
+            // $(document).on('input', '.FixCost', function() {
+            // console.log("input détecté");
+            // var val = $("#CarSellingPrice").val();
+            // console.log("CarSellingPrice:", val);
+            // var carSellingPriceForFunction = parseFloat(val) || 0;
+            // console.log("Parsed carSellingPriceForFunction:", carSellingPriceForFunction);
+            // });
+            // });
+
+
+            
             </script>
+
+
+
 
             <script type="text/javascript">
                 $(document).ready(function() 
@@ -623,6 +684,12 @@
                 }
             });
             </script>
+
+
+
+
+
+
         }
     }
             

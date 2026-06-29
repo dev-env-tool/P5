@@ -168,47 +168,66 @@ namespace P5WebApp.Data
                 FixDate = new DateOnly(2026, 05, 06),
                 FixDescription = "Changement des pneus / Géométrie",
                 FixCost = 200,
-                AssociatedCarId = p205.Id,
+                AssociatedCarId = car1.CarId,
             };
             var fix2 = new Fix
             {
                 FixDate = new DateOnly(2026, 05, 06),
                 FixDescription = "Vidange",
                 FixCost = 40,
-                AssociatedCarId = p205.Id,
+                AssociatedCarId = car1.CarId,
             };
             var fix3 = new Fix
             {
                 FixDate = new DateOnly(2026, 06, 06),
                 FixDescription = "Distribution",
                 FixCost = 150,
-                AssociatedCarId = p206.Id,
+                AssociatedCarId = car2.CarId,
             };
             var fix4 = new Fix
             {
                 FixDate = new DateOnly(2026, 06, 06),
                 FixDescription = "Suspensions",
                 FixCost = 200,
-                AssociatedCarId = p205.Id,
+                AssociatedCarId = car2.CarId,
             };
             var fix5 = new Fix
             {
                 FixDate = new DateOnly(2026, 06, 10),
                 FixDescription = "Carrosserie aile avant droite",
                 FixCost = 40,
-                AssociatedCarId = xantia.Id,
+                AssociatedCarId = car3.CarId,
             };
             var fix6 = new Fix
             {
                 FixDate = new DateOnly(2026, 06, 07),
                 FixDescription = "Batterie",
                 FixCost = 60,
-                AssociatedCarId = xsara.Id,
+                AssociatedCarId = car4.CarId,
                 
             };
 
             context.Fixes.AddRange(fix1, fix2, fix3, fix4, fix5, fix6);
             context.SaveChanges();
+
+            car1.CarSellingPrice += fix1.FixCost + fix2.FixCost;
+            context.Entry(car1).State = EntityState.Modified;
+            context.SaveChanges();
+
+            car2.CarSellingPrice += fix3.FixCost + fix4.FixCost;
+            context.Entry(car2).State = EntityState.Modified;
+            context.SaveChanges();
+
+            car3.CarSellingPrice += fix5.FixCost;
+            context.Entry(car3).State = EntityState.Modified;
+            context.SaveChanges();
+
+
+            car4.CarSellingPrice += fix6.FixCost;
+            context.Entry(car4).State = EntityState.Modified;
+            context.SaveChanges();
+
+
 
             if (context.Photos.Any())
             {
@@ -244,11 +263,7 @@ namespace P5WebApp.Data
             context.Photos.AddRange(photo1, photo2, photo3, photo4);
             context.SaveChanges();
 
-            car1.CarSellingPrice += fix1.FixCost + fix2.FixCost;
-            car2.CarSellingPrice += fix3.FixCost + fix4.FixCost;
-            car3.CarSellingPrice += fix5.FixCost;
-            car4.CarSellingPrice += fix6.FixCost;
-            context.SaveChanges();
+
         }
 
 }}
