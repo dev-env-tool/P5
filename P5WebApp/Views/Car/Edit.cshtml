@@ -424,15 +424,6 @@
             setTimeout(checkFields, 100);
             $("input[required]").on("blur", checkFields);
 
-            // setTimeout(updateCarSellingPrice, 100);
-            // $("#CarSellingPrice").on("blur", updateCarSellingPrice);
-                    
-            // function updateCarSellingPrice()
-            // {
-            //     var CarBuyPriceForFunction = $("#CarBuyPrice").val("");
-            //     var CarSellingPriceForFunction = CarBuyPriceForFunction + 500;
-            //     $("#CarBuyPrice").val("CarSellingPriceForFunction");
-            // }
 
             function checkFields()
             {
@@ -478,12 +469,6 @@
             {
                 count = countFixesAtPageLoad
             }
-            // if(count == 0)
-            // {
-            // var fakeFix = $('#fix-fake-template').html();
-            // container.append(fakeFix);
-            // }
-
 
             function addFix()
             {
@@ -511,13 +496,6 @@
 
             createButton.click(function(e)
             {
-            // var fakeFix = container.find(".fix:hidden");
-            // if(fakeFix.length > 0)
-            // {
-            //     fakeFix.remove();
-            //     count = 0;
-            // }
-            // else
             {
             e.preventDefault();
             console.log("clic button");
@@ -578,54 +556,6 @@
         </script>
 
         <script type="text/javascript">
-
-
-
-                // $(document).on('input', '.CarBuyPrice', function()
-                // {
-                //     setTimeout(updateCarSellingPrice, 100);
-                //     // $("#CarBuyPrice").on("blur", updateCarSellingPrice);
-
-                //     function updateCarSellingPrice()
-                //     {
-                //         var CarBuyPriceForFunction = parseFloat($("#CarBuyPrice").val())|| 0;
-                //         console.log("Valeur entrée:", CarBuyPriceForFunction);
-                //         var CarSellingPriceForFunction = CarBuyPriceForFunction + 500;
-                //         console.log("Valeur entrée:", CarSellingPriceForFunction);
-                //         $("#CarSellingPrice").text(CarSellingPriceForFunction);
-                //         $("#CarSellingPriceHidden").val(CarSellingPriceForFunction);
-                //     }
-
-                // });
-                
-            
-
-
-                // $(document).on('input', '.FixCost', function()
-                // {
-                //     setTimeout(updateCarSellingPriceWithFixCosts, 100);
-                //     function updateCarSellingPriceWithFixCosts()
-                //     {
-                //         var CarSellingPriceForFunction = parseFloat($("#CarSellingPrice").val())|| 0;
-
-                //         var value = parseFloat($(this).val()) || 0;
-                //         console.log("Value:", value);
-
-                //         var total = 0;
-                //         $('.FixCost').each(function() {
-                //         total += parseFloat($(this).val()) || 0;
-                //         });
-                //         console.log("FixCost Total:", total);
-
-                //         CarSellingPriceForFunction += total;
-
-                //         // $('#CarSellingPrice').val(total.toFixed(2));
-                //         $("#CarSellingPrice").text(CarSellingPriceForFunction);
-                //         $("#CarSellingPriceHidden").val(CarSellingPriceForFunction);
-                //     }
-                // });
-
-
                 $(document).on('input', '.CarBuyPrice, .FixCost', function()
                 {
                     setTimeout(updateCarSellingPrice, 100);
@@ -646,34 +576,8 @@
                         $("#CarSellingPriceHidden").val(CarSellingPriceForFunction);
                         console.log("Output:", CarSellingPriceForFunction);
                     }
-
-                    // setTimeout(updateCarSellingPriceWithFixCosts, 100);
-                    // function updateCarSellingPriceWithFixCosts()
-                    // {
-                    //     console.log("ici");
-                    //     var CarSellingPriceForFunction = parseFloat($("#CarSellingPrice").val())|| 0;
-
-                    //     var value = parseFloat($(this).val()) || 0;
-                    //     console.log("Value:", value);
-
-                    //     var total = 0;
-                    //     $('.FixCost:visible:input').each(function() {
-                    //     total += parseFloat($(this).val()) || 0;
-                    //     });
-                    //     console.log("FixCost Total:", total);
-
-                    //     CarSellingPriceForFunction += total;
-
-                    //     // $('#CarSellingPrice').val(total.toFixed(2));
-                    //     $("#CarSellingPrice").text(CarSellingPriceForFunction);
-                    //     $("#CarSellingPriceHidden").val(CarSellingPriceForFunction);
-                    // }
-
                 });
-
         </script>
-
-
     }
 }
 

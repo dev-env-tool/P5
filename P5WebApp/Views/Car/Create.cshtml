@@ -326,37 +326,6 @@
 
 
 
-        <script type="text/javascript">
-            $(document).ready(function()
-            {
-            // var lastFix = container.children(".fix").last();
-            // var lastlastFixCost = parseFloat($(lastFix.find("FixCost").val())) || 0;
-
-
-            setTimeout(updateCarSellingPrice, 100);
-            $("#CarBuyPrice").on("blur", updateCarSellingPrice);
-            // $("#FixCost").on("blur", updateCarSellingPrice);
-                    
-            function updateCarSellingPrice()
-            {
-            var CarBuyPriceForFunction = parseFloat($("#CarBuyPrice").val()) || 0;
-
-
-            console.log("Valeur entrée:", CarBuyPriceForFunction);
-            var CarSellingPriceForFunction = CarBuyPriceForFunction + 500;
-
-            // var CarFixCostForFunction =
-
-            console.log("Valeur entrée:", CarSellingPriceForFunction);
-            $("#CarSellingPrice").text(CarSellingPriceForFunction);
-            $("#CarSellingPriceHidden").val(CarSellingPriceForFunction);
-            }
-            });
-        
-
-
-
-
 
 
         <script type="text/javascript">
@@ -462,62 +431,6 @@
 
 
             <script type="text/javascript">
-
-            // setTimeout(updateCarSellingPriceWithFixCost, 100);
-
-
-            // var index = 0;
-
-            //     $(document).on('input', '.FixCost' + index, function()
-            //     {
-            //         var carSellingPriceForFunction = parseFloat($("#CarSellingPrice").val()) || 0;
-            //         console.log("Input:", carSellingPriceForFunction);
-            //         var index = 0;
-                    
-            //         var fixCostForFunction = parseFloat($('#FixCost_' + index).val()) || 0;
-
-            //         carSellingPriceForFunction += fixCostForFunction
-            //         console.log("Output:", CarSellingPriceForFunction);
-            //         $("#CarSellingPrice").text(CarSellingPriceForFunction);
-            //         $("#CarSellingPriceHidden").val(CarSellingPriceForFunction);
-
-
-               
-            // });
-
-
-            // $(document).on('input', '.FixCost', function() {
-            // var valeur = $(this).val();
-            // console.log("Valeur modifiée:", valeur);
-
-   
-            // var total = 0;
-            // $('.FixCost').each(function() {
-            // var v = parseFloat($(this).val()) || 0;
-            // total += v;
-            // });
-            // console.log("Total:", total);
-            // });
-
-            // $(document).ready(function() {
-            // console.log("ready"); 
-            // $(document).on('input', '.FixCost', function() {
-            // console.log("input détecté");
-            // var val = $("#CarSellingPrice").val();
-            // console.log("CarSellingPrice:", val);
-            // var carSellingPriceForFunction = parseFloat(val) || 0;
-            // console.log("Parsed carSellingPriceForFunction:", carSellingPriceForFunction);
-            // });
-            // });
-
-
-            
-            </script>
-
-
-
-
-            <script type="text/javascript">
                 $(document).ready(function() 
                 {
                     var form = $("#CarForm");
@@ -536,15 +449,7 @@
                     setTimeout(checkFields, 100);
                     $("input[required]").on("blur", checkFields);
 
-                    // setTimeout(updateCarSellingPrice, 100);
-                    // $("#CarSellingPrice").on("blur", updateCarSellingPrice);
-                    
-                    // function updateCarSellingPrice()
-                    // {
-                    //     var CarBuyPriceForFunction = $("#CarBuyPrice").val(""); 
-                    //     var CarSellingPriceForFunction = CarBuyPriceForFunction + 500;
-                    //     $("#CarBuyPrice").val("CarSellingPriceForFunction");
-                    // }
+
 
                     function checkFields() 
                     {
@@ -589,11 +494,7 @@
                 {
                 count = countFixesAtPageLoad
                 }
-                // if(count == 0)
-                // {
-                    // var fakeFix = $('#fix-fake-template').html();
-                    // container.append(fakeFix);
-                // }
+
 
 
                 function addFix() 
@@ -620,13 +521,7 @@
 
                 createButton.click(function(e)
                 { 
-                        // var fakeFix = container.find(".fix:hidden");
-                        // if(fakeFix.length > 0) 
-                        // {
-                        //     fakeFix.remove();
-                        //     count = 0;
-                        // }
-                        // else
+
                         {
                             e.preventDefault();
                             console.log("clic button");
@@ -652,8 +547,6 @@
                         {
                             container.hide();
                             container.empty();
-                            // var fakeFix = $('#fix-fake-template').html();
-                            // container.append(fakeFix);
                             count = 0;
                         }
                         else
@@ -686,7 +579,28 @@
             </script>
 
 
+            <script type="text/javascript">
+                $(document).on('input', '.CarBuyPrice, .FixCost', function()
+                {
+                setTimeout(updateCarSellingPrice, 100);
 
+                function updateCarSellingPrice()
+                {
+                var CarBuyPriceForFunction = parseFloat($("#CarBuyPrice").val())|| 0;
+                console.log("Input:", CarBuyPriceForFunction);
+                var CarSellingPriceForFunction = CarBuyPriceForFunction + 500;
+
+                var total = 0;
+                $('.FixCost').each(function() {
+                total += parseFloat($(this).val()) || 0;
+                });
+                CarSellingPriceForFunction += total;
+                $("#CarSellingPrice").text(CarSellingPriceForFunction);
+                $("#CarSellingPriceHidden").val(CarSellingPriceForFunction);
+                console.log("Output:", CarSellingPriceForFunction);
+                }
+                });
+            </script>
 
 
 
