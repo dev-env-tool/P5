@@ -11,7 +11,7 @@ namespace P5WebApp.Models.Repositories
 {
     public class PhotoRepository : IPhotoRepository
     {
-        private readonly P5Referential? _context;
+        private static P5Referential? _context;
 
         public PhotoRepository(P5Referential context)
         {

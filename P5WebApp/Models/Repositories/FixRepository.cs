@@ -11,7 +11,7 @@ namespace P5WebApp.Models.Repositories
 {
     public class FixRepository : IFixRepository
     {
-        private readonly P5Referential? _context;
+        private static P5Referential? _context;
 
         public FixRepository(P5Referential context)
         {
